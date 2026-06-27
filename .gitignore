@@ -2,3 +2,5 @@
 /data/scoped/*.duckdb
 /data/scoped/*.wal
 /data/scoped/*.tmp
+__pycache__/
+*.pyc
