@@ -1,16 +1,17 @@
 create or replace table silver.dim_station as
 select
-    row_number() over (order by station_id, station_name, xml_station_name) as station_key,
+    row_number() over (order by station_id) as station_key,
     station_id,
-    station_name,
-    xml_station_name
+    min(station_name) as station_name,
+    min(xml_station_name) as xml_station_name
 from (
-    select distinct
+    select
         eva as station_id,
         station_name,
         xml_station_name
     from bronze.raw_stop_events
-) station_source;
+) station_source
+group by station_id;
 
 create or replace table silver.dim_train_service as
 select
@@ -142,8 +143,6 @@ select
 from delay_rows
 join silver.dim_station as station_dim
     on delay_rows.station_id = station_dim.station_id
-   and delay_rows.station_name = station_dim.station_name
-   and delay_rows.xml_station_name = station_dim.xml_station_name
 join silver.dim_train_service as train_service_dim
     on delay_rows.train_type = train_service_dim.train_type
    and delay_rows.train_number = train_service_dim.train_number

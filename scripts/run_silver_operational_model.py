@@ -28,6 +28,9 @@ def collect_summary() -> dict[str, object]:
     try:
         bronze_row_count = connection.execute("select count(*) from bronze.raw_stop_events").fetchone()
         silver_row_count = connection.execute("select count(*) from silver.fact_stop_event").fetchone()
+        distinct_station_id_count = connection.execute(
+            "select count(distinct eva) from bronze.raw_stop_events",
+        ).fetchone()
         station_count = connection.execute("select count(*) from silver.dim_station").fetchone()
         train_service_count = connection.execute("select count(*) from silver.dim_train_service").fetchone()
         date_count = connection.execute("select count(*) from silver.dim_date").fetchone()
@@ -68,6 +71,7 @@ def collect_summary() -> dict[str, object]:
         "duckdb_path": str(DUCKDB_PATH),
         "bronze_row_count": bronze_row_count[0],
         "silver_fact_stop_event_row_count": silver_row_count[0],
+        "distinct_station_id_row_count": distinct_station_id_count[0] if distinct_station_id_count else None,
         "dim_station_row_count": station_count[0] if station_count else None,
         "dim_train_service_row_count": train_service_count[0] if train_service_count else None,
         "dim_date_row_count": date_count[0] if date_count else None,
@@ -77,6 +81,8 @@ def collect_summary() -> dict[str, object]:
     }
     if summary["bronze_row_count"] != summary["silver_fact_stop_event_row_count"]:
         raise AssertionError("Silver fact row count does not match Bronze raw row count")
+    if summary["distinct_station_id_row_count"] != summary["dim_station_row_count"]:
+        raise AssertionError("Silver station dimension row count does not match distinct Bronze station ids")
     return summary
 
 

@@ -2,6 +2,7 @@
   "duckdb_path": "C:\\Users\\HOANG PHI LONG DANG\\repos\\deutsche-bahn\\data\\scoped\\local_scope_bronze.duckdb",
   "bronze_row_count": 186656,
   "silver_fact_stop_event_row_count": 186656,
+  "distinct_station_id_row_count": 90,
   "dim_station_row_count": 90,
   "dim_train_service_row_count": 2767,
   "dim_date_row_count": 31,

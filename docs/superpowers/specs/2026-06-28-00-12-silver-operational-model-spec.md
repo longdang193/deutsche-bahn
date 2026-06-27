@@ -147,7 +147,7 @@ Define the exact validation checks that prove Silver preserves Bronze row covera
 - context: local MVP needs join stability, but not enterprise key management
 - choice:
   - `station_key` derives from distinct normalized station identity
-  - `train_service_key` derives from distinct train type plus train number combination
+  - `train_service_key` derives from distinct train type plus train number plus line number combination
   - `date_key` uses `YYYYMMDD`
   - `hour_key` uses `HH`
   - `stop_event_key` uses Bronze `id`
@@ -160,12 +160,12 @@ Define the exact validation checks that prove Silver preserves Bronze row covera
   - key generation remains reproducible
   - later cloud port can preserve logical meanings
 
-### Decision: Station dimension uses `eva` plus station name as normalized identity
+### Decision: Station dimension uses `eva` as normalized identity
 
 - context: Bronze has both `eva` and station-name fields, and station naming variants can appear
 - choice: `silver.dim_station` uses:
   - `station_id` from `eva`
-  - `station_name` from `station_name`
+  - `station_name` as descriptive label, not part of join identity
   - `xml_station_name` preserved as secondary source field
 - alternatives considered:
   - station name only
@@ -183,6 +183,7 @@ Define the exact validation checks that prove Silver preserves Bronze row covera
   - `train_number`
   - `line_number`
   - `service_class`
+  - train-service identity stays `train_type + train_number + line_number` for this scoped slice
 - alternatives considered:
   - route and destination dimensions now
   - no train-service dimension
