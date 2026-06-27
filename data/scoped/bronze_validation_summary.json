@@ -1,0 +1,46 @@
+{
+  "scope_version": "2026-06-27-local-bronze-v1",
+  "selected_month": "2025-03",
+  "selected_hub": "Frankfurt (Main) Hbf",
+  "source_file_name": "data-2025-03.parquet",
+  "duckdb_path": "C:\\Users\\HOANG PHI LONG DANG\\repos\\deutsche-bahn\\data\\scoped\\local_scope_bronze.duckdb",
+  "raw_stop_events_row_count": 186656,
+  "manifest_row_count": 186656,
+  "hub_row_count": 62698,
+  "journey_count": 3451,
+  "hub_sample_rows": [
+    [
+      "Frankfurt (Main) Hbf",
+      "S",
+      "36615",
+      "Darmstadt Hbf",
+      "-8707109134936807572"
+    ],
+    [
+      "Frankfurt (Main) Hbf",
+      "RB",
+      "15404",
+      "Frankfurt (Main) Hbf",
+      "-9192485595791867238"
+    ],
+    [
+      "Frankfurt (Main) Hbf",
+      "HLB",
+      "15004",
+      "Stadtallendorf",
+      "190074822622425170"
+    ]
+  ],
+  "manifest_row": [
+    "data-2025-03.parquet",
+    "monthly_processed_data/data-2025-03.parquet@main",
+    "2026-06-27-local-bronze-v1",
+    "2026-06-27-hub-touching-journeys-v1",
+    "2025-03",
+    "Frankfurt (Main) Hbf",
+    "[\"station_name\", \"xml_station_name\", \"eva\", \"train_number\", \"line_number\", \"final_destination_station\", \"delay_in_min\", \"time\", \"is_canceled\", \"train_type\", \"train_line_ride_id\", \"train_line_station_num\", \"arrival_planned_time\", \"arrival_change_time\", \"departure_planned_time\", \"departure_change_time\", \"id\"]",
+    "retain all rows whose train_line_ride_id appears at least once at selected_hub within selected_month file",
+    "2026-06-27 22:01:27",
+    186656
+  ]
+}

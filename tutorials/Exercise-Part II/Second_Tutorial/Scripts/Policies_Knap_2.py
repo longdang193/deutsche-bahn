@@ -1,0 +1,19 @@
+# File containing the implemented Policies
+
+from abc import ABC, abstractmethod
+
+# Abstract Policy Class that represents the Super Class for all inheriting Policy Subclasses
+class Policy(ABC):
+    
+    @abstractmethod # "act" method must be implemented by all subclasses
+    def act(self, state: dict) -> None:
+        pass
+        return None         
+  
+# Greedy Policy Class
+class Greedy(Policy):
+    
+    """
+    # TODO: Write a Function "act" that takes a state as the argument and 
+    returns True if the item can be packed and False if not
+    """       

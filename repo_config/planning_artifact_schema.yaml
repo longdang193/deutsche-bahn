@@ -1,0 +1,218 @@
+schema_version: 1
+
+shared_base_fields:
+  artifact_type:
+    type: string
+    required: true
+  template_id:
+    type: string
+    required: false
+  name:
+    type: string
+    required: false
+  status:
+    type: string
+    required: true
+  layer:
+    type: string
+    required: false
+
+shared_typed_lineage_fields:
+  parent_workstream:
+    type: string
+    required: false
+  parent_thread:
+    type: string
+    required: false
+  parent_spec:
+    type: repo_relative_path
+    required: false
+  threads:
+    type: string_list
+    required: false
+  specs:
+    type: repo_relative_path_list
+    required: false
+
+shared_optional_context_fields:
+  targets:
+    type: repo_relative_path_list
+    required: false
+  related_features:
+    type: string_list
+    required: false
+  related_stages:
+    type: string_list
+    required: false
+
+allowed_values:
+  status:
+    roadmap:
+      - proposed
+      - active
+      - completed
+      - dropped
+    workstream:
+      - proposed
+      - active
+      - blocked
+      - completed
+      - dropped
+    bounded_change_thread:
+      - proposed
+      - active
+      - blocked
+      - completed
+      - dropped
+    execution_map:
+      - proposed
+      - active
+      - completed
+      - superseded
+    spec:
+      - proposed
+      - active
+      - completed
+      - superseded
+    plan:
+      - proposed
+      - active
+      - completed
+      - superseded
+  layer:
+    shared:
+      - intent
+      - operating_system
+      - workstream
+      - change
+  map_type:
+    execution_map:
+      - complete_spec_set
+      - spec_authoring
+      - implementation_execution
+
+artifacts:
+  roadmap:
+    description: Master workstream roadmap artifact.
+    path_globs:
+      - docs/intent/master-workstream-roadmap.md
+    identity:
+      canonical_field: name
+      legacy_field: template_id
+      recommended_value: master-workstream-roadmap
+    required_fields:
+      - artifact_type
+      - status
+      - layer
+    optional_fields:
+      - template_id
+      - name
+    required_values:
+      artifact_type: roadmap
+      layer: intent
+
+  workstream:
+    description: Registered workstream artifact.
+    path_globs:
+      - docs/intent/workstreams/*.md
+    identity:
+      canonical_field: name
+      legacy_field: workstream_id
+    required_fields:
+      - artifact_type
+      - status
+      - layer
+    optional_fields:
+      - name
+      - roadmap_name
+    required_values:
+      artifact_type: workstream
+      layer: workstream
+
+  bounded_change_thread:
+    description: Bounded change thread artifact.
+    path_globs:
+      - docs/intent/workstreams/threads/*/*.md
+    identity:
+      canonical_field: name
+      legacy_field: thread_id
+    required_fields:
+      - artifact_type
+      - status
+      - layer
+    optional_fields:
+      - name
+    required_values:
+      artifact_type: bounded_change_thread
+      layer: change
+    forbidden_fields:
+      - parent_workstream
+      - linked_spec
+      - linked_plan
+
+  execution_map:
+    description: Execution-map artifact family.
+    path_globs:
+      - docs/superpowers/execution_maps/*.md
+    identity:
+      canonical_field: name
+      legacy_field: none
+    required_fields:
+      - artifact_type
+      - status
+      - layer
+      - map_type
+      - parent_workstream
+      - threads
+    optional_fields:
+      - template_id
+      - name
+      - specs
+    required_values:
+      artifact_type: execution_map
+      layer: change
+
+  spec:
+    description: Detailed specification artifact.
+    path_globs:
+      - docs/superpowers/specs/*.md
+    identity:
+      canonical_field: name
+      legacy_field: none
+    required_fields:
+      - artifact_type
+      - status
+      - layer
+    optional_fields:
+      - template_id
+      - name
+      - parent_workstream
+      - parent_thread
+      - targets
+      - related_features
+      - related_stages
+    required_values:
+      artifact_type: spec
+
+  plan:
+    description: Implementation plan artifact.
+    path_globs:
+      - docs/superpowers/plans/*.md
+    identity:
+      canonical_field: name
+      legacy_field: none
+    required_fields:
+      - artifact_type
+      - status
+      - layer
+    optional_fields:
+      - template_id
+      - name
+      - parent_workstream
+      - parent_thread
+      - parent_spec
+      - targets
+      - related_features
+      - related_stages
+    required_values:
+      artifact_type: plan

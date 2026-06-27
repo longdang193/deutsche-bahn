@@ -1,0 +1,29 @@
+{
+  "scope_version": "2026-06-27-local-bronze-v1",
+  "extraction_query_version": "2026-06-27-hub-touching-journeys-v1",
+  "selected_month": "2025-03",
+  "selected_hub": "Frankfurt (Main) Hbf",
+  "source_file_name": "data-2025-03.parquet",
+  "source_url": "https://huggingface.co/datasets/piebro/deutsche-bahn-data/resolve/main/monthly_processed_data/data-2025-03.parquet",
+  "source_version": "monthly_processed_data/data-2025-03.parquet@main",
+  "required_columns": [
+    "station_name",
+    "xml_station_name",
+    "eva",
+    "train_number",
+    "line_number",
+    "final_destination_station",
+    "delay_in_min",
+    "time",
+    "is_canceled",
+    "train_type",
+    "train_line_ride_id",
+    "train_line_station_num",
+    "arrival_planned_time",
+    "arrival_change_time",
+    "departure_planned_time",
+    "departure_change_time",
+    "id"
+  ],
+  "complete_journey_rule": "retain all rows whose train_line_ride_id appears at least once at selected_hub within selected_month file"
+}

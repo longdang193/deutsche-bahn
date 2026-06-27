@@ -1,0 +1,8 @@
+adoption_mode: starter_method_only
+repo_role: consumer_derived
+managed_architecture_metadata: false
+legacy_feature_contracts: false
+architecture_generator: none
+notes: >
+  Repo operating-system, intent, adapter, and publication guidance are adopted.
+  Product feature/stage metadata is intentionally not adopted yet.
