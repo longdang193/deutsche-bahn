@@ -1,0 +1,154 @@
+{
+  "scope": {
+    "artifact": "power_bi_semantic_export",
+    "boundary": "semantic_export_only",
+    "report_build_status": "pending",
+    "scenario_key_rule": "scenario_key = frozen_policy.policy_version",
+    "notes": [
+      "This contract governs semantic export and report-build handoff metadata only.",
+      "Actual Power BI relationships, DAX measures, slicer interactions, and page behavior are validated in downstream report authoring work."
+    ]
+  },
+  "tables": {
+    "fact_event_decision": {
+      "grain": "one row per scoped scored stop event",
+      "key": "stop_event_key",
+      "columns": [
+        {"name": "optimization_run_id", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
+        {"name": "execution_mode", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false, "allowed_values": ["final"]},
+        {"name": "scenario_key", "type": "VARCHAR", "nullable": false, "role": "foreign_key", "visible": true},
+        {"name": "capacity_scenario", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
+        {"name": "capacity_per_hour", "type": "BIGINT", "nullable": false, "role": "attribute", "visible": false},
+        {"name": "minimum_candidate_probability", "type": "DOUBLE", "nullable": false, "role": "attribute", "visible": false, "range": [0.0, 1.0]},
+        {"name": "calendar_date", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
+        {"name": "hour_of_day", "type": "BIGINT", "nullable": false, "role": "attribute", "visible": false, "range": [0, 23]},
+        {"name": "horizon_id", "type": "VARCHAR", "nullable": false, "role": "foreign_key", "visible": false},
+        {"name": "stop_event_key", "type": "VARCHAR", "nullable": false, "role": "primary_key", "visible": false},
+        {"name": "journey_id", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
+        {"name": "station_id", "type": "VARCHAR", "nullable": false, "role": "foreign_key", "visible": false},
+        {"name": "station_name", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
+        {"name": "train_type", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
+        {"name": "line_number", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
+        {"name": "train_service_key", "type": "VARCHAR", "nullable": false, "role": "foreign_key", "visible": false},
+        {"name": "service_class", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
+        {"name": "predicted_severe_delay_probability", "type": "DOUBLE", "nullable": false, "role": "measure", "visible": true, "range": [0.0, 1.0], "default_aggregation": "average"},
+        {"name": "actual_is_departure_severe_delay", "type": "BOOLEAN", "nullable": false, "role": "flag", "visible": true, "default_aggregation": "none"},
+        {"name": "prediction_split", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false, "allowed_values": ["test"]},
+        {"name": "is_eligible_candidate", "type": "BOOLEAN", "nullable": false, "role": "flag", "visible": true, "default_aggregation": "none"},
+        {"name": "eligibility_reason", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": true},
+        {"name": "selected_for_review", "type": "BOOLEAN", "nullable": false, "role": "flag", "visible": true, "default_aggregation": "none"},
+        {"name": "candidate_priority_rank", "type": "BIGINT", "nullable": true, "role": "measure", "visible": true, "default_aggregation": "none"},
+        {"name": "selection_rank", "type": "BIGINT", "nullable": true, "role": "measure", "visible": true, "default_aggregation": "none"},
+        {"name": "priority_score", "type": "DOUBLE", "nullable": true, "role": "measure", "visible": true, "default_aggregation": "average"},
+        {"name": "objective_contribution", "type": "DOUBLE", "nullable": true, "role": "measure", "visible": false, "default_aggregation": "sum"},
+        {"name": "solver_status", "type": "BIGINT", "nullable": false, "role": "metadata", "visible": false},
+        {"name": "model_name", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
+        {"name": "model_version", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
+        {"name": "selected_threshold", "type": "DOUBLE", "nullable": false, "role": "metadata", "visible": false, "range": [0.0, 1.0]},
+        {"name": "optimized_at", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false}
+      ]
+    },
+    "fact_horizon_summary": {
+      "grain": "one row per scoped horizon",
+      "key": "horizon_id",
+      "columns": [
+        {"name": "optimization_run_id", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
+        {"name": "execution_mode", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false, "allowed_values": ["final"]},
+        {"name": "scenario_key", "type": "VARCHAR", "nullable": false, "role": "foreign_key", "visible": true},
+        {"name": "calendar_date", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
+        {"name": "hour_of_day", "type": "BIGINT", "nullable": false, "role": "attribute", "visible": false, "range": [0, 23]},
+        {"name": "horizon_id", "type": "VARCHAR", "nullable": false, "role": "primary_key", "visible": false},
+        {"name": "capacity_scenario", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
+        {"name": "capacity_per_hour", "type": "BIGINT", "nullable": false, "role": "attribute", "visible": false},
+        {"name": "candidate_count", "type": "BIGINT", "nullable": false, "role": "measure", "visible": true, "default_aggregation": "sum"},
+        {"name": "eligible_candidate_count", "type": "BIGINT", "nullable": false, "role": "measure", "visible": true, "default_aggregation": "sum"},
+        {"name": "selected_event_count", "type": "BIGINT", "nullable": false, "role": "measure", "visible": true, "default_aggregation": "sum"},
+        {"name": "unused_capacity", "type": "BIGINT", "nullable": false, "role": "measure", "visible": true, "default_aggregation": "sum"},
+        {"name": "selected_probability_score_sum", "type": "DOUBLE", "nullable": false, "role": "measure", "visible": false, "default_aggregation": "sum"},
+        {"name": "actual_severe_selected_count", "type": "BIGINT", "nullable": false, "role": "measure", "visible": true, "default_aggregation": "sum"},
+        {"name": "actual_severe_candidate_count", "type": "BIGINT", "nullable": false, "role": "measure", "visible": true, "default_aggregation": "sum"},
+        {"name": "candidate_prevalence", "type": "DOUBLE", "nullable": true, "role": "measure", "visible": false, "default_aggregation": "none", "purpose": "source reconciliation only"},
+        {"name": "precision_at_capacity", "type": "DOUBLE", "nullable": true, "role": "measure", "visible": false, "default_aggregation": "none", "purpose": "source reconciliation only"},
+        {"name": "severe_delay_coverage", "type": "DOUBLE", "nullable": true, "role": "measure", "visible": false, "default_aggregation": "none", "purpose": "source reconciliation only"},
+        {"name": "lift_over_candidate_prevalence", "type": "DOUBLE", "nullable": true, "role": "measure", "visible": false, "default_aggregation": "none", "purpose": "source reconciliation only"},
+        {"name": "solver_status", "type": "BIGINT", "nullable": false, "role": "metadata", "visible": false},
+        {"name": "model_name", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
+        {"name": "model_version", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
+        {"name": "optimized_at", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false}
+      ]
+    },
+    "dim_date_hour": {
+      "grain": "one row per horizon_id",
+      "key": "horizon_id",
+      "columns": [
+        {"name": "horizon_id", "type": "VARCHAR", "nullable": false, "role": "primary_key", "visible": false},
+        {"name": "calendar_date", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": true},
+        {"name": "hour_of_day", "type": "BIGINT", "nullable": false, "role": "sort_key", "visible": false, "range": [0, 23]},
+        {"name": "date_label", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true, "sort_by": "calendar_date"},
+        {"name": "hour_label", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true, "sort_by": "hour_of_day", "format": "HH:00-HH:59"}
+      ]
+    },
+    "dim_station": {
+      "grain": "one row per station_id",
+      "key": "station_id",
+      "columns": [
+        {"name": "station_id", "type": "VARCHAR", "nullable": false, "role": "primary_key", "visible": false},
+        {"name": "station_name", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true}
+      ]
+    },
+    "dim_train_service": {
+      "grain": "one row per train_service_key",
+      "key": "train_service_key",
+      "columns": [
+        {"name": "train_service_key", "type": "VARCHAR", "nullable": false, "role": "primary_key", "visible": false},
+        {"name": "train_type", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true},
+        {"name": "line_number", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true},
+        {"name": "service_class", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true}
+      ]
+    },
+    "dim_scenario": {
+      "grain": "one row per scenario_key",
+      "key": "scenario_key",
+      "columns": [
+        {"name": "scenario_key", "type": "VARCHAR", "nullable": false, "role": "primary_key", "visible": true},
+        {"name": "capacity_scenario", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true},
+        {"name": "capacity_per_hour", "type": "BIGINT", "nullable": false, "role": "display", "visible": true},
+        {"name": "minimum_candidate_probability", "type": "DOUBLE", "nullable": false, "role": "display", "visible": true, "range": [0.0, 1.0]},
+        {"name": "model_name", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true},
+        {"name": "model_version", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true},
+        {"name": "selected_threshold", "type": "DOUBLE", "nullable": false, "role": "display", "visible": true, "range": [0.0, 1.0]},
+        {"name": "policy_version", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
+        {"name": "frozen_at", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
+        {"name": "scenario_display_name", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true}
+      ]
+    }
+  },
+  "relationship_topology": [
+    {"from": "dim_date_hour", "to": "fact_event_decision", "key": "horizon_id", "direction": "dimension_to_fact"},
+    {"from": "dim_date_hour", "to": "fact_horizon_summary", "key": "horizon_id", "direction": "dimension_to_fact"},
+    {"from": "dim_scenario", "to": "fact_event_decision", "key": "scenario_key", "direction": "dimension_to_fact"},
+    {"from": "dim_scenario", "to": "fact_horizon_summary", "key": "scenario_key", "direction": "dimension_to_fact"},
+    {"from": "dim_station", "to": "fact_event_decision", "key": "station_id", "direction": "dimension_to_fact"},
+    {"from": "dim_train_service", "to": "fact_event_decision", "key": "train_service_key", "direction": "dimension_to_fact"}
+  ],
+  "slicer_scope": {
+    "metadata_contract_only": true,
+    "both_facts": ["calendar_date", "hour_of_day", "scenario_key"],
+    "event_only": ["station_id", "station_name", "train_service_key", "train_type", "service_class", "selected_for_review", "eligibility_reason"],
+    "notes": [
+      "Station and train-service slicers must not affect global horizon visuals in downstream Power BI report authoring.",
+      "This file documents intended slicer scope only; actual visual interaction behavior is validated downstream."
+    ]
+  },
+  "measure_formulas": {
+    "Selected Events": "SUM(fact_horizon_summary[selected_event_count])",
+    "Eligible Events": "SUM(fact_horizon_summary[eligible_candidate_count])",
+    "Candidate Severe Events": "SUM(fact_horizon_summary[actual_severe_candidate_count])",
+    "Selected Severe Events": "SUM(fact_horizon_summary[actual_severe_selected_count])",
+    "Candidate Prevalence": "DIVIDE([Candidate Severe Events], [Eligible Events])",
+    "Precision at Capacity": "DIVIDE([Selected Severe Events], [Selected Events])",
+    "Severe-Delay Coverage": "DIVIDE([Selected Severe Events], [Candidate Severe Events])",
+    "Selection Lift": "DIVIDE([Precision at Capacity], [Candidate Prevalence])",
+    "Capacity Utilization": "DIVIDE(SUM(fact_horizon_summary[selected_event_count]), SUM(fact_horizon_summary[selected_event_count]) + SUM(fact_horizon_summary[unused_capacity]))"
+  }
+}

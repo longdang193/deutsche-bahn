@@ -1,0 +1,36 @@
+{
+  "artifact": "dashboard_mvp_manifest",
+  "status": "handoff_ready",
+  "metadata_contract_only": true,
+  "report_build_status": "pending",
+  "page_count": 2,
+  "notes": [
+    "This manifest defines report-build handoff requirements only.",
+    "Actual Power BI relationships, DAX measures, slicer interactions, and page behavior are validated downstream during report authoring."
+  ],
+  "pages": [
+    {
+      "page_key": "overview_capacity",
+      "page_title": "Overview and Capacity",
+      "required_slicers": ["calendar_date", "hour_of_day", "scenario_key"],
+      "required_visual_groups": [
+        "selected_vs_eligible_cards",
+        "candidate_prevalence_cards",
+        "precision_coverage_lift_cards",
+        "capacity_utilization_cards",
+        "date_hour_capacity_trend"
+      ]
+    },
+    {
+      "page_key": "candidate_station_detail",
+      "page_title": "Candidate and Station Detail",
+      "required_slicers": ["calendar_date", "hour_of_day", "scenario_key", "station_id", "train_service_key", "eligibility_reason", "selected_for_review"],
+      "required_visual_groups": [
+        "selected_vs_not_selected_breakdown",
+        "station_detail_table",
+        "train_service_detail_table",
+        "candidate_probability_distribution"
+      ]
+    }
+  ]
+}
