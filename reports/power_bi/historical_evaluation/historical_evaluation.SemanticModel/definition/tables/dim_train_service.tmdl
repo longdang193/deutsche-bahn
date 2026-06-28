@@ -1,0 +1,49 @@
+table dim_train_service
+	lineageTag: a475925b-e19a-4d7e-8069-711b7ef65f4f
+
+	column train_service_key
+		dataType: string
+		lineageTag: 0224b5ee-798b-47ed-adc6-ac2fd6a0b9aa
+		summarizeBy: none
+		sourceColumn: train_service_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column train_type
+		dataType: string
+		lineageTag: 36542617-a02e-4521-9d9f-ac8699ecb397
+		summarizeBy: none
+		sourceColumn: train_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column line_number
+		dataType: string
+		lineageTag: ec72c456-3a50-4c1b-b144-89a969214d87
+		summarizeBy: none
+		sourceColumn: line_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column service_class
+		dataType: string
+		lineageTag: f2a4e705-2151-4fea-b00f-ace79c3a3cf7
+		summarizeBy: none
+		sourceColumn: service_class
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_train_service = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(
+				        File.Contents(SemanticExportRoot & "\dim_train_service.parquet")
+				    )
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

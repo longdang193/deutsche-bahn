@@ -1,0 +1,93 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "bec68b21978e7c7c6507",
+  "position": {
+    "x": 880.23505698996462,
+    "y": 0,
+    "z": 10000,
+    "height": 360.46613958637914,
+    "width": 400.00113554101432,
+    "tabOrder": 10000
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_event_decision"
+                    }
+                  },
+                  "Property": "predicted_severe_delay_probability (bins)"
+                }
+              },
+              "queryRef": "fact_event_decision.predicted_severe_delay_probability (bins)",
+              "nativeQueryRef": "predicted_severe_delay_probability (bins)",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_event_decision"
+                    }
+                  },
+                  "Property": "selected_for_review"
+                }
+              },
+              "queryRef": "fact_event_decision.selected_for_review",
+              "nativeQueryRef": "selected_for_review"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_event_decision"
+                    }
+                  },
+                  "Property": "Event Count"
+                }
+              },
+              "queryRef": "fact_event_decision.Event Count",
+              "nativeQueryRef": "Event Count"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_event_decision"
+                  }
+                },
+                "Property": "Event Count"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

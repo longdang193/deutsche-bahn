@@ -1,0 +1,24 @@
+relationship 49c3b6a5-c00f-53b7-f088-ac5aeac5582e
+	fromColumn: fact_event_decision.horizon_id
+	toColumn: dim_date_hour.horizon_id
+
+relationship 7cbe19f9-6f5e-e5f7-54e1-f3c3454d412b
+	fromColumn: fact_horizon_summary.horizon_id
+	toColumn: dim_date_hour.horizon_id
+
+relationship fcdb88bf-e0f7-3df9-645b-80b0e1c5f334
+	fromColumn: fact_event_decision.scenario_key
+	toColumn: dim_scenario.scenario_key
+
+relationship c0fc7c8e-e706-f8f7-4936-7e2e7af38d93
+	fromColumn: fact_horizon_summary.scenario_key
+	toColumn: dim_scenario.scenario_key
+
+relationship a9b73fce-479a-c424-b48d-e7a904fdb430
+	fromColumn: fact_event_decision.station_id
+	toColumn: dim_station.station_id
+
+relationship 2fb8857d-6c07-0860-48b4-11edb214fbe7
+	fromColumn: fact_event_decision.train_service_key
+	toColumn: dim_train_service.train_service_key
+

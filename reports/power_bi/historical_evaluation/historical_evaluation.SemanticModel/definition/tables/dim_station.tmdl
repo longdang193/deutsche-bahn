@@ -1,0 +1,33 @@
+table dim_station
+	lineageTag: 6ed6c446-2a0b-4eb7-926b-d26068401d6c
+
+	column station_id
+		dataType: string
+		lineageTag: b109bb98-83e3-46df-90ab-e94431459bb5
+		summarizeBy: none
+		sourceColumn: station_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column station_name
+		dataType: string
+		lineageTag: c07a02ce-08fa-4d7d-a797-439c72d69347
+		summarizeBy: none
+		sourceColumn: station_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_station = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(
+				        File.Contents(SemanticExportRoot & "\dim_station.parquet")
+				    )
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,114 @@
+table dim_scenario
+	lineageTag: 6d1cbab8-4640-478a-9b80-24061d708eff
+
+	measure 'Scenario Key Display' = SELECTEDVALUE(dim_scenario[scenario_key], "Multiple / none")
+		lineageTag: 46346797-4d2e-4fed-9b41-3b8ec809c6aa
+
+	measure 'Scenario Name Display' = SELECTEDVALUE(dim_scenario[scenario_display_name], "Multiple / none")
+		lineageTag: 989129cd-7c0c-4426-bed6-33855247a869
+
+	measure 'Model Version Display' = SELECTEDVALUE(dim_scenario[model_version], "Multiple / none")
+		lineageTag: 95f6e89e-46c9-4a1e-b123-176fc606d6f0
+
+	measure 'Policy Version Display' = SELECTEDVALUE(dim_scenario[policy_version], "Multiple / none")
+		lineageTag: 9c8fb755-5bc3-4188-b3c0-ada94af8a9aa
+
+	column scenario_key
+		dataType: string
+		lineageTag: 4fe1dadc-ecc1-4e8f-a99d-f243c1c0ae6c
+		summarizeBy: none
+		sourceColumn: scenario_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column capacity_scenario
+		dataType: string
+		lineageTag: c849d212-ef17-44e0-907e-34df852438f4
+		summarizeBy: none
+		sourceColumn: capacity_scenario
+
+		annotation SummarizationSetBy = Automatic
+
+	column capacity_per_hour
+		dataType: int64
+		formatString: 0
+		lineageTag: cf2f76ff-3b4c-433a-b0b1-61266310e058
+		summarizeBy: sum
+		sourceColumn: capacity_per_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column minimum_candidate_probability
+		dataType: double
+		lineageTag: 33c300d5-6086-4b26-ad09-6c4392278715
+		summarizeBy: sum
+		sourceColumn: minimum_candidate_probability
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column model_name
+		dataType: string
+		lineageTag: eba93f4b-3c60-4f25-8843-a51e0a5f02f1
+		summarizeBy: none
+		sourceColumn: model_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column model_version
+		dataType: string
+		lineageTag: e3a6b231-4dd7-4711-811d-8a23abf08436
+		summarizeBy: none
+		sourceColumn: model_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column selected_threshold
+		dataType: double
+		lineageTag: 429c4fc6-cfc2-400c-8026-a1304d693676
+		summarizeBy: sum
+		sourceColumn: selected_threshold
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column policy_version
+		dataType: string
+		lineageTag: 0176a47e-d436-4d93-a752-4b9c63f1c00b
+		summarizeBy: none
+		sourceColumn: policy_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column frozen_at
+		dataType: string
+		lineageTag: 2db4749d-df05-48fb-b9d0-d269faa6d34d
+		summarizeBy: none
+		sourceColumn: frozen_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column scenario_display_name
+		dataType: string
+		lineageTag: 1d36a525-934d-4261-9783-f2f52cf8a2e0
+		summarizeBy: none
+		sourceColumn: scenario_display_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_scenario = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(
+				        File.Contents(SemanticExportRoot & "\dim_scenario.parquet")
+				    )
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

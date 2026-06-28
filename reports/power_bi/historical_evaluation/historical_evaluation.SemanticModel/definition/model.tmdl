@@ -1,0 +1,23 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["SemanticExportRoot","fact_event_decision","fact_horizon_summary","dim_date_hour","dim_station","dim_train_service","dim_scenario"]
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table fact_event_decision
+ref table fact_horizon_summary
+ref table dim_date_hour
+ref table dim_station
+ref table dim_train_service
+ref table dim_scenario
+
+ref cultureInfo en-US
+

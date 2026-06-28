@@ -1,0 +1,386 @@
+table fact_event_decision
+	lineageTag: 4ed99f14-0adf-4a57-8120-78818da795af
+
+	measure 'Optimized At Display' = SELECTEDVALUE(fact_event_decision[optimized_at], "Multiple / none")
+		lineageTag: 2dc83ec1-ce3d-4184-8aca-8dbe6b3657b7
+
+	measure 'Event Count' = COUNTROWS(fact_event_decision)
+		formatString: 0
+		lineageTag: 07b1fffe-7f8c-4f2d-b242-e7bd620636b1
+
+	measure 'Eligible Event Count' =
+			
+			CALCULATE(
+			    [Event Count],
+			    fact_event_decision[is_eligible_candidate] = TRUE()
+			)
+		formatString: 0
+		lineageTag: 655df25e-f958-42fd-865a-3a5df6da15fc
+
+	measure 'Selected Event Count' =
+			
+			CALCULATE(
+			    [Event Count],
+			    fact_event_decision[selected_for_review] = TRUE()
+			)
+		formatString: 0
+		lineageTag: 88cb09b2-e198-45f8-82d7-b4afa022533c
+
+	measure 'Actual Severe Event Count' =
+			
+			CALCULATE(
+			    [Event Count],
+			    fact_event_decision[actual_is_departure_severe_delay] = TRUE()
+			)
+		formatString: 0
+		lineageTag: 9e615fea-05b9-438e-9377-95a3e0686c61
+
+	measure 'Selected Severe Event Count' =
+			
+			CALCULATE(
+			    [Event Count],
+			    fact_event_decision[selected_for_review] = TRUE(),
+			    fact_event_decision[actual_is_departure_severe_delay] = TRUE()
+			)
+		formatString: 0
+		lineageTag: 5a2bb6c2-16a4-4d5b-9a31-b47b6e600b3b
+
+	measure 'Average Predicted Severe Probability' =
+			
+			AVERAGE(fact_event_decision[predicted_severe_delay_probability])
+		lineageTag: fa1bda09-b14e-4432-9daa-ed437dce9b06
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column optimization_run_id
+		dataType: string
+		lineageTag: ecdf363e-724a-47c7-aba0-d399b8dd8e4f
+		summarizeBy: none
+		sourceColumn: optimization_run_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column execution_mode
+		dataType: string
+		lineageTag: 253385ee-db49-4a31-9b48-7656afc6c7e1
+		summarizeBy: none
+		sourceColumn: execution_mode
+
+		annotation SummarizationSetBy = Automatic
+
+	column scenario_key
+		dataType: string
+		lineageTag: ab8d480d-68ec-4eb9-89c4-88eff3d22beb
+		summarizeBy: none
+		sourceColumn: scenario_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column capacity_scenario
+		dataType: string
+		lineageTag: 4e84e82b-8fe2-4afb-891e-d4c8304fc262
+		summarizeBy: none
+		sourceColumn: capacity_scenario
+
+		annotation SummarizationSetBy = Automatic
+
+	column capacity_per_hour
+		dataType: int64
+		formatString: 0
+		lineageTag: 508423ea-a365-440e-96bb-a18521cb88cd
+		summarizeBy: sum
+		sourceColumn: capacity_per_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column minimum_candidate_probability
+		dataType: double
+		lineageTag: 60e9153d-7bde-4ba3-9ca0-f1098a331b52
+		summarizeBy: sum
+		sourceColumn: minimum_candidate_probability
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column calendar_date
+		dataType: string
+		lineageTag: a5db4313-01fa-4f71-898e-ddbc8b297827
+		summarizeBy: none
+		sourceColumn: calendar_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column hour_of_day
+		dataType: int64
+		formatString: 0
+		lineageTag: 0a2e8a88-163d-460c-b000-c209ee368524
+		summarizeBy: sum
+		sourceColumn: hour_of_day
+
+		annotation SummarizationSetBy = Automatic
+
+	column horizon_id
+		dataType: string
+		lineageTag: 3e949144-367e-4b32-bcc6-2487bde53f28
+		summarizeBy: none
+		sourceColumn: horizon_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column stop_event_key
+		dataType: string
+		lineageTag: a6b371d0-f2e0-4b48-83f4-e7429377531c
+		summarizeBy: none
+		sourceColumn: stop_event_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column journey_id
+		dataType: string
+		lineageTag: 3ddbc277-b23a-436d-bf96-55b6bdc6b524
+		summarizeBy: none
+		sourceColumn: journey_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column station_id
+		dataType: string
+		lineageTag: 492de287-5b8d-4ff4-8cc7-27f7e5e3c8ac
+		summarizeBy: none
+		sourceColumn: station_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column station_name
+		dataType: string
+		lineageTag: 92aa2144-5448-442c-a827-a68c89a98da5
+		summarizeBy: none
+		sourceColumn: station_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column train_type
+		dataType: string
+		lineageTag: 54a7b807-e431-41d7-accf-f5a16b2e62c2
+		summarizeBy: none
+		sourceColumn: train_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column line_number
+		dataType: string
+		lineageTag: e3e992d7-4e89-4a08-9481-ee6dae2f0b68
+		summarizeBy: none
+		sourceColumn: line_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column train_service_key
+		dataType: string
+		lineageTag: 9120acba-b66d-46d8-a2f8-665fb21829f6
+		summarizeBy: none
+		sourceColumn: train_service_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column service_class
+		dataType: string
+		lineageTag: b6ac0452-9103-40bc-be66-1134344611c4
+		summarizeBy: none
+		sourceColumn: service_class
+
+		annotation SummarizationSetBy = Automatic
+
+	column predicted_severe_delay_probability
+		dataType: double
+		lineageTag: 2193693c-b5d1-4d89-8343-033ae311c93b
+		summarizeBy: sum
+		sourceColumn: predicted_severe_delay_probability
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"fact_event_decision","TableItemName":"predicted_severe_delay_probability (bins)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column actual_is_departure_severe_delay
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 7d846bb3-ad3a-46ed-9391-faced96c71d8
+		summarizeBy: none
+		sourceColumn: actual_is_departure_severe_delay
+
+		annotation SummarizationSetBy = Automatic
+
+	column prediction_split
+		dataType: string
+		lineageTag: 6fc49f2f-48a6-4c95-8fe8-7c8f8c29a838
+		summarizeBy: none
+		sourceColumn: prediction_split
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_eligible_candidate
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 3031c276-48ab-4315-9287-8ebb5f81e7ab
+		summarizeBy: none
+		sourceColumn: is_eligible_candidate
+
+		annotation SummarizationSetBy = Automatic
+
+	column eligibility_reason
+		dataType: string
+		lineageTag: cdefca6c-2d50-4f28-8bfe-3765056bb290
+		summarizeBy: none
+		sourceColumn: eligibility_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column selected_for_review
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 7319cbc4-1f52-4c71-a713-09b9a927a146
+		summarizeBy: none
+		sourceColumn: selected_for_review
+
+		annotation SummarizationSetBy = Automatic
+
+	column candidate_priority_rank
+		dataType: int64
+		formatString: 0
+		lineageTag: 4e4a9ddf-d0d9-461d-a496-c64bb4b2e50a
+		summarizeBy: sum
+		sourceColumn: candidate_priority_rank
+
+		annotation SummarizationSetBy = Automatic
+
+	column selection_rank
+		dataType: int64
+		formatString: 0
+		lineageTag: f2566ebe-6667-438a-a443-4f58497cdcc9
+		summarizeBy: sum
+		sourceColumn: selection_rank
+
+		annotation SummarizationSetBy = Automatic
+
+	column priority_score
+		dataType: double
+		lineageTag: 44c43a08-8531-4f9c-a1cc-f31aa23f8f28
+		summarizeBy: sum
+		sourceColumn: priority_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column objective_contribution
+		dataType: double
+		lineageTag: cce0e5e6-c9c2-4d1a-a397-354de5e44f6e
+		summarizeBy: sum
+		sourceColumn: objective_contribution
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column solver_status
+		dataType: int64
+		formatString: 0
+		lineageTag: 77fb5ec3-deeb-4055-b82c-031659617cc5
+		summarizeBy: sum
+		sourceColumn: solver_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column model_name
+		dataType: string
+		lineageTag: f2ae0fda-824b-4884-a9a0-e0269d8e758d
+		summarizeBy: none
+		sourceColumn: model_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column model_version
+		dataType: string
+		lineageTag: 12e08365-1330-46d2-8b04-c1a76fdf3ff8
+		summarizeBy: none
+		sourceColumn: model_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column selected_threshold
+		dataType: double
+		lineageTag: 8e0a62a0-22bc-447a-a4fe-a7071f8fa7a0
+		summarizeBy: sum
+		sourceColumn: selected_threshold
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column optimized_at
+		dataType: string
+		lineageTag: 74c133e1-3202-4f67-927e-247a5e65fccb
+		summarizeBy: none
+		sourceColumn: optimized_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'predicted_severe_delay_probability (bins)' =
+			IF(
+				ISBLANK('fact_event_decision'[predicted_severe_delay_probability]),
+				BLANK(),
+				IF(
+					'fact_event_decision'[predicted_severe_delay_probability] >= 0,
+					ROUNDDOWN('fact_event_decision'[predicted_severe_delay_probability] / 0.05, 0) * 0.05,
+					ROUNDUP('fact_event_decision'[predicted_severe_delay_probability] / 0.05, 0) * 0.05
+				)
+			)
+		lineageTag: f339c798-a5b3-4c04-bf37-6b81f4f3ff34
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "fact_event_decision"
+				          }
+				        },
+				        "Property": "predicted_severe_delay_probability"
+				      }
+				    }
+				  ],
+				  "binningMetadata": {
+				    "binSize": {
+				      "value": 0.05,
+				      "unit": 0
+				    }
+				  }
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"f","Entity":"fact_event_decision"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"f"}},"Property":"predicted_severe_delay_probability"}}],"BinItem":{"Expression":{"Floor":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"f"}},"Property":"predicted_severe_delay_probability"}},"Size":0.05}}}}
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_event_decision = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(
+				        File.Contents(SemanticExportRoot & "\fact_event_decision.parquet")
+				    )
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

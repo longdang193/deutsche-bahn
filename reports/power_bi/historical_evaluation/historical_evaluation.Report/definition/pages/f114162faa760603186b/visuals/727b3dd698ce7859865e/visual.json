@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "727b3dd698ce7859865e",
+  "position": {
+    "x": 829.0721210486721,
+    "y": 518.60612340491969,
+    "z": 11000,
+    "height": 151.16321982654611,
+    "width": 208.14012576116733,
+    "tabOrder": 11000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_horizon_summary"
+                    }
+                  },
+                  "Property": "Capacity Utilization"
+                }
+              },
+              "queryRef": "fact_horizon_summary.Capacity Utilization",
+              "nativeQueryRef": "Capacity Utilization"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_horizon_summary"
+                  }
+                },
+                "Property": "Capacity Utilization"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,58 @@
+table dim_date_hour
+	lineageTag: 1fbd7e12-5ed5-4228-9f1b-5a6e1019b129
+
+	column horizon_id
+		dataType: string
+		lineageTag: fc15b3d8-a213-4464-a50f-4ac84df3de83
+		summarizeBy: none
+		sourceColumn: horizon_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column calendar_date
+		dataType: string
+		lineageTag: e879a8cf-8d91-4644-b76f-2d6f53742abf
+		summarizeBy: none
+		sourceColumn: calendar_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column hour_of_day
+		dataType: int64
+		formatString: 0
+		lineageTag: 30ceedf8-2483-4434-830c-fad549e29925
+		summarizeBy: sum
+		sourceColumn: hour_of_day
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_label
+		dataType: string
+		lineageTag: f021a691-0a74-45ce-bd3f-056bf0f919fe
+		summarizeBy: none
+		sourceColumn: date_label
+
+		annotation SummarizationSetBy = Automatic
+
+	column hour_label
+		dataType: string
+		lineageTag: 40e1f64e-212c-41f7-995e-27e2d7fc7052
+		summarizeBy: none
+		sourceColumn: hour_label
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_date_hour = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(
+				        File.Contents(SemanticExportRoot & "\dim_date_hour.parquet")
+				    )
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

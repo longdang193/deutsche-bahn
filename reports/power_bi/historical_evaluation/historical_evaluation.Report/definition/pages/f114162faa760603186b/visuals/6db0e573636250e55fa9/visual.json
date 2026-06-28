@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "6db0e573636250e55fa9",
+  "position": {
+    "x": 876.74667499396742,
+    "y": 60.465287930618437,
+    "z": 12000,
+    "height": 429.07098550765778,
+    "width": 403.48951753701152,
+    "tabOrder": 12000
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_date_hour"
+                    }
+                  },
+                  "Property": "hour_label"
+                }
+              },
+              "queryRef": "dim_date_hour.hour_label",
+              "nativeQueryRef": "hour_label",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_horizon_summary"
+                    }
+                  },
+                  "Property": "Selected Events"
+                }
+              },
+              "queryRef": "fact_horizon_summary.Selected Events",
+              "nativeQueryRef": "Selected Events"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_horizon_summary"
+                  }
+                },
+                "Property": "Selected Events"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

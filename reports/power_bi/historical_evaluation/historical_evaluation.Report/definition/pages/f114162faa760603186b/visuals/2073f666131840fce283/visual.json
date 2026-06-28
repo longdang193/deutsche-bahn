@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "2073f666131840fce283",
+  "position": {
+    "x": 290,
+    "y": 338,
+    "z": 5000,
+    "height": 151,
+    "width": 280,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_horizon_summary"
+                    }
+                  },
+                  "Property": "Candidate Severe Events"
+                }
+              },
+              "queryRef": "fact_horizon_summary.Candidate Severe Events",
+              "nativeQueryRef": "Candidate Severe Events"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_horizon_summary"
+                  }
+                },
+                "Property": "Candidate Severe Events"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "c8113895a5c31f6c4c38",
+  "position": {
+    "x": 0,
+    "y": 519,
+    "z": 4000,
+    "height": 151,
+    "width": 280,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_horizon_summary"
+                    }
+                  },
+                  "Property": "Eligible Events"
+                }
+              },
+              "queryRef": "fact_horizon_summary.Eligible Events",
+              "nativeQueryRef": "Eligible Events"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_horizon_summary"
+                  }
+                },
+                "Property": "Eligible Events"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

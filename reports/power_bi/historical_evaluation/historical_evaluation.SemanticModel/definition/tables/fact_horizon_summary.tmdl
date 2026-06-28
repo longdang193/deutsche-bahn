@@ -1,0 +1,260 @@
+table fact_horizon_summary
+	lineageTag: 1766006c-4172-496a-8751-41f12e2f7d5b
+
+	measure 'Selected Events' = SUM(fact_horizon_summary[selected_event_count])
+		formatString: 0
+		lineageTag: 30d7ed8d-0c4a-44e4-838b-291ded16336b
+
+	measure 'Eligible Events' = SUM(fact_horizon_summary[eligible_candidate_count])
+		formatString: 0
+		lineageTag: 439bd717-b114-471b-95fd-0f5f174e33e3
+
+	measure 'Candidate Severe Events' = SUM(fact_horizon_summary[actual_severe_candidate_count])
+		formatString: 0
+		lineageTag: 2acf9f42-19e9-4049-a35b-443dc369b157
+
+	measure 'Selected Severe Events' = SUM(fact_horizon_summary[actual_severe_selected_count])
+		formatString: 0
+		lineageTag: 69a1f007-3bfa-4c35-af75-434425a8838f
+
+	measure 'Candidate Prevalence' = DIVIDE([Candidate Severe Events], [Eligible Events])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 5b32766c-5bde-48ac-aa31-9c8f8b870ec4
+
+	measure 'Precision at Capacity' = DIVIDE([Selected Severe Events], [Selected Events])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: bd79f1c0-8133-4df9-ad56-f02113cf0a10
+
+	measure 'Severe-Delay Coverage' = DIVIDE([Selected Severe Events], [Candidate Severe Events])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: f24eeb01-fc58-4c06-a303-85c94451963f
+
+	measure 'Selection Lift' = DIVIDE([Precision at Capacity], [Candidate Prevalence])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 802200ef-7b11-4ce0-bb9f-882519468be0
+
+	measure 'Capacity Utilization' =
+			DIVIDE(
+			    SUM(fact_horizon_summary[selected_event_count]),
+			    SUM(fact_horizon_summary[selected_event_count]) + SUM(fact_horizon_summary[unused_capacity])
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: fac6cc5d-0499-408e-99cf-ed59a960acf7
+
+	column optimization_run_id
+		dataType: string
+		lineageTag: ed5eeaba-c2f3-4594-9d3c-49e6542de71a
+		summarizeBy: none
+		sourceColumn: optimization_run_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column execution_mode
+		dataType: string
+		lineageTag: 1f4b7f6a-0003-47d1-8fe8-5e42af23d6ad
+		summarizeBy: none
+		sourceColumn: execution_mode
+
+		annotation SummarizationSetBy = Automatic
+
+	column scenario_key
+		dataType: string
+		lineageTag: f7f1e75f-cc94-4eea-a67b-48734d8e4df7
+		summarizeBy: none
+		sourceColumn: scenario_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column calendar_date
+		dataType: string
+		lineageTag: 2d80ca39-2a8d-46e4-86f2-4d01395d871b
+		summarizeBy: none
+		sourceColumn: calendar_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column hour_of_day
+		dataType: int64
+		formatString: 0
+		lineageTag: e3947230-d749-4219-8d02-6ef6035a87a5
+		summarizeBy: sum
+		sourceColumn: hour_of_day
+
+		annotation SummarizationSetBy = Automatic
+
+	column horizon_id
+		dataType: string
+		lineageTag: afa07681-89a3-4f1b-9681-a0f547ea62bf
+		summarizeBy: none
+		sourceColumn: horizon_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column capacity_scenario
+		dataType: string
+		lineageTag: 9227de09-c2cf-45e5-bf6c-51f2aa523b73
+		summarizeBy: none
+		sourceColumn: capacity_scenario
+
+		annotation SummarizationSetBy = Automatic
+
+	column capacity_per_hour
+		dataType: int64
+		formatString: 0
+		lineageTag: 43c4603c-df95-4614-94c1-292ade9d5084
+		summarizeBy: sum
+		sourceColumn: capacity_per_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column candidate_count
+		dataType: int64
+		formatString: 0
+		lineageTag: cc47102a-7e59-4727-9cdf-99144325d7f5
+		summarizeBy: sum
+		sourceColumn: candidate_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column eligible_candidate_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 83f27cd2-d966-4790-9f95-d26526761657
+		summarizeBy: sum
+		sourceColumn: eligible_candidate_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column selected_event_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 72a162dd-a5b6-44b2-a613-cebb8409db25
+		summarizeBy: sum
+		sourceColumn: selected_event_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column unused_capacity
+		dataType: int64
+		formatString: 0
+		lineageTag: e54fa5d4-b345-4481-854c-25f3f0eeb62b
+		summarizeBy: sum
+		sourceColumn: unused_capacity
+
+		annotation SummarizationSetBy = Automatic
+
+	column selected_probability_score_sum
+		dataType: double
+		lineageTag: a2de96b8-5ace-4339-80dc-c45d7b8fa7eb
+		summarizeBy: sum
+		sourceColumn: selected_probability_score_sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column actual_severe_selected_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 5a89f466-5c00-4840-aa15-db6c645df5f5
+		summarizeBy: sum
+		sourceColumn: actual_severe_selected_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_severe_candidate_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 64421344-5ab6-4978-bb10-d1a009dc04fd
+		summarizeBy: sum
+		sourceColumn: actual_severe_candidate_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column candidate_prevalence
+		dataType: double
+		lineageTag: ca960a71-0091-4f80-9df4-5e9ec85592d6
+		summarizeBy: sum
+		sourceColumn: candidate_prevalence
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column precision_at_capacity
+		dataType: double
+		lineageTag: e7a75d92-0a67-4bfe-a4ee-8b19917e26b2
+		summarizeBy: sum
+		sourceColumn: precision_at_capacity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column severe_delay_coverage
+		dataType: double
+		lineageTag: c7dd4160-2adb-44b9-bad8-df6576752756
+		summarizeBy: sum
+		sourceColumn: severe_delay_coverage
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column lift_over_candidate_prevalence
+		dataType: double
+		lineageTag: 9429c602-26b0-4205-b0ca-a987927b2cea
+		summarizeBy: sum
+		sourceColumn: lift_over_candidate_prevalence
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column solver_status
+		dataType: int64
+		formatString: 0
+		lineageTag: fc72aa6f-0019-45d5-a27d-3f2fca974f07
+		summarizeBy: sum
+		sourceColumn: solver_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column model_name
+		dataType: string
+		lineageTag: 029d0285-baaa-4482-9f83-9b2d53c72d92
+		summarizeBy: none
+		sourceColumn: model_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column model_version
+		dataType: string
+		lineageTag: 5c6356d7-66c5-437b-90c0-cee9a8edb081
+		summarizeBy: none
+		sourceColumn: model_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column optimized_at
+		dataType: string
+		lineageTag: c11f9a6f-7ea7-4150-833b-c209e6cabc76
+		summarizeBy: none
+		sourceColumn: optimized_at
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_horizon_summary = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(
+				        File.Contents(SemanticExportRoot & "\fact_horizon_summary.parquet")
+				    )
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,137 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "ec964cc92fec3e9baf76",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 13000,
+    "height": 60.465287930618437,
+    "width": 1280.236192530979,
+    "tabOrder": 13000
+  },
+  "visual": {
+    "visualType": "multiRowCard",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_scenario"
+                    }
+                  },
+                  "Property": "Scenario Key Display"
+                }
+              },
+              "queryRef": "dim_scenario.Scenario Key Display",
+              "nativeQueryRef": "Scenario Key Display"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_scenario"
+                    }
+                  },
+                  "Property": "Scenario Name Display"
+                }
+              },
+              "queryRef": "dim_scenario.Scenario Name Display",
+              "nativeQueryRef": "Scenario Name Display"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_scenario"
+                    }
+                  },
+                  "Property": "Model Version Display"
+                }
+              },
+              "queryRef": "dim_scenario.Model Version Display",
+              "nativeQueryRef": "Model Version Display"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_scenario"
+                    }
+                  },
+                  "Property": "Policy Version Display"
+                }
+              },
+              "queryRef": "dim_scenario.Policy Version Display",
+              "nativeQueryRef": "Policy Version Display"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_event_decision"
+                    }
+                  },
+                  "Property": "Optimized At Display"
+                }
+              },
+              "queryRef": "fact_event_decision.Optimized At Display",
+              "nativeQueryRef": "Optimized At Display"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "card": [
+        {
+          "properties": {
+            "outlineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
