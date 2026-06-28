@@ -1,0 +1,30 @@
+{
+  "policy_version": "2026-06-28-v1",
+  "execution_modes": [
+    "development",
+    "final"
+  ],
+  "canonical_probability_field": "predicted_severe_delay_probability",
+  "threshold_source": "data/scoped/ml/evaluation.json",
+  "minimum_candidate_probability": 0.4,
+  "capacity_scenario": "hourly_capacity_3",
+  "capacity_per_hour": 3,
+  "constraint_set": [
+    "hourly_capacity",
+    "one_per_journey_per_horizon"
+  ],
+  "tie_break_rule": [
+    "predicted_severe_delay_probability desc",
+    "stop_event_key asc"
+  ],
+  "metric_definitions": [
+    "precision_at_capacity",
+    "severe_delay_coverage",
+    "lift_over_candidate_prevalence",
+    "candidate_prevalence"
+  ],
+  "model_name": "logistic_regression",
+  "model_version": "2026-06-28-v1",
+  "selected_threshold": 0.4,
+  "frozen_at": "2026-06-28T10:26:49.750462+00:00"
+}

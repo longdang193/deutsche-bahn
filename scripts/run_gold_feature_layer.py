@@ -44,7 +44,7 @@ def collect_summary() -> dict[str, object]:
                     count(*) as stop_event_count,
                     sum(case when has_delay_measurement then 1 else 0 end) as measured_delay_event_count,
                     sum(case when is_delayed then 1 else 0 end) as delayed_event_count,
-                    sum(case when is_heavy_delay then 1 else 0 end) as heavy_delay_event_count,
+                    sum(case when is_severe_delay then 1 else 0 end) as severe_delay_event_count,
                     sum(case when is_extreme_delay then 1 else 0 end) as extreme_delay_event_count,
                     sum(case when is_cancellation then 1 else 0 end) as cancellation_event_count,
                     sum(case when has_arrival_time_data then 1 else 0 end) as arrival_time_data_count,
@@ -55,8 +55,8 @@ def collect_summary() -> dict[str, object]:
                         / nullif(sum(case when has_delay_measurement then 1 else 0 end), 0) as pct_delayed,
                     sum(case when is_cancellation then 1 else 0 end)::double
                         / nullif(count(*), 0) as pct_cancellation,
-                    sum(case when is_heavy_delay then 1 else 0 end)::double
-                        / nullif(sum(case when has_delay_measurement then 1 else 0 end), 0) as pct_heavy_delay
+                    sum(case when is_severe_delay then 1 else 0 end)::double
+                        / nullif(sum(case when has_delay_measurement then 1 else 0 end), 0) as pct_severe_delay
                 from gold.feature_stop_event
                 group by 1, 2, 3
             )
@@ -66,7 +66,7 @@ def collect_summary() -> dict[str, object]:
             where recomputed.stop_event_count is distinct from gold.fact_station_hour.stop_event_count
                or recomputed.measured_delay_event_count is distinct from gold.fact_station_hour.measured_delay_event_count
                or recomputed.delayed_event_count is distinct from gold.fact_station_hour.delayed_event_count
-               or recomputed.heavy_delay_event_count is distinct from gold.fact_station_hour.heavy_delay_event_count
+               or recomputed.severe_delay_event_count is distinct from gold.fact_station_hour.severe_delay_event_count
                or recomputed.extreme_delay_event_count is distinct from gold.fact_station_hour.extreme_delay_event_count
                or recomputed.cancellation_event_count is distinct from gold.fact_station_hour.cancellation_event_count
                or recomputed.arrival_time_data_count is distinct from gold.fact_station_hour.arrival_time_data_count
@@ -75,7 +75,7 @@ def collect_summary() -> dict[str, object]:
                or recomputed.max_event_delay_min is distinct from gold.fact_station_hour.max_event_delay_min
                or recomputed.pct_delayed is distinct from gold.fact_station_hour.pct_delayed
                or recomputed.pct_cancellation is distinct from gold.fact_station_hour.pct_cancellation
-               or recomputed.pct_heavy_delay is distinct from gold.fact_station_hour.pct_heavy_delay
+               or recomputed.pct_severe_delay is distinct from gold.fact_station_hour.pct_severe_delay
             """,
         ).fetchone()
         feature_sample = connection.execute(
@@ -87,7 +87,7 @@ def collect_summary() -> dict[str, object]:
                 event_delay_min,
                 has_delay_measurement,
                 is_delayed,
-                is_heavy_delay,
+                is_severe_delay,
                 is_extreme_delay,
                 is_departure_severe_delay,
                 delay_bucket

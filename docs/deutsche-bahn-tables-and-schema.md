@@ -166,21 +166,24 @@ Columns:
 
 | Column | Type | Notes |
 |---|---|---|
-| `stop_event_key` | bigint | join key |
+| `stop_event_key` | string | event key |
 | `station_key` | int | station |
 | `train_service_key` | int | service |
 | `service_date` | date | date |
 | `hour_of_day` | int | time feature |
 | `day_of_week` | int | calendar feature |
-| `is_peak_hour` | boolean | peak indicator |
-| `arrival_delay_min` | int | current delay |
-| `departure_delay_min` | int | current delay |
-| `rolling_station_delay_count_30m` | int | congestion proxy |
-| `rolling_station_cancel_count_60m` | int | disruption proxy |
-| `station_avg_delay_last_7d` | decimal | baseline |
-| `train_type_avg_delay_last_30d` | decimal | baseline |
+| `time_band` | string | peak/off_peak band |
+| `arrival_delay_min` | int | arrival delay |
+| `departure_delay_min` | int | departure delay |
 | `delay_change_min` | int | propagation proxy |
-| `label_severe_departure_delay_15plus` | boolean | MVP label |
+| `event_delay_min` | int | reporting fallback delay |
+| `is_delayed` | boolean | delay > 0 |
+| `is_severe_delay` | boolean | fallback delay >= 15 |
+| `is_extreme_delay` | boolean | fallback delay >= 30 |
+| `is_departure_severe_delay` | boolean | ML label candidate |
+| `delay_bucket` | string | unknown / early_or_on_time / minor / medium / severe / extreme |
+| `has_arrival_time_data` | boolean | arrival time completeness |
+| `has_departure_time_data` | boolean | departure time completeness |
 
 ### `gold.fact_station_hour`
 
@@ -192,16 +195,20 @@ Columns:
 
 | Column | Type | Notes |
 |---|---|---|
-| `station_hour_key` | string | composite surrogate |
 | `station_key` | int | station |
-| `service_date` | date | date |
+| `date_key` | int | date key |
 | `hour_of_day` | int | hour |
-| `total_trains` | int | traffic volume |
-| `avg_arrival_delay_min` | decimal | aggregate |
-| `avg_departure_delay_min` | decimal | aggregate |
-| `severe_delay_count` | int | aggregate |
-| `cancellation_count` | int | aggregate |
-| `rolling_delay_pressure` | decimal | station stress score |
+| `stop_event_count` | int | traffic volume |
+| `measured_delay_event_count` | int | denominator for delay rates |
+| `delayed_event_count` | int | aggregate |
+| `severe_delay_event_count` | int | aggregate |
+| `extreme_delay_event_count` | int | aggregate |
+| `cancellation_event_count` | int | aggregate |
+| `avg_event_delay_min` | decimal | aggregate |
+| `max_event_delay_min` | decimal | aggregate |
+| `pct_delayed` | decimal | delay rate |
+| `pct_severe_delay` | decimal | severe-delay rate |
+| `pct_cancellation` | decimal | cancellation rate |
 
 ### `gold.fact_ml_prediction`
 

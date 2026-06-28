@@ -1,0 +1,11 @@
+{
+  "mode": "development",
+  "capacity_scenario": "hourly_capacity_3",
+  "capacity_per_hour": 3,
+  "minimum_candidate_probability": 0.4,
+  "reference_selected_count": 45,
+  "gurobi_selected_count": 45,
+  "selected_set_match": true,
+  "horizon_count": 212,
+  "null_precision_horizon_count": 172
+}

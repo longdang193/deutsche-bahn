@@ -33,7 +33,7 @@ select
     coalesce(fact.departure_delay_min, fact.arrival_delay_min, fact.provider_delay_in_min) as event_delay_min,
     coalesce(fact.departure_delay_min, fact.arrival_delay_min, fact.provider_delay_in_min) is not null as has_delay_measurement,
     coalesce(fact.departure_delay_min, fact.arrival_delay_min, fact.provider_delay_in_min) > 0 as is_delayed,
-    coalesce(fact.departure_delay_min, fact.arrival_delay_min, fact.provider_delay_in_min) >= 15 as is_heavy_delay,
+    coalesce(fact.departure_delay_min, fact.arrival_delay_min, fact.provider_delay_in_min) >= 15 as is_severe_delay,
     coalesce(fact.departure_delay_min, fact.arrival_delay_min, fact.provider_delay_in_min) >= 30 as is_extreme_delay,
     fact.departure_delay_min >= 15 as is_departure_severe_delay,
     case
@@ -41,7 +41,7 @@ select
         when coalesce(fact.departure_delay_min, fact.arrival_delay_min, fact.provider_delay_in_min) <= 0 then 'early_or_on_time'
         when coalesce(fact.departure_delay_min, fact.arrival_delay_min, fact.provider_delay_in_min) between 1 and 5 then 'minor'
         when coalesce(fact.departure_delay_min, fact.arrival_delay_min, fact.provider_delay_in_min) between 6 and 14 then 'medium'
-        when coalesce(fact.departure_delay_min, fact.arrival_delay_min, fact.provider_delay_in_min) between 15 and 29 then 'heavy'
+        when coalesce(fact.departure_delay_min, fact.arrival_delay_min, fact.provider_delay_in_min) between 15 and 29 then 'severe'
         else 'extreme'
     end as delay_bucket,
     not fact.is_cancellation as is_active_stop,
@@ -77,7 +77,7 @@ with grouped as (
         count(*) as stop_event_count,
         sum(case when has_delay_measurement then 1 else 0 end) as measured_delay_event_count,
         sum(case when is_delayed then 1 else 0 end) as delayed_event_count,
-        sum(case when is_heavy_delay then 1 else 0 end) as heavy_delay_event_count,
+        sum(case when is_severe_delay then 1 else 0 end) as severe_delay_event_count,
         sum(case when is_extreme_delay then 1 else 0 end) as extreme_delay_event_count,
         sum(case when is_cancellation then 1 else 0 end) as cancellation_event_count,
         sum(case when has_arrival_time_data then 1 else 0 end) as arrival_time_data_count,
@@ -105,7 +105,7 @@ select
     stop_event_count,
     measured_delay_event_count,
     delayed_event_count,
-    heavy_delay_event_count,
+    severe_delay_event_count,
     extreme_delay_event_count,
     cancellation_event_count,
     arrival_time_data_count,
@@ -114,5 +114,5 @@ select
     max_event_delay_min,
     delayed_event_count::double / nullif(measured_delay_event_count, 0) as pct_delayed,
     cancellation_event_count::double / nullif(stop_event_count, 0) as pct_cancellation,
-    heavy_delay_event_count::double / nullif(measured_delay_event_count, 0) as pct_heavy_delay
+    severe_delay_event_count::double / nullif(measured_delay_event_count, 0) as pct_severe_delay
 from grouped;

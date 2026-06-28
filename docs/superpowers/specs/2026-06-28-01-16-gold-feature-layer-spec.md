@@ -151,7 +151,7 @@ Define the exact validation checks that prove Gold preserves Silver event covera
     - `event_delay_min` = `coalesce(departure_delay_min, arrival_delay_min, provider_delay_in_min)`
     - `has_delay_measurement` = `event_delay_min is not null`
     - `is_delayed` = `event_delay_min > 0`
-    - `is_heavy_delay` = `event_delay_min >= 15`
+    - `is_severe_delay` = `event_delay_min >= 15`
     - `is_extreme_delay` = `event_delay_min >= 30`
     - `is_departure_severe_delay` = `departure_delay_min >= 15`
     - `delay_bucket` with values:
@@ -159,7 +159,7 @@ Define the exact validation checks that prove Gold preserves Silver event covera
       - `early_or_on_time` when `event_delay_min <= 0`
       - `minor` when `event_delay_min between 1 and 5`
       - `medium` when `event_delay_min between 6 and 14`
-      - `heavy` when `event_delay_min between 15 and 29`
+      - `severe` when `event_delay_min between 15 and 29`
       - `extreme` when `event_delay_min >= 30`
     - `is_active_stop` = `not is_cancellation`
     - `has_arrival_time_data` = `planned_arrival_ts is not null or actual_arrival_ts is not null`
@@ -233,7 +233,7 @@ Define the exact validation checks that prove Gold preserves Silver event covera
     - `stop_event_count`
     - `measured_delay_event_count`
     - `delayed_event_count`
-    - `heavy_delay_event_count`
+    - `severe_delay_event_count`
     - `extreme_delay_event_count`
     - `cancellation_event_count`
     - `arrival_time_data_count`
@@ -243,7 +243,7 @@ Define the exact validation checks that prove Gold preserves Silver event covera
     - `max_event_delay_min`
     - `pct_delayed`
     - `pct_cancellation`
-    - `pct_heavy_delay`
+    - `pct_severe_delay`
 - alternatives considered:
   - sum-only aggregate table
   - dashboard measures only in Power BI
@@ -310,7 +310,7 @@ Define the exact validation checks that prove Gold preserves Silver event covera
   - use simple 5/15/30 minute boundaries now
   - revisit in later ML or dashboard threads only when real consumer need appears
 
-### Risk: Departure-first delay fallback may bias some arrival-heavy use cases
+### Risk: Departure-first delay fallback may bias arrival-focused use cases
 
 - mitigation:
   - preserve `arrival_delay_min`, `departure_delay_min`, and `provider_delay_in_min` alongside `event_delay_min`
@@ -322,7 +322,7 @@ Define the exact validation checks that prove Gold preserves Silver event covera
   - keep station-hour base fact narrow now
   - defer segmented aggregate tables until real dashboard or forecasting demand proves need
 
-### Risk: Null-heavy delay data may weaken rates and averages
+### Risk: Delay data with many nulls may weaken rates and averages
 
 - mitigation:
   - expose `measured_delay_event_count`

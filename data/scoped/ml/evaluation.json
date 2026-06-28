@@ -1,0 +1,124 @@
+{
+  "duckdb_path": "C:\\Users\\HOANG PHI LONG DANG\\repos\\deutsche-bahn\\data\\scoped\\local_scope_bronze.duckdb",
+  "source_table": "gold.feature_stop_event",
+  "model_name": "logistic_regression",
+  "model_version": "2026-06-28-v1",
+  "target_column": "is_departure_severe_delay",
+  "feature_columns": [
+    "station_id",
+    "train_type",
+    "line_number",
+    "service_class",
+    "day_name",
+    "time_band",
+    "hour_of_day",
+    "day_of_week",
+    "month",
+    "week_of_year",
+    "arrival_delay_min",
+    "is_weekend",
+    "is_cancellation",
+    "is_arrival_cancelled",
+    "has_arrival_time_data"
+  ],
+  "selected_threshold": 0.4,
+  "split_metrics": [
+    {
+      "split": "train",
+      "row_count": 135045,
+      "journey_count": 2905,
+      "positive_count": 13859,
+      "negative_count": 121186,
+      "prevalence": 0.10262505090895628,
+      "anchor_date_min": "2025-03-01",
+      "anchor_date_max": "2025-03-18"
+    },
+    {
+      "split": "validation",
+      "row_count": 742,
+      "journey_count": 68,
+      "positive_count": 109,
+      "negative_count": 633,
+      "prevalence": 0.14690026954177898,
+      "anchor_date_min": "2025-03-19",
+      "anchor_date_max": "2025-03-24"
+    },
+    {
+      "split": "test",
+      "row_count": 743,
+      "journey_count": 112,
+      "positive_count": 119,
+      "negative_count": 624,
+      "prevalence": 0.1601615074024226,
+      "anchor_date_min": "2025-03-25",
+      "anchor_date_max": "2025-03-31"
+    }
+  ],
+  "validation_metrics": {
+    "split": "validation",
+    "pr_auc": 0.9463437036634407,
+    "roc_auc": 0.9670710320738582,
+    "precision": 0.9603960396039604,
+    "recall": 0.8899082568807339,
+    "f1": 0.9238095238095239,
+    "confusion_matrix": {
+      "tn": 629,
+      "fp": 4,
+      "fn": 12,
+      "tp": 97
+    },
+    "naive_baseline_prevalence": 0.10262505090895628
+  },
+  "test_metrics": {
+    "split": "test",
+    "pr_auc": 0.9502542624760527,
+    "roc_auc": 0.9828498707175178,
+    "precision": 0.8677685950413223,
+    "recall": 0.8823529411764706,
+    "f1": 0.875,
+    "confusion_matrix": {
+      "tn": 608,
+      "fp": 16,
+      "fn": 14,
+      "tp": 105
+    },
+    "naive_baseline_prevalence": 0.10262505090895628
+  },
+  "excluded_feature_columns": [
+    "stop_event_key",
+    "date_key",
+    "hour_key",
+    "station_key",
+    "train_service_key",
+    "service_date",
+    "calendar_date",
+    "journey_id",
+    "stop_sequence",
+    "station_name",
+    "train_number",
+    "year",
+    "provider_delay_in_min",
+    "departure_delay_min",
+    "delay_change_min",
+    "event_delay_min",
+    "has_delay_measurement",
+    "is_delayed",
+    "is_severe_delay",
+    "is_extreme_delay",
+    "delay_bucket",
+    "is_departure_cancelled",
+    "has_departure_time_data",
+    "is_active_stop",
+    "is_departure_severe_delay",
+    "journey_anchor_date",
+    "prediction_split"
+  ],
+  "scored_output_path": "C:\\Users\\HOANG PHI LONG DANG\\repos\\deutsche-bahn\\data\\scoped\\ml\\scored_stop_events.parquet",
+  "model_path": "C:\\Users\\HOANG PHI LONG DANG\\repos\\deutsche-bahn\\data\\scoped\\ml\\severe_delay_model.joblib",
+  "scored_row_count": 1485,
+  "scored_split_counts": {
+    "test": 743,
+    "validation": 742
+  },
+  "scored_at": "2026-06-28T09:45:21.869778+00:00"
+}
