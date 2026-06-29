@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "cb459850a7b4e8a2c2c0",
   "position": {
-    "x": 290,
-    "y": 519,
+    "x": 1250,
+    "y": 680,
     "z": 6000,
-    "height": 151,
-    "width": 280,
+    "height": 12,
+    "width": 12,
     "tabOrder": 6000
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "fact_horizon_summary"
                     }
                   },
-                  "Property": "Selected Severe Events"
+                  "Property": "Review Slots"
                 }
               },
-              "queryRef": "fact_horizon_summary.Selected Severe Events",
-              "nativeQueryRef": "Selected Severe Events"
+              "queryRef": "fact_horizon_summary.Review Slots",
+              "nativeQueryRef": "Review Slots"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "fact_horizon_summary"
                   }
                 },
-                "Property": "Selected Severe Events"
+                "Property": "Review Slots"
               }
             },
             "direction": "Descending"
@@ -51,6 +51,20 @@
         "isDefaultSort": true
       }
     },
-    "drillFilterOtherVisuals": true
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }

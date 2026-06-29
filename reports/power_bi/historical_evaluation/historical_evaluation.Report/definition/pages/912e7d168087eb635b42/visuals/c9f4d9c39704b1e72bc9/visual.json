@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "c9f4d9c39704b1e72bc9",
   "position": {
-    "x": 466.28039346496143,
-    "y": 360.46613958637914,
+    "x": 240,
+    "y": 320,
     "z": 7000,
-    "height": 358.14055158904767,
-    "width": 296.5124696597635,
+    "height": 260,
+    "width": 370,
     "tabOrder": 7000
   },
   "visual": {
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_event_decision"
+                      "Entity": "dim_train_service"
                     }
                   },
-                  "Property": "selected_for_review"
+                  "Property": "train_type"
                 }
               },
-              "queryRef": "fact_event_decision.selected_for_review",
-              "nativeQueryRef": "selected_for_review",
+              "queryRef": "dim_train_service.train_type",
+              "nativeQueryRef": "train_type",
               "active": true
             }
           ]
@@ -42,11 +42,11 @@
                       "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Event Count"
+                  "Property": "Average Reviewable Predicted Risk"
                 }
               },
-              "queryRef": "fact_event_decision.Event Count",
-              "nativeQueryRef": "Event Count"
+              "queryRef": "fact_event_decision.Average Reviewable Predicted Risk",
+              "nativeQueryRef": "Average Reviewable Predicted Risk"
             }
           ]
         }
@@ -70,6 +70,27 @@
         "isDefaultSort": true
       }
     },
-    "drillFilterOtherVisuals": true
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "\"Average predicted severe-risk by train type\""
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }

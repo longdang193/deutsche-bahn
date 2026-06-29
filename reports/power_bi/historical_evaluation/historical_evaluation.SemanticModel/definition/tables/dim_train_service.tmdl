@@ -38,7 +38,7 @@ table dim_train_service
 		source =
 				let
 				    Source = Parquet.Document(
-				        File.Contents(SemanticExportRoot & "\dim_train_service.parquet")
+				        File.Contents("C:\Users\HOANG PHI LONG DANG\repos\deutsche-bahn\data\scoped\power_bi\dim_train_service.parquet")
 				    )
 				in
 				    Source

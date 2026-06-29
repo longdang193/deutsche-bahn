@@ -1,8 +1,0 @@
-/// Root folder for Power BI semantic export parquet files
-expression SemanticExportRoot = "C:\Users\HOANG PHI LONG DANG\repos\deutsche-bahn\data\scoped\power_bi" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
-	lineageTag: 19ea79f5-7a61-4cdc-9981-dabee051317b
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Text
-

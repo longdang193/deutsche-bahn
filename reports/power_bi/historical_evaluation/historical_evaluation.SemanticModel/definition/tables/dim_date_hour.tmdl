@@ -47,7 +47,7 @@ table dim_date_hour
 		source =
 				let
 				    Source = Parquet.Document(
-				        File.Contents(SemanticExportRoot & "\dim_date_hour.parquet")
+				        File.Contents("C:\Users\HOANG PHI LONG DANG\repos\deutsche-bahn\data\scoped\power_bi\dim_date_hour.parquet")
 				    )
 				in
 				    Source

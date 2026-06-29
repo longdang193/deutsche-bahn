@@ -1,0 +1,164 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "264ec34db1b81a424547",
+  "position": {
+    "x": 456.97804147563551,
+    "y": 0,
+    "z": 8000,
+    "height": 280.23335367844317,
+    "width": 423.25701551432911,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_date_hour"
+                    }
+                  },
+                  "Property": "calendar_date"
+                }
+              },
+              "queryRef": "dim_date_hour.calendar_date",
+              "nativeQueryRef": "calendar_date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_date_hour"
+                    }
+                  },
+                  "Property": "hour_of_day"
+                }
+              },
+              "queryRef": "dim_date_hour.hour_of_day",
+              "nativeQueryRef": "hour_of_day"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_event_decision"
+                    }
+                  },
+                  "Property": "selection_rank"
+                }
+              },
+              "queryRef": "fact_event_decision.selection_rank",
+              "nativeQueryRef": "selection_rank"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_station"
+                    }
+                  },
+                  "Property": "station_name"
+                }
+              },
+              "queryRef": "dim_station.station_name",
+              "nativeQueryRef": "station_name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_train_service"
+                    }
+                  },
+                  "Property": "train_type"
+                }
+              },
+              "queryRef": "dim_train_service.train_type",
+              "nativeQueryRef": "train_type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_train_service"
+                    }
+                  },
+                  "Property": "line_number"
+                }
+              },
+              "queryRef": "dim_train_service.line_number",
+              "nativeQueryRef": "line_number"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_event_decision"
+                    }
+                  },
+                  "Property": "predicted_severe_delay_probability"
+                }
+              },
+              "queryRef": "fact_event_decision.predicted_severe_delay_probability",
+              "nativeQueryRef": "predicted_severe_delay_probability"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_event_decision"
+                    }
+                  },
+                  "Property": "Actual Outcome"
+                }
+              },
+              "queryRef": "fact_event_decision.Actual Outcome",
+              "nativeQueryRef": "Actual Outcome"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_event_decision"
+                    }
+                  },
+                  "Property": "priority_score"
+                }
+              },
+              "queryRef": "fact_event_decision.priority_score",
+              "nativeQueryRef": "priority_score"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -5,14 +5,40 @@
   "report_build_status": "pending",
   "page_count": 2,
   "notes": [
-    "This manifest defines report-build handoff requirements only.",
-    "Actual Power BI relationships, DAX measures, slicer interactions, and page behavior are validated downstream during report authoring."
+    "Prototype / historical evaluation only.",
+    "ML scores severe-delay risk. Gurobi selects limited review slots under capacity and station-concentration trade-off.",
+    "Canonical event_decision and horizon_summary are frozen Gurobi at capacity 3. Cross-policy and cross-capacity analysis lives in policy_comparison and horizon_policy_metrics."
   ],
+  "semantic_contract": {
+    "canonical_policy_name": "gurobi_soft_station_penalty",
+    "canonical_capacity_per_hour": 3,
+    "comparison_policies": [
+      "random",
+      "ml_first",
+      "constrained_greedy",
+      "gurobi_soft_station_penalty"
+    ],
+    "scenario_capacities": [
+      1,
+      3,
+      5,
+      10
+    ],
+    "wording_guardrails": [
+      "Say prototype / historical evaluation.",
+      "Do not claim causal avoided-delay impact.",
+      "Separate ML prediction from optimizer decision."
+    ]
+  },
   "pages": [
     {
       "page_key": "overview_capacity",
       "page_title": "Overview and Capacity",
-      "required_slicers": ["calendar_date", "hour_of_day", "scenario_key"],
+      "required_slicers": [
+        "calendar_date",
+        "hour_of_day",
+        "scenario_key"
+      ],
       "required_visual_groups": [
         "selected_vs_eligible_cards",
         "candidate_prevalence_cards",
@@ -24,7 +50,15 @@
     {
       "page_key": "candidate_station_detail",
       "page_title": "Candidate and Station Detail",
-      "required_slicers": ["calendar_date", "hour_of_day", "scenario_key", "station_id", "train_service_key", "eligibility_reason", "selected_for_review"],
+      "required_slicers": [
+        "calendar_date",
+        "hour_of_day",
+        "scenario_key",
+        "station_id",
+        "train_service_key",
+        "eligibility_reason",
+        "selected_for_review"
+      ],
       "required_visual_groups": [
         "selected_vs_not_selected_breakdown",
         "station_detail_table",

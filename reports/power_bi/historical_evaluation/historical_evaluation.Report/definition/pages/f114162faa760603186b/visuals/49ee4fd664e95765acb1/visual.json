@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "49ee4fd664e95765acb1",
   "position": {
-    "x": 584.88538132886686,
-    "y": 140.69807383855445,
+    "x": 1250,
+    "y": 680,
     "z": 9000,
-    "height": 200.00056777050716,
-    "width": 280.23335367844317,
+    "height": 12,
+    "width": 12,
     "tabOrder": 9000
   },
   "visual": {
@@ -20,14 +20,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_horizon_summary"
+                      "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Severe-Delay Coverage"
+                  "Property": "Not Reviewable Event Count"
                 }
               },
-              "queryRef": "fact_horizon_summary.Severe-Delay Coverage",
-              "nativeQueryRef": "Severe-Delay Coverage"
+              "queryRef": "fact_event_decision.Not Reviewable Event Count",
+              "nativeQueryRef": "Not Reviewable Event Count"
             }
           ]
         }
@@ -39,10 +39,10 @@
               "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "fact_horizon_summary"
+                    "Entity": "fact_event_decision"
                   }
                 },
-                "Property": "Severe-Delay Coverage"
+                "Property": "Not Reviewable Event Count"
               }
             },
             "direction": "Descending"
@@ -51,6 +51,20 @@
         "isDefaultSort": true
       }
     },
-    "drillFilterOtherVisuals": true
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }

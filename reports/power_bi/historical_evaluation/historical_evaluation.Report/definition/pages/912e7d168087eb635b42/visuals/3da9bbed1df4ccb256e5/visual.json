@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "3da9bbed1df4ccb256e5",
   "position": {
-    "x": 10.465145987991653,
-    "y": 360.46613958637914,
+    "x": 0,
+    "y": 460,
     "z": 3000,
-    "height": 359.30334558771341,
-    "width": 279.07055967977743,
+    "height": 220,
+    "width": 105,
     "tabOrder": 3000
   },
   "visual": {
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_station"
+                      "Entity": "dim_train_service"
                     }
                   },
-                  "Property": "station_name"
+                  "Property": "train_type"
                 }
               },
-              "queryRef": "dim_station.station_name",
-              "nativeQueryRef": "station_name",
+              "queryRef": "dim_train_service.train_type",
+              "nativeQueryRef": "train_type",
               "active": true
             }
           ]
@@ -50,46 +50,26 @@
       ],
       "general": [
         {
+          "properties": {}
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
           "properties": {
-            "filter": {
-              "filter": {
-                "Version": 2,
-                "From": [
-                  {
-                    "Name": "d",
-                    "Entity": "dim_station",
-                    "Type": 0
-                  }
-                ],
-                "Where": [
-                  {
-                    "Condition": {
-                      "In": {
-                        "Expressions": [
-                          {
-                            "Column": {
-                              "Expression": {
-                                "SourceRef": {
-                                  "Source": "d"
-                                }
-                              },
-                              "Property": "station_name"
-                            }
-                          }
-                        ],
-                        "Values": [
-                          [
-                            {
-                              "Literal": {
-                                "Value": "'Essen Hbf'"
-                              }
-                            }
-                          ]
-                        ]
-                      }
-                    }
-                  }
-                ]
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "\"Train type\""
+                }
               }
             }
           }
@@ -100,7 +80,6 @@
       "groupName": "station_name",
       "fieldChanges": true,
       "filterChanges": true
-    },
-    "drillFilterOtherVisuals": true
+    }
   }
 }

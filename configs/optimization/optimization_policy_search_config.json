@@ -1,0 +1,38 @@
+{
+  "optimization_policy_name": "gurobi_soft_station_penalty",
+  "optimization_policy_version": "2026-06-29-v1",
+  "canonical_tuning_capacity_per_hour": 3,
+  "scenario_capacities": [
+    1,
+    3,
+    5,
+    10
+  ],
+  "preferred_station_load_per_station_hour_candidates": [
+    1,
+    2
+  ],
+  "diagnostic_station_excess_penalty_lambda": 0.0,
+  "eligible_frozen_station_excess_penalty_lambdas": [
+    0.05,
+    0.1,
+    0.2
+  ],
+  "winner_selection_rule": [
+    "selected_severe_event_count desc",
+    "severe_delay_coverage desc",
+    "station_concentration_excess_total asc",
+    "distinct_stations_covered desc",
+    "station_excess_penalty_lambda asc",
+    "preferred_station_load_per_station_hour asc"
+  ],
+  "random_seed": 17,
+  "development_allowed_solver_statuses": [
+    "OPTIMAL",
+    "TIME_LIMIT_WITH_INCUMBENT"
+  ],
+  "final_allowed_solver_statuses": [
+    "OPTIMAL",
+    "TIME_LIMIT_WITH_INCUMBENT"
+  ]
+}

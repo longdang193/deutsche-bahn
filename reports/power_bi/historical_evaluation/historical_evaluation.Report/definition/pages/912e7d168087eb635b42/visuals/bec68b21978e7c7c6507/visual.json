@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "bec68b21978e7c7c6507",
   "position": {
-    "x": 880.23505698996462,
-    "y": 0,
+    "x": 240,
+    "y": 80,
     "z": 10000,
-    "height": 360.46613958637914,
-    "width": 400.00113554101432,
+    "height": 220,
+    "width": 470,
     "tabOrder": 10000
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "predicted_severe_delay_probability (bins)"
+                  "Property": "Predicted Risk Band"
                 }
               },
-              "queryRef": "fact_event_decision.predicted_severe_delay_probability (bins)",
-              "nativeQueryRef": "predicted_severe_delay_probability (bins)",
+              "queryRef": "fact_event_decision.Predicted Risk Band",
+              "nativeQueryRef": "Predicted Risk Band",
               "active": true
             }
           ]
@@ -42,11 +42,11 @@
                       "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "selected_for_review"
+                  "Property": "Review Eligibility"
                 }
               },
-              "queryRef": "fact_event_decision.selected_for_review",
-              "nativeQueryRef": "selected_for_review"
+              "queryRef": "fact_event_decision.Review Eligibility",
+              "nativeQueryRef": "Review Eligibility"
             }
           ]
         },
@@ -88,6 +88,27 @@
         "isDefaultSort": true
       }
     },
-    "drillFilterOtherVisuals": true
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "\"Predicted severe-risk distribution\""
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }

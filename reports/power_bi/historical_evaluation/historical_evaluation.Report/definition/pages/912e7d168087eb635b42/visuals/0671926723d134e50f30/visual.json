@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "0671926723d134e50f30",
   "position": {
-    "x": 289,
-    "y": 360,
+    "x": 115,
+    "y": 460,
     "z": 4000,
-    "height": 359,
-    "width": 167,
+    "height": 220,
+    "width": 105,
     "tabOrder": 4000
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "dim_train_service"
                     }
                   },
-                  "Property": "train_service_key"
+                  "Property": "service_class"
                 }
               },
-              "queryRef": "dim_train_service.train_service_key",
-              "nativeQueryRef": "train_service_key",
+              "queryRef": "dim_train_service.service_class",
+              "nativeQueryRef": "service_class",
               "active": true
             }
           ]
@@ -54,11 +54,32 @@
         }
       ]
     },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "\"Service class\""
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "syncGroup": {
       "groupName": "train_service_key",
       "fieldChanges": true,
       "filterChanges": true
-    },
-    "drillFilterOtherVisuals": true
+    }
   }
 }

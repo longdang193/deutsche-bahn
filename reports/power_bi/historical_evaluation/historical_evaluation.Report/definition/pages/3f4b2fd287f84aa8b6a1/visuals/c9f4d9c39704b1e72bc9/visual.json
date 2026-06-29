@@ -1,0 +1,89 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "c9f4d9c39704b1e72bc9",
+  "position": {
+    "x": 466.28039346496143,
+    "y": 360.46613958637914,
+    "z": 7000,
+    "height": 358.14055158904767,
+    "width": 296.5124696597635,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_event_decision"
+                    }
+                  },
+                  "Property": "Review Decision"
+                }
+              },
+              "queryRef": "fact_event_decision.Review Decision",
+              "nativeQueryRef": "Review Decision",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_event_decision"
+                    }
+                  },
+                  "Property": "Event Count"
+                }
+              },
+              "queryRef": "fact_event_decision.Event Count",
+              "nativeQueryRef": "Event Count"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_event_decision"
+                  }
+                },
+                "Property": "Event Count"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

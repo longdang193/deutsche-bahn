@@ -176,9 +176,11 @@ def test_export_power_bi_semantic_dataset_real_outputs(tmp_path: Path, contract:
     assert len(artifacts.event_fact) == 743
     assert len(artifacts.horizon_fact) == 137
     assert artifacts.event_fact['scenario_key'].nunique() == 1
-    assert artifacts.event_fact['scenario_key'].iloc[0] == '2026-06-28-v1'
+    expected_scenario_key = SEM.policy_version_value(json.loads((REPO_ROOT / 'data' / 'scoped' / 'optimization' / 'frozen_policy.json').read_text(encoding='utf-8')))
+    assert artifacts.event_fact['scenario_key'].iloc[0] == expected_scenario_key
     assert artifacts.event_fact['execution_mode'].eq('final').all()
     assert artifacts.event_fact['prediction_split'].eq('test').all()
+    assert not artifacts.event_fact['station_name'].eq('Unknown station').all()
     assert artifacts.horizon_fact['scenario_key'].nunique() == 1
 
     event_fact = read_parquet(tmp_path / 'fact_event_decision.parquet')

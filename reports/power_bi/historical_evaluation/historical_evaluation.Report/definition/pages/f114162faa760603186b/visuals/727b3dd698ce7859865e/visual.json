@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "727b3dd698ce7859865e",
   "position": {
-    "x": 829.0721210486721,
-    "y": 518.60612340491969,
+    "x": 960,
+    "y": 86,
     "z": 11000,
-    "height": 151.16321982654611,
-    "width": 208.14012576116733,
+    "height": 110,
+    "width": 220,
     "tabOrder": 11000
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "fact_horizon_summary"
                     }
                   },
-                  "Property": "Capacity Utilization"
+                  "Property": "Available review slots left unused"
                 }
               },
-              "queryRef": "fact_horizon_summary.Capacity Utilization",
-              "nativeQueryRef": "Capacity Utilization"
+              "queryRef": "fact_horizon_summary.Available review slots left unused",
+              "nativeQueryRef": "Available review slots left unused"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "fact_horizon_summary"
                   }
                 },
-                "Property": "Capacity Utilization"
+                "Property": "Available review slots left unused"
               }
             },
             "direction": "Descending"
@@ -51,6 +51,27 @@
         "isDefaultSort": true
       }
     },
-    "drillFilterOtherVisuals": true
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "\"Available review slots left unused\""
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }

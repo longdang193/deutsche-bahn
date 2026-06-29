@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "7507a55def478a28cff9",
   "position": {
-    "x": 9.3023519893259135,
-    "y": 140.69807383855445,
+    "x": 0,
+    "y": 86,
     "z": 0,
-    "height": 197.67497977317566,
-    "width": 196.51218577450993,
+    "height": 150,
+    "width": 220,
     "tabOrder": 0
   },
   "visual": {
@@ -54,11 +54,32 @@
         }
       ]
     },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "\"Date\""
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "syncGroup": {
       "groupName": "calendar_date",
       "fieldChanges": true,
       "filterChanges": true
-    },
-    "drillFilterOtherVisuals": true
+    }
   }
 }

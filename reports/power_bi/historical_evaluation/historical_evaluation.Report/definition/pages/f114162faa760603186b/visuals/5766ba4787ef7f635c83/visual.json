@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "5766ba4787ef7f635c83",
   "position": {
-    "x": 570,
-    "y": 519,
+    "x": 560,
+    "y": 216,
     "z": 8000,
-    "height": 151,
-    "width": 249,
+    "height": 110,
+    "width": 300,
     "tabOrder": 8000
   },
   "visual": {
@@ -20,14 +20,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_horizon_summary"
+                      "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Precision at Capacity"
+                  "Property": "Among eligible stop events, share that became severe"
                 }
               },
-              "queryRef": "fact_horizon_summary.Precision at Capacity",
-              "nativeQueryRef": "Precision at Capacity"
+              "queryRef": "fact_event_decision.Among eligible stop events, share that became severe",
+              "nativeQueryRef": "Among eligible stop events, share that became severe"
             }
           ]
         }
@@ -39,10 +39,10 @@
               "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "fact_horizon_summary"
+                    "Entity": "fact_event_decision"
                   }
                 },
-                "Property": "Precision at Capacity"
+                "Property": "Among eligible stop events, share that became severe"
               }
             },
             "direction": "Descending"
@@ -51,6 +51,27 @@
         "isDefaultSort": true
       }
     },
-    "drillFilterOtherVisuals": true
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "\"Among eligible stop events, share that became severe\""
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }

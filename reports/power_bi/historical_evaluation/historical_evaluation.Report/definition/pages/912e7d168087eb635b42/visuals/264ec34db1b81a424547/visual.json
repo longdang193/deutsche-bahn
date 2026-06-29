@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "264ec34db1b81a424547",
   "position": {
-    "x": 456.97804147563551,
-    "y": 0,
+    "x": 730,
+    "y": 80,
     "z": 8000,
-    "height": 280.23335367844317,
-    "width": 423.25701551432911,
+    "height": 220,
+    "width": 490,
     "tabOrder": 8000
   },
   "visual": {
@@ -15,6 +15,34 @@
       "queryState": {
         "Values": {
           "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_date_hour"
+                    }
+                  },
+                  "Property": "calendar_date"
+                }
+              },
+              "queryRef": "dim_date_hour.calendar_date",
+              "nativeQueryRef": "calendar_date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_date_hour"
+                    }
+                  },
+                  "Property": "hour_of_day"
+                }
+              },
+              "queryRef": "dim_date_hour.hour_of_day",
+              "nativeQueryRef": "hour_of_day"
+            },
             {
               "field": {
                 "Column": {
@@ -31,17 +59,59 @@
             },
             {
               "field": {
-                "Measure": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_train_service"
+                    }
+                  },
+                  "Property": "train_type"
+                }
+              },
+              "queryRef": "dim_train_service.train_type",
+              "nativeQueryRef": "train_type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_train_service"
+                    }
+                  },
+                  "Property": "line_number"
+                }
+              },
+              "queryRef": "dim_train_service.line_number",
+              "nativeQueryRef": "line_number"
+            },
+            {
+              "field": {
+                "Column": {
                   "Expression": {
                     "SourceRef": {
                       "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Event Count"
+                  "Property": "predicted_severe_delay_probability"
                 }
               },
-              "queryRef": "fact_event_decision.Event Count1",
-              "nativeQueryRef": "Event Count"
+              "queryRef": "fact_event_decision.predicted_severe_delay_probability",
+              "nativeQueryRef": "predicted_severe_delay_probability"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_event_decision"
+                    }
+                  },
+                  "Property": "Actual Outcome"
+                }
+              },
+              "queryRef": "fact_event_decision.Actual Outcome",
+              "nativeQueryRef": "Actual Outcome"
             },
             {
               "field": {
@@ -51,58 +121,37 @@
                       "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Eligible Event Count"
+                  "Property": "Reviewable Risk Rank In Current Filter"
                 }
               },
-              "queryRef": "fact_event_decision.Event Count",
-              "nativeQueryRef": "Eligible Event Count1"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "fact_event_decision"
-                    }
-                  },
-                  "Property": "Selected Event Count"
-                }
-              },
-              "queryRef": "fact_event_decision.Selected Event Count",
-              "nativeQueryRef": "Selected Event Count"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "fact_event_decision"
-                    }
-                  },
-                  "Property": "Actual Severe Event Count"
-                }
-              },
-              "queryRef": "fact_event_decision.Actual Severe Event Count",
-              "nativeQueryRef": "Actual Severe Event Count"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "fact_event_decision"
-                    }
-                  },
-                  "Property": "Average Predicted Severe Probability"
-                }
-              },
-              "queryRef": "fact_event_decision.Average Predicted Severe Probability",
-              "nativeQueryRef": "Average Predicted Severe Probability"
+              "queryRef": "fact_event_decision.Reviewable Risk Rank In Current Filter",
+              "nativeQueryRef": "Reviewable Risk Rank In Current Filter"
             }
           ]
         }
       }
     },
-    "drillFilterOtherVisuals": true
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "\"Highest-risk reviewable stop events in this filter\""
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }

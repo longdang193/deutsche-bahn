@@ -1,7 +1,7 @@
 table fact_event_decision
 	lineageTag: 4ed99f14-0adf-4a57-8120-78818da795af
 
-	measure 'Optimized At Display' = SELECTEDVALUE(fact_event_decision[optimized_at], "Multiple / none")
+	measure 'Optimized At Display' = IF ( HASONEVALUE ( dim_scenario[scenario_key] ), SELECTEDVALUE ( fact_event_decision[optimized_at] ), BLANK () )
 		lineageTag: 2dc83ec1-ce3d-4184-8aca-8dbe6b3657b7
 
 	measure 'Event Count' = COUNTROWS(fact_event_decision)
@@ -51,6 +51,84 @@ table fact_event_decision
 		lineageTag: fa1bda09-b14e-4432-9daa-ed437dce9b06
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Reviewable Event Count' = CALCULATE ( [Event Count], fact_event_decision[is_eligible_candidate] = TRUE () )
+		formatString: 0
+		lineageTag: 5e382e3a-9507-4d35-8911-02c5077fd51c
+
+	measure 'Not Reviewable Event Count' = [Event Count] - [Reviewable Event Count]
+		formatString: 0
+		lineageTag: a9d5bdad-75f8-4990-84c6-e907dd4434d0
+
+	measure 'Chosen Event Count' = CALCULATE ( [Event Count], fact_event_decision[selected_for_review] = TRUE () )
+		formatString: 0
+		lineageTag: 9797e731-0cf7-4cb8-9d4b-f8bb3ad2cabd
+
+	measure 'Reviewable Severe Event Count' = CALCULATE ( [Event Count], fact_event_decision[is_eligible_candidate] = TRUE (), fact_event_decision[actual_is_departure_severe_delay] = TRUE () )
+		formatString: 0
+		lineageTag: ca4956d5-3c1d-4ca5-967d-0bb237547de2
+
+	measure 'Chosen Severe Event Count' = CALCULATE ( [Event Count], fact_event_decision[selected_for_review] = TRUE (), fact_event_decision[actual_is_departure_severe_delay] = TRUE () )
+		formatString: 0
+		lineageTag: 47081ef4-01fc-42e0-95f7-224c6e310299
+
+	measure 'Average Predicted Risk' = AVERAGE ( fact_event_decision[predicted_severe_delay_probability] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 45c35e91-fb53-4fc6-abe1-6ded207f4226
+
+	measure 'Average Reviewable Predicted Risk' = CALCULATE ( [Average Predicted Risk], fact_event_decision[is_eligible_candidate] = TRUE () )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 430506e7-b91f-4c24-ad39-029dc818fc90
+
+	measure 'Scenario Selection Valid' = IF ( HASONEVALUE ( dim_scenario[scenario_key] ), 1, 0 )
+		formatString: 0
+		lineageTag: 470043c4-d74a-478b-a8f4-1a7fa6a8d989
+
+	measure 'Optimized at' = MAX ( fact_event_decision[optimized_at] )
+		lineageTag: 20874aa5-16de-466f-bd7f-11381ef54aae
+
+	measure 'Reviewable Share' = DIVIDE ( [Reviewable Event Count], [Event Count] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 43f794ca-39f5-4eca-a029-3ba465cdc2cb
+
+	measure 'Chosen Share Of Reviewable' = DIVIDE ( [Chosen Event Count], [Reviewable Event Count] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: f5dce38d-3e3a-4c4c-9875-0dcb5451fa96
+
+	measure 'Reviewable Severe Share' = DIVIDE ( [Reviewable Severe Event Count], [Reviewable Event Count] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 56e933e4-7f0e-4099-a115-aec6016957de
+
+	measure 'Stop events in this slice' = [Event Count]
+		formatString: 0
+
+	measure 'Stop events that became severe' = [Actual Severe Event Count]
+		formatString: 0
+
+	measure 'Stop events eligible for review' = [Reviewable Event Count]
+		formatString: 0
+
+	measure 'Share of stop events eligible for review' = [Reviewable Share]
+		formatString: 0.0%;-0.0%;0.0%
+
+	measure 'Among eligible stop events, share that became severe' = [Reviewable Severe Share]
+		formatString: 0.0%;-0.0%;0.0%
+
+	measure 'Chosen Severe Share' = DIVIDE ( [Chosen Severe Event Count], [Chosen Event Count] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 8cdf6bf4-e615-44fb-98ae-19277556e560
+
+	measure 'Chosen Severe Capture' = DIVIDE ( [Chosen Severe Event Count], CALCULATE ( [Reviewable Severe Event Count], REMOVEFILTERS ( fact_event_decision[Review Decision] ) ) )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 37749501-6ca0-4191-9794-061ac9cf10f7
+
+	measure 'Chosen Lift Vs Reviewable Base' = DIVIDE ( [Chosen Severe Share], [Reviewable Severe Share] )
+		formatString: 0.0x
+		lineageTag: d38a3430-7723-4109-bdaa-863e85c0cb44
+
+	measure 'Reviewable Risk Rank In Current Filter' = VAR CurrentProbability = MAX ( fact_event_decision[predicted_severe_delay_probability] ) VAR CurrentStopEventKey = SELECTEDVALUE ( fact_event_decision[stop_event_key] ) VAR IsCurrentRowReviewable = SELECTEDVALUE ( fact_event_decision[is_eligible_candidate], FALSE () ) VAR ReviewableUniverse = FILTER ( ALLSELECTED ( fact_event_decision ), fact_event_decision[is_eligible_candidate] = TRUE () ) RETURN IF ( NOT IsCurrentRowReviewable || ISBLANK ( CurrentStopEventKey ), BLANK (), RANKX ( ReviewableUniverse, fact_event_decision[predicted_severe_delay_probability], CurrentProbability, DESC, DENSE ) )
+		formatString: 0
+		lineageTag: baa69880-327a-4e7e-a58d-480fb58731f2
 
 	column optimization_run_id
 		dataType: string
@@ -370,12 +448,38 @@ table fact_event_decision
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	column 'Review Eligibility' = IF ( fact_event_decision[is_eligible_candidate], "Can be reviewed", "Not reviewable" )
+		dataType: string
+		lineageTag: 619fba29-8645-4ff3-853b-fbe7ea8a66e6
+		summarizeBy: none
+
+	column 'Review Decision' = SWITCH ( TRUE (), NOT fact_event_decision[is_eligible_candidate], "Not reviewable", fact_event_decision[selected_for_review], "Chosen for review", "Not chosen for review" )
+		dataType: string
+		lineageTag: 19e0c3d8-4cdd-4a70-bfb9-63dec06c7cba
+		summarizeBy: none
+
+	column 'Actual Outcome' = SWITCH ( TRUE (), ISBLANK ( fact_event_decision[actual_is_departure_severe_delay] ), "Outcome unavailable", fact_event_decision[actual_is_departure_severe_delay], "Became severe", "Did not become severe" )
+		dataType: string
+		lineageTag: 217e9d9d-0d95-4c7f-b88f-f47415f0a4bb
+		summarizeBy: none
+
+	column 'Predicted Risk Band' = VAR p = fact_event_decision[predicted_severe_delay_probability] RETURN SWITCH ( TRUE (), ISBLANK ( p ), "Unknown", p < 0.10, "00-10%", p < 0.20, "10-20%", p < 0.30, "20-30%", p < 0.40, "30-40%", p < 0.50, "40-50%", p < 0.60, "50-60%", p < 0.70, "60-70%", p < 0.80, "70-80%", p < 0.90, "80-90%", "90-100%" )
+		dataType: string
+		lineageTag: c0dc7539-8822-400e-ba17-cd11192dfe6f
+		summarizeBy: none
+		sortByColumn: 'Predicted Risk Band Sort'
+
+	column 'Predicted Risk Band Sort' = VAR p = fact_event_decision[predicted_severe_delay_probability] RETURN IF ( ISBLANK ( p ), 99, MIN ( 10, INT ( p * 10 ) + 1 ) )
+		dataType: int64
+		lineageTag: d254ad51-437e-4af3-81e3-1f537ab0903e
+		summarizeBy: none
+
 	partition fact_event_decision = m
 		mode: import
 		source =
 				let
 				    Source = Parquet.Document(
-				        File.Contents(SemanticExportRoot & "\fact_event_decision.parquet")
+				        File.Contents("C:\Users\HOANG PHI LONG DANG\repos\deutsche-bahn\data\scoped\power_bi\fact_event_decision.parquet")
 				    )
 				in
 				    Source

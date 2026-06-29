@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "5387c11ae0b833f3df53",
   "position": {
-    "x": 569.47017537982219,
-    "y": 337.56545335767771,
+    "x": 240,
+    "y": 216,
     "z": 7000,
-    "height": 150.94390190790466,
-    "width": 249.74354679307862,
+    "height": 110,
+    "width": 300,
     "tabOrder": 7000
   },
   "visual": {
@@ -20,14 +20,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_horizon_summary"
+                      "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Candidate Prevalence"
+                  "Property": "Share of stop events eligible for review"
                 }
               },
-              "queryRef": "fact_horizon_summary.Candidate Prevalence",
-              "nativeQueryRef": "Candidate Prevalence"
+              "queryRef": "fact_event_decision.Share of stop events eligible for review",
+              "nativeQueryRef": "Share of stop events eligible for review"
             }
           ]
         }
@@ -39,10 +39,10 @@
               "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "fact_horizon_summary"
+                    "Entity": "fact_event_decision"
                   }
                 },
-                "Property": "Candidate Prevalence"
+                "Property": "Share of stop events eligible for review"
               }
             },
             "direction": "Descending"
@@ -51,6 +51,27 @@
         "isDefaultSort": true
       }
     },
-    "drillFilterOtherVisuals": true
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "\"Share of stop events eligible for review\""
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }

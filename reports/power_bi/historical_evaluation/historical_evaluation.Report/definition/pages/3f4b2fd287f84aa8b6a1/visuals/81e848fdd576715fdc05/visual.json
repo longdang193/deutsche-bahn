@@ -1,0 +1,73 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "81e848fdd576715fdc05",
+  "position": {
+    "x": 10.465145987991653,
+    "y": 289.53570566776909,
+    "z": 2000,
+    "height": 101.16307788391931,
+    "width": 279.07055967977743,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_scenario"
+                    }
+                  },
+                  "Property": "scenario_display_name"
+                }
+              },
+              "queryRef": "dim_scenario.scenario_display_name",
+              "nativeQueryRef": "scenario_display_name",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Basic'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "syncGroup": {
+      "groupName": "scenario_key",
+      "fieldChanges": true,
+      "filterChanges": true
+    }
+  }
+}

@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "c2076b73336554baf32f",
   "position": {
-    "x": 205.81453776383586,
-    "y": 140.69807383855445,
+    "x": 0,
+    "y": 376,
     "z": 2000,
-    "height": 151.16321982654611,
-    "width": 223.25644774382192,
+    "height": 104,
+    "width": 220,
     "tabOrder": 2000
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "dim_scenario"
                     }
                   },
-                  "Property": "scenario_key"
+                  "Property": "scenario_display_name"
                 }
               },
-              "queryRef": "dim_scenario.scenario_key",
-              "nativeQueryRef": "scenario_key",
+              "queryRef": "dim_scenario.scenario_display_name",
+              "nativeQueryRef": "scenario_display_name",
               "active": true
             }
           ]
@@ -49,11 +49,32 @@
         }
       ]
     },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "\"Scenario\""
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "syncGroup": {
       "groupName": "scenario_key",
       "fieldChanges": true,
       "filterChanges": true
-    },
-    "drillFilterOtherVisuals": true
+    }
   }
 }

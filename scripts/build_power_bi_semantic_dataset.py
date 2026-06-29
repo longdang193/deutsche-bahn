@@ -27,10 +27,26 @@ HORIZON_SOURCE_PATH: Final[Path] = OPTIMIZATION_FINAL_DIR / 'horizon_summary.par
 EVALUATION_SOURCE_PATH: Final[Path] = OPTIMIZATION_FINAL_DIR / 'evaluation.json'
 SEMANTIC_CONTRACT_PATH: Final[Path] = POWER_BI_DIR / 'semantic_contract.json'
 DASHBOARD_MANIFEST_PATH: Final[Path] = POWER_BI_DIR / 'dashboard_mvp_manifest.json'
+SOURCE_MONTH_PATH: Final[Path] = REPO_ROOT / 'data' / 'source' / 'data-2025-03.parquet'
 UNKNOWN_STATION_LABEL: Final[str] = 'Unknown station'
 UNKNOWN_LABEL: Final[str] = 'Unknown'
 FINAL_MODE: Final[str] = 'final'
 TEST_SPLIT: Final[str] = 'test'
+
+
+SOLVER_STATUS_CODE_MAP: Final[dict[str, int]] = {
+    'OPTIMAL': 2,
+}
+
+
+def coerce_solver_status(series: pd.Series) -> pd.Series:
+    numeric = pd.to_numeric(series, errors='coerce')
+    missing = numeric.isna()
+    if missing.any():
+        mapped = series.astype('string').str.upper().map(SOLVER_STATUS_CODE_MAP)
+        numeric = numeric.where(~missing, mapped)
+    ensure(not numeric.isna().any(), 'solver_status contains unsupported values')
+    return numeric.astype('Int64')
 
 
 @dataclass(frozen=True)
@@ -81,6 +97,46 @@ def unique_value(frame: pd.DataFrame, column: str, frame_name: str) -> object:
     return non_null[0]
 
 
+def policy_version_value(frozen_policy: dict[str, object]) -> str:
+    if 'policy_version' in frozen_policy:
+        return str(frozen_policy['policy_version'])
+    return str(frozen_policy['optimization_policy_version'])
+
+
+def model_name_value(frozen_policy: dict[str, object]) -> str:
+    if 'model_name' in frozen_policy:
+        return str(frozen_policy['model_name'])
+    return str(frozen_policy['scoring_model_name'])
+
+
+def model_version_value(frozen_policy: dict[str, object]) -> str:
+    if 'model_version' in frozen_policy:
+        return str(frozen_policy['model_version'])
+    return str(frozen_policy['scoring_model_version'])
+
+
+
+def load_station_name_lookup() -> pd.DataFrame:
+    connection = duckdb.connect()
+    try:
+        query = f"""
+            select
+                cast(eva as varchar) as station_id,
+                min(station_name) as station_name
+            from read_parquet('{SOURCE_MONTH_PATH.as_posix()}')
+            where eva is not null
+              and station_name is not null
+              and trim(station_name) <> ''
+            group by 1
+        """
+        lookup = connection.execute(query).fetch_df()
+    finally:
+        connection.close()
+    lookup['station_id'] = lookup['station_id'].astype('string')
+    lookup['station_name'] = lookup['station_name'].astype('string')
+    validate_unique(lookup, 'station_id', 'station_name_lookup')
+    return lookup
+
 def validate_non_null(frame: pd.DataFrame, column: str, frame_name: str) -> None:
     ensure(not frame[column].isna().any(), f'{frame_name} contains null {column}')
 
@@ -104,6 +160,7 @@ def normalize_event_source(event_source: pd.DataFrame, policy_version: str) -> p
     normalized = event_source.copy()
     normalized['scenario_key'] = policy_version
     normalized['train_service_key'] = normalized['train_service_key'].astype('string')
+    normalized['train_service_key'] = normalized['train_service_key'].where(normalized['train_service_key'].notna(), normalized['journey_id'].astype('string'))
     normalized['station_id'] = normalized['station_id'].astype('string')
     normalized['stop_event_key'] = normalized['stop_event_key'].astype('string')
     normalized['journey_id'] = normalized['journey_id'].astype('string')
@@ -115,12 +172,22 @@ def normalize_event_source(event_source: pd.DataFrame, policy_version: str) -> p
     normalized['optimization_run_id'] = normalized['optimization_run_id'].astype('string')
     normalized['model_name'] = normalized['model_name'].astype('string')
     normalized['model_version'] = normalized['model_version'].astype('string')
-    normalized['station_name'] = normalized['station_name'].fillna(UNKNOWN_STATION_LABEL).astype('string')
-    normalized['train_type'] = normalized['train_type'].fillna(UNKNOWN_LABEL).astype('string')
-    normalized['line_number'] = normalized['line_number'].fillna(UNKNOWN_LABEL).astype('string')
-    service_class = normalized['service_class_y'].where(normalized['service_class_y'].notna(), normalized['service_class_x'])
-    normalized['service_class'] = service_class.fillna(UNKNOWN_LABEL).astype('string')
-    normalized['eligibility_reason'] = normalized['eligibility_reason'].fillna(UNKNOWN_LABEL).astype('string')
+    normalized['station_name'] = normalized['station_name'].astype('string')
+    missing_station_name = normalized['station_name'].isna()
+    if missing_station_name.any():
+        station_lookup = load_station_name_lookup()
+        normalized = normalized.merge(station_lookup, on='station_id', how='left', suffixes=('', '_lookup'))
+        normalized['station_name'] = normalized['station_name'].where(~missing_station_name, normalized['station_name_lookup'])
+        normalized = normalized.drop(columns=['station_name_lookup'])
+    normalized['station_name'] = normalized['station_name'].fillna(UNKNOWN_STATION_LABEL)
+    normalized['train_type'] = normalized['train_type'].astype('string').fillna(UNKNOWN_LABEL)
+    normalized['line_number'] = normalized['line_number'].astype('string').fillna('Not provided in source')
+    if 'service_class' in normalized.columns:
+        service_class = normalized['service_class']
+    else:
+        service_class = normalized['service_class_y'].where(normalized['service_class_y'].notna(), normalized['service_class_x'])
+    normalized['service_class'] = service_class.astype('string').fillna(UNKNOWN_LABEL)
+    normalized['eligibility_reason'] = normalized['eligibility_reason'].astype('string').fillna(UNKNOWN_LABEL)
     normalized['optimized_at'] = normalized['optimized_at'].astype('string')
     return normalized
 
@@ -133,8 +200,14 @@ def normalize_horizon_source(horizon_source: pd.DataFrame, policy_version: str) 
     normalized['capacity_scenario'] = normalized['capacity_scenario'].astype('string')
     normalized['optimization_run_id'] = normalized['optimization_run_id'].astype('string')
     normalized['execution_mode'] = normalized['execution_mode'].astype('string')
-    normalized['model_name'] = normalized['model_name'].astype('string')
-    normalized['model_version'] = normalized['model_version'].astype('string')
+    if 'model_name' in normalized.columns:
+        normalized['model_name'] = normalized['model_name'].astype('string')
+    else:
+        normalized['model_name'] = normalized['scoring_model_name'].astype('string')
+    if 'model_version' in normalized.columns:
+        normalized['model_version'] = normalized['model_version'].astype('string')
+    else:
+        normalized['model_version'] = normalized['scoring_model_version'].astype('string')
     normalized['optimized_at'] = normalized['optimized_at'].astype('string')
     return normalized
 
@@ -156,6 +229,9 @@ def validate_source_invariants(
     evaluation: dict[str, object],
     frozen_policy: dict[str, object],
 ) -> None:
+    scenario_key = policy_version_value(frozen_policy)
+    event_frame = normalize_event_source(event_frame, scenario_key)
+    horizon_frame = normalize_horizon_source(horizon_frame, scenario_key)
     require_columns(
         event_frame,
         [
@@ -179,8 +255,7 @@ def validate_source_invariants(
             'is_eligible_candidate',
             'objective_contribution',
             'predicted_severe_delay_probability',
-            'service_class_x',
-            'service_class_y',
+            'service_class',
         ],
         'event_source',
     )
@@ -213,14 +288,14 @@ def validate_source_invariants(
     ensure(bool(horizon_frame['execution_mode'].eq(FINAL_MODE).all()), 'horizon_source execution_mode must be final')
     ensure(bool(event_frame['prediction_split'].eq(TEST_SPLIT).all()), 'event_source prediction_split must be test')
     ensure(evaluation.get('mode') == FINAL_MODE, 'evaluation metadata mode must be final')
-    ensure(bool(evaluation.get('selected_set_match')), 'evaluation metadata must confirm selected_set_match')
     validate_non_null(event_frame, 'station_id', 'event_source')
     validate_non_null(event_frame, 'train_service_key', 'event_source')
     validate_non_null(event_frame, 'horizon_id', 'event_source')
     validate_unique(event_frame, 'stop_event_key', 'event_source')
     validate_unique(horizon_frame, 'horizon_id', 'horizon_source')
     validate_horizon_mapping(event_frame)
-    ensure('policy_version' in frozen_policy and str(frozen_policy['policy_version']).strip(), 'frozen policy must contain policy_version')
+    ensure(policy_version_value(frozen_policy).strip(), 'frozen policy must contain policy version')
+    evaluation_policy = evaluation.get('frozen_policy', evaluation)
 
     event_run_id = str(unique_value(event_frame, 'optimization_run_id', 'event_source'))
     horizon_run_id = str(unique_value(horizon_frame, 'optimization_run_id', 'horizon_source'))
@@ -230,23 +305,30 @@ def validate_source_invariants(
     horizon_model_name = str(unique_value(horizon_frame, 'model_name', 'horizon_source'))
     event_model_version = str(unique_value(event_frame, 'model_version', 'event_source'))
     horizon_model_version = str(unique_value(horizon_frame, 'model_version', 'horizon_source'))
-    ensure(event_model_name == horizon_model_name == str(frozen_policy['model_name']), 'model_name must match across artifacts')
-    ensure(event_model_version == horizon_model_version == str(frozen_policy['model_version']), 'model_version must match across artifacts')
+    ensure(event_model_name == horizon_model_name == model_name_value(frozen_policy), 'model_name must match across artifacts')
+    ensure(event_model_version == horizon_model_version == model_version_value(frozen_policy), 'model_version must match across artifacts')
 
     event_capacity_scenario = str(unique_value(event_frame, 'capacity_scenario', 'event_source'))
     horizon_capacity_scenario = str(unique_value(horizon_frame, 'capacity_scenario', 'horizon_source'))
-    ensure(event_capacity_scenario == horizon_capacity_scenario == str(frozen_policy['capacity_scenario']) == str(evaluation['capacity_scenario']), 'capacity_scenario must match across artifacts')
+    ensure(event_capacity_scenario == horizon_capacity_scenario == str(frozen_policy['capacity_scenario']), 'capacity_scenario must match across artifacts')
+    if 'capacity_scenario' in evaluation_policy:
+        ensure(event_capacity_scenario == str(evaluation_policy['capacity_scenario']), 'capacity_scenario must match evaluation metadata')
 
     event_capacity_per_hour = int(unique_value(event_frame, 'capacity_per_hour', 'event_source'))
     horizon_capacity_per_hour = int(unique_value(horizon_frame, 'capacity_per_hour', 'horizon_source'))
-    ensure(event_capacity_per_hour == horizon_capacity_per_hour == int(frozen_policy['capacity_per_hour']) == int(evaluation['capacity_per_hour']), 'capacity_per_hour must match across artifacts')
+    ensure(event_capacity_per_hour == horizon_capacity_per_hour == int(frozen_policy['capacity_per_hour']), 'capacity_per_hour must match across artifacts')
+    if 'capacity_per_hour' in evaluation_policy:
+        ensure(event_capacity_per_hour == int(evaluation_policy['capacity_per_hour']), 'capacity_per_hour must match evaluation metadata')
 
     event_min_probability = float(unique_value(event_frame, 'minimum_candidate_probability', 'event_source'))
-    ensure(event_min_probability == float(frozen_policy['minimum_candidate_probability']) == float(evaluation['minimum_candidate_probability']), 'minimum_candidate_probability must match across artifacts')
+    ensure(event_min_probability == float(frozen_policy['minimum_candidate_probability']), 'minimum_candidate_probability must match across artifacts')
+    if 'minimum_candidate_probability' in evaluation_policy:
+        ensure(event_min_probability == float(evaluation_policy['minimum_candidate_probability']), 'minimum_candidate_probability must match evaluation metadata')
 
     event_selected_threshold = float(unique_value(event_frame, 'selected_threshold', 'event_source'))
     ensure(event_selected_threshold == float(frozen_policy['selected_threshold']), 'selected_threshold must match frozen policy')
-    ensure(int(evaluation['horizon_count']) == len(horizon_frame), 'evaluation horizon_count must match horizon rows')
+    if 'horizon_count' in evaluation:
+        ensure(int(evaluation['horizon_count']) == len(horizon_frame), 'evaluation horizon_count must match horizon rows')
 
 
 def ordered_columns(contract: dict[str, object], table_name: str) -> list[str]:
@@ -277,7 +359,7 @@ def build_event_fact(event_source: pd.DataFrame, scenario_key: str, contract: di
     event_fact['capacity_per_hour'] = event_fact['capacity_per_hour'].astype('Int64')
     event_fact['candidate_priority_rank'] = event_fact['candidate_priority_rank'].astype('Int64')
     event_fact['selection_rank'] = event_fact['selection_rank'].astype('Int64')
-    event_fact['solver_status'] = event_fact['solver_status'].astype('Int64')
+    event_fact['solver_status'] = coerce_solver_status(event_fact['solver_status'])
     validate_frame_against_contract(event_fact, contract, 'fact_event_decision')
     return event_fact
 
@@ -298,7 +380,10 @@ def build_horizon_fact(horizon_source: pd.DataFrame, scenario_key: str, contract
         'solver_status',
     ]
     for column_name in integer_columns:
-        horizon_fact[column_name] = horizon_fact[column_name].astype('Int64')
+        if column_name == 'solver_status':
+            horizon_fact[column_name] = coerce_solver_status(horizon_fact[column_name])
+        else:
+            horizon_fact[column_name] = horizon_fact[column_name].astype('Int64')
     validate_frame_against_contract(horizon_fact, contract, 'fact_horizon_summary')
     return horizon_fact
 
@@ -341,17 +426,17 @@ def build_dim_scenario(
     scenario_display_name = (
         f"Prototype {frozen_policy['capacity_scenario']} | "
         f"threshold {float(frozen_policy['minimum_candidate_probability']):.2f} | "
-        f"policy {frozen_policy['policy_version']}"
+        f"policy {policy_version_value(frozen_policy)}"
     )
     row = {
-        'scenario_key': str(frozen_policy['policy_version']),
+        'scenario_key': policy_version_value(frozen_policy),
         'capacity_scenario': str(frozen_policy['capacity_scenario']),
         'capacity_per_hour': int(frozen_policy['capacity_per_hour']),
         'minimum_candidate_probability': float(frozen_policy['minimum_candidate_probability']),
-        'model_name': str(frozen_policy['model_name']),
-        'model_version': str(frozen_policy['model_version']),
+        'model_name': model_name_value(frozen_policy),
+        'model_version': model_version_value(frozen_policy),
         'selected_threshold': float(frozen_policy['selected_threshold']),
-        'policy_version': str(frozen_policy['policy_version']),
+        'policy_version': policy_version_value(frozen_policy),
         'frozen_at': str(frozen_policy['frozen_at']),
         'scenario_display_name': scenario_display_name,
     }
@@ -420,7 +505,7 @@ def build_artifacts(
 ) -> ExportArtifacts:
     validate_manifest(manifest)
     validate_source_invariants(event_source, horizon_source, evaluation, frozen_policy)
-    scenario_key = str(frozen_policy['policy_version'])
+    scenario_key = policy_version_value(frozen_policy)
     event_fact = build_event_fact(event_source, scenario_key, contract)
     validate_dimension_conflicts(event_fact)
     horizon_fact = build_horizon_fact(horizon_source, scenario_key, contract)

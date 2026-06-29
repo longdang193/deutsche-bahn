@@ -41,6 +41,20 @@ table fact_horizon_summary
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: fac6cc5d-0499-408e-99cf-ed59a960acf7
 
+	measure 'Review Slots' = SUM ( fact_horizon_summary[selected_event_count] ) + SUM ( fact_horizon_summary[unused_capacity] )
+		formatString: 0
+		lineageTag: 5993d6d1-f263-458d-947b-5bd45a903b85
+
+	measure 'Unused Review Slots' = SUM ( fact_horizon_summary[unused_capacity] )
+		formatString: 0
+		lineageTag: eda84384-8dd8-478a-a349-ea947c6a49d7
+
+	measure 'Available review slots left unused' = [Unused Review Slots]
+		formatString: 0
+
+	measure 'Share of available review slots that were used' = [Capacity Utilization]
+		formatString: 0.00%;-0.00%;0.00%
+
 	column optimization_run_id
 		dataType: string
 		lineageTag: ed5eeaba-c2f3-4594-9d3c-49e6542de71a
@@ -249,7 +263,7 @@ table fact_horizon_summary
 		source =
 				let
 				    Source = Parquet.Document(
-				        File.Contents(SemanticExportRoot & "\fact_horizon_summary.parquet")
+				        File.Contents("C:\Users\HOANG PHI LONG DANG\repos\deutsche-bahn\data\scoped\power_bi\fact_horizon_summary.parquet")
 				    )
 				in
 				    Source

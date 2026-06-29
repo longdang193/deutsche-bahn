@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "2f871f2966ce08c60435",
   "position": {
-    "x": 0,
-    "y": 337.56545335767771,
+    "x": 240,
+    "y": 86,
     "z": 3000,
-    "height": 150.94390190790466,
-    "width": 279.93232717465958,
+    "height": 110,
+    "width": 220,
     "tabOrder": 3000
   },
   "visual": {
@@ -20,14 +20,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_horizon_summary"
+                      "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Selected Events"
+                  "Property": "Stop events in this slice"
                 }
               },
-              "queryRef": "fact_horizon_summary.Selected Events",
-              "nativeQueryRef": "Selected Events"
+              "queryRef": "fact_event_decision.Stop events in this slice",
+              "nativeQueryRef": "Stop events in this slice"
             }
           ]
         }
@@ -39,10 +39,10 @@
               "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "fact_horizon_summary"
+                    "Entity": "fact_event_decision"
                   }
                 },
-                "Property": "Selected Events"
+                "Property": "Stop events in this slice"
               }
             },
             "direction": "Descending"
@@ -51,6 +51,27 @@
         "isDefaultSort": true
       }
     },
-    "drillFilterOtherVisuals": true
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "\"Stop events in this slice\""
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }

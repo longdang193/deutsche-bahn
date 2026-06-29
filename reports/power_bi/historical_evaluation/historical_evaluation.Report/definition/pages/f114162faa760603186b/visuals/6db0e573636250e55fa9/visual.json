@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "6db0e573636250e55fa9",
   "position": {
-    "x": 876.74667499396742,
-    "y": 60.465287930618437,
+    "x": 240,
+    "y": 346,
     "z": 12000,
-    "height": 429.07098550765778,
-    "width": 403.48951753701152,
+    "height": 270,
+    "width": 950,
     "tabOrder": 12000
   },
   "visual": {
@@ -39,14 +39,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_horizon_summary"
+                      "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Selected Events"
+                  "Property": "Stop events in this slice"
                 }
               },
-              "queryRef": "fact_horizon_summary.Selected Events",
-              "nativeQueryRef": "Selected Events"
+              "queryRef": "fact_event_decision.Stop events in this slice",
+              "nativeQueryRef": "Stop events in this slice"
             }
           ]
         }
@@ -55,21 +55,41 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "fact_horizon_summary"
+                    "Entity": "dim_date_hour"
                   }
                 },
-                "Property": "Selected Events"
+                "Property": "hour_label"
               }
             },
-            "direction": "Descending"
+            "direction": "Ascending"
           }
-        ],
-        "isDefaultSort": true
+        ]
       }
     },
-    "drillFilterOtherVisuals": true
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "\"Stop events by hour of day\""
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }

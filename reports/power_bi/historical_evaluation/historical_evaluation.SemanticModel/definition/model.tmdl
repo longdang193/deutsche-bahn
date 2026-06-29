@@ -6,7 +6,7 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation PBI_QueryOrder = ["SemanticExportRoot","fact_event_decision","fact_horizon_summary","dim_date_hour","dim_station","dim_train_service","dim_scenario"]
+annotation PBI_QueryOrder = ["fact_event_decision","fact_horizon_summary","dim_date_hour","dim_station","dim_train_service","dim_scenario"]
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 

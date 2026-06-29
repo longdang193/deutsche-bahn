@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "c8113895a5c31f6c4c38",
   "position": {
-    "x": 0,
-    "y": 519,
+    "x": 720,
+    "y": 86,
     "z": 4000,
-    "height": 151,
-    "width": 280,
+    "height": 110,
+    "width": 220,
     "tabOrder": 4000
   },
   "visual": {
@@ -20,14 +20,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_horizon_summary"
+                      "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Eligible Events"
+                  "Property": "Stop events eligible for review"
                 }
               },
-              "queryRef": "fact_horizon_summary.Eligible Events",
-              "nativeQueryRef": "Eligible Events"
+              "queryRef": "fact_event_decision.Stop events eligible for review",
+              "nativeQueryRef": "Stop events eligible for review"
             }
           ]
         }
@@ -39,10 +39,10 @@
               "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "fact_horizon_summary"
+                    "Entity": "fact_event_decision"
                   }
                 },
-                "Property": "Eligible Events"
+                "Property": "Stop events eligible for review"
               }
             },
             "direction": "Descending"
@@ -51,6 +51,27 @@
         "isDefaultSort": true
       }
     },
-    "drillFilterOtherVisuals": true
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "\"Stop events eligible for review\""
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }

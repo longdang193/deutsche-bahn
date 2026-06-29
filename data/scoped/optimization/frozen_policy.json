@@ -1,30 +1,59 @@
 {
-  "policy_version": "2026-06-28-v1",
+  "optimization_policy_name": "gurobi_soft_station_penalty",
+  "optimization_policy_version": "2026-06-29-v1",
   "execution_modes": [
     "development",
     "final"
   ],
+  "solver_name": "gurobi",
+  "solver_version": [
+    13,
+    0,
+    1
+  ],
   "canonical_probability_field": "predicted_severe_delay_probability",
   "threshold_source": "data/scoped/ml/evaluation.json",
+  "selected_threshold": 0.4,
   "minimum_candidate_probability": 0.4,
+  "scoring_model_name": "logistic_regression",
+  "scoring_model_version": "2026-06-28-v1",
   "capacity_scenario": "hourly_capacity_3",
   "capacity_per_hour": 3,
+  "preferred_station_load_per_station_hour": 1,
+  "diagnostic_station_excess_penalty_lambda": 0.0,
+  "eligible_frozen_station_excess_penalty_lambdas": [
+    0.05,
+    0.1,
+    0.2
+  ],
+  "frozen_station_excess_penalty_lambda": 0.05,
+  "feasible_selection_rule": "exact_feasible_selection_target",
   "constraint_set": [
-    "hourly_capacity",
+    "exact_feasible_selection_target",
     "one_per_journey_per_horizon"
+  ],
+  "baseline_policies": [
+    "random",
+    "ml_first",
+    "constrained_greedy",
+    "gurobi_soft_station_penalty"
   ],
   "tie_break_rule": [
     "predicted_severe_delay_probability desc",
     "stop_event_key asc"
   ],
+  "scenario_capacities": [
+    1,
+    3,
+    5,
+    10
+  ],
   "metric_definitions": [
     "precision_at_capacity",
     "severe_delay_coverage",
     "lift_over_candidate_prevalence",
-    "candidate_prevalence"
+    "candidate_prevalence",
+    "station_concentration_excess_total"
   ],
-  "model_name": "logistic_regression",
-  "model_version": "2026-06-28-v1",
-  "selected_threshold": 0.4,
-  "frozen_at": "2026-06-28T10:26:49.750462+00:00"
+  "frozen_at": "2026-06-28T22:37:13.917593+00:00"
 }
