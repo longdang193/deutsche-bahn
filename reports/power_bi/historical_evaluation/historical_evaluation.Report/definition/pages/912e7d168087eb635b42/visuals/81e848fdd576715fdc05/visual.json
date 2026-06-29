@@ -59,13 +59,6 @@
                   "Value": "true"
                 }
               }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "\"Scenario\""
-                }
-              }
             }
           }
         }

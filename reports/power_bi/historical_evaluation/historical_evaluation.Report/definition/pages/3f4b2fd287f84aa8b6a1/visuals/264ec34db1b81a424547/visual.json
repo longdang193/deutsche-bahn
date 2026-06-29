@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "264ec34db1b81a424547",
   "position": {
-    "x": 456.97804147563551,
-    "y": 0,
+    "x": 480,
+    "y": 430,
     "z": 8000,
-    "height": 280.23335367844317,
-    "width": 423.25701551432911,
+    "height": 290,
+    "width": 800,
     "tabOrder": 8000
   },
   "visual": {
@@ -112,20 +112,6 @@
               },
               "queryRef": "fact_event_decision.predicted_severe_delay_probability",
               "nativeQueryRef": "predicted_severe_delay_probability"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "fact_event_decision"
-                    }
-                  },
-                  "Property": "actual_severe_delay_label"
-                }
-              },
-              "queryRef": "fact_event_decision.actual_severe_delay_label",
-              "nativeQueryRef": "actual_severe_delay_label"
             }
           ]
         }

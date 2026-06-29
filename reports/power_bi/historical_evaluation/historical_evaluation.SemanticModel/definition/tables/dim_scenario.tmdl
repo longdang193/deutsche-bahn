@@ -4,7 +4,7 @@ table dim_scenario
 	measure 'Scenario Key Display' = IF ( HASONEVALUE ( dim_scenario[scenario_key] ), SELECTEDVALUE ( dim_scenario[scenario_key] ), BLANK () )
 		lineageTag: 46346797-4d2e-4fed-9b41-3b8ec809c6aa
 
-	measure 'Scenario' = IF ( HASONEVALUE ( dim_scenario[scenario_key] ), SELECTEDVALUE ( dim_scenario[scenario_display_name] ), BLANK () )
+	measure Scenario = IF ( HASONEVALUE ( dim_scenario[scenario_key] ), SELECTEDVALUE ( dim_scenario[scenario_display_name] ), BLANK () )
 		lineageTag: 989129cd-7c0c-4426-bed6-33855247a869
 
 	measure 'Model version' = IF ( HASONEVALUE ( dim_scenario[scenario_key] ), SELECTEDVALUE ( dim_scenario[model_version] ), BLANK () )

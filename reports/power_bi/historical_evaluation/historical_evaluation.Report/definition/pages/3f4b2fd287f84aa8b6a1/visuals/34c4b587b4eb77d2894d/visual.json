@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "34c4b587b4eb77d2894d",
   "position": {
-    "x": 763,
-    "y": 360,
+    "x": 943.02593291791447,
+    "y": 100.00028388525358,
     "z": 9000,
-    "height": 358,
-    "width": 517,
+    "height": 319.76834963307829,
+    "width": 322.09393763040976,
     "tabOrder": 9000
   },
   "visual": {
@@ -28,20 +28,6 @@
               },
               "queryRef": "dim_train_service.train_type",
               "nativeQueryRef": "train_type"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_train_service"
-                    }
-                  },
-                  "Property": "line_number"
-                }
-              },
-              "queryRef": "dim_train_service.line_number",
-              "nativeQueryRef": "line_number"
             },
             {
               "field": {
@@ -79,34 +65,6 @@
                       "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Eligible Event Count"
-                }
-              },
-              "queryRef": "fact_event_decision.Eligible Event Count",
-              "nativeQueryRef": "Eligible Event Count"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "fact_event_decision"
-                    }
-                  },
-                  "Property": "Selected Event Count"
-                }
-              },
-              "queryRef": "fact_event_decision.Selected Event Count",
-              "nativeQueryRef": "Selected Event Count"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "fact_event_decision"
-                    }
-                  },
                   "Property": "Actual Severe Event Count"
                 }
               },
@@ -121,11 +79,11 @@
                       "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Selected Severe Event Count"
+                  "Property": "Chosen Severe Share"
                 }
               },
-              "queryRef": "fact_event_decision.Selected Severe Event Count",
-              "nativeQueryRef": "Selected Severe Event Count"
+              "queryRef": "fact_event_decision.Chosen Severe Share",
+              "nativeQueryRef": "Chosen Severe Share"
             },
             {
               "field": {

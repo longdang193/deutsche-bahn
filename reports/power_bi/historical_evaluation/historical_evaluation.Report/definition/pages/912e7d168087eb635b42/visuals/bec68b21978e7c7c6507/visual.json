@@ -3,10 +3,10 @@
   "name": "bec68b21978e7c7c6507",
   "position": {
     "x": 240,
-    "y": 80,
+    "y": 200,
     "z": 10000,
-    "height": 220,
-    "width": 470,
+    "height": 240,
+    "width": 510,
     "tabOrder": 10000
   },
   "visual": {
@@ -32,24 +32,6 @@
             }
           ]
         },
-        "Series": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "fact_event_decision"
-                    }
-                  },
-                  "Property": "Review Eligibility"
-                }
-              },
-              "queryRef": "fact_event_decision.Review Eligibility",
-              "nativeQueryRef": "Review Eligibility"
-            }
-          ]
-        },
         "Y": {
           "projections": [
             {
@@ -60,32 +42,14 @@
                       "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Event Count"
+                  "Property": "Reviewable Event Count"
                 }
               },
-              "queryRef": "fact_event_decision.Event Count",
-              "nativeQueryRef": "Event Count"
+              "queryRef": "fact_event_decision.Reviewable Event Count",
+              "nativeQueryRef": "Reviewable Event Count"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "fact_event_decision"
-                  }
-                },
-                "Property": "Event Count"
-              }
-            },
-            "direction": "Descending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "visualContainerObjects": {
@@ -96,13 +60,6 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "\"Predicted severe-risk distribution\""
                 }
               }
             }

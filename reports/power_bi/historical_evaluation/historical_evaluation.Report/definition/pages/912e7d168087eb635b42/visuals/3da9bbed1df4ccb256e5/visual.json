@@ -64,13 +64,6 @@
                   "Value": "true"
                 }
               }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "\"Train type\""
-                }
-              }
             }
           }
         }

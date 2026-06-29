@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "34c4b587b4eb77d2894d",
   "position": {
-    "x": 630,
-    "y": 320,
+    "x": 620,
+    "y": 460,
     "z": 9000,
-    "height": 260,
-    "width": 590,
+    "height": 220,
+    "width": 600,
     "tabOrder": 9000
   },
   "visual": {
@@ -97,13 +97,6 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "\"Reviewable stop events by train type and class\""
                 }
               }
             }

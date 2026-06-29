@@ -57,7 +57,7 @@
       "candidate_prevalence",
       "station_concentration_excess_total"
     ],
-    "frozen_at": "2026-06-28T22:37:13.917593+00:00"
+    "frozen_at": "2026-06-29T14:24:37.070921+00:00"
   },
   "horizon_policy_metrics_path": "data/scoped/optimization/final/horizon_policy_metrics.parquet",
   "policy_comparison_path": "data/scoped/optimization/final/policy_comparison.parquet",

@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
-  "name": "2f871f2966ce08c60435",
+  "name": "1c_page2_severe_share",
   "position": {
-    "x": 240,
-    "y": 86,
-    "z": 3000,
-    "height": 110,
-    "width": 220,
-    "tabOrder": 3000
+    "x": 560.46670735688633,
+    "y": 37.209407957303654,
+    "z": 11200,
+    "height": 143.02366183588592,
+    "width": 189.5354217825155,
+    "tabOrder": 11200
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Stop events in this slice"
+                  "Property": "Among eligible stop events, share that became severe"
                 }
               },
-              "queryRef": "fact_event_decision.Stop events in this slice",
-              "nativeQueryRef": "Stop events in this slice"
+              "queryRef": "fact_event_decision.Among eligible stop events, share that became severe",
+              "nativeQueryRef": "Among eligible stop events, share that became severe"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "fact_event_decision"
                   }
                 },
-                "Property": "Stop events in this slice"
+                "Property": "Among eligible stop events, share that became severe"
               }
             },
             "direction": "Descending"
@@ -50,6 +50,40 @@
         ],
         "isDefaultSort": true
       }
+    },
+    "objects": {
+      "label": [
+        {
+          "properties": {
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ],
+      "value": [
+        {
+          "properties": {
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
     },
     "visualContainerObjects": {
       "title": [

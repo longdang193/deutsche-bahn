@@ -174,6 +174,31 @@ def test_random_policy_is_row_order_invariant() -> None:
     assert first['selected_for_review'].tolist() == second['selected_for_review'].tolist()
 
 
+def test_selection_rank_is_assigned_to_every_selected_row() -> None:
+    metadata = make_metadata()
+    search_config = build_search_config()
+    frozen_policy = build_frozen_policy(
+        metadata=metadata,
+        search_config=search_config,
+        preferred_station_load_per_station_hour=1,
+        frozen_station_excess_penalty_lambda=0.1,
+    )
+    prepared = prepare_candidates(
+        scored_rows=make_scored_rows(),
+        metadata=metadata,
+        execution_mode='development',
+        frozen_policy=frozen_policy,
+    )
+
+    decided = select_policy(prepared, 'ml_first', frozen_policy=frozen_policy, search_config=search_config)
+    selected = decided.loc[decided['selected_for_review']].copy()
+
+    assert not selected.empty
+    assert selected['selection_rank'].notna().all()
+    for _, horizon_frame in selected.groupby('horizon_id', sort=True):
+        assert horizon_frame['selection_rank'].tolist() == list(range(1, len(horizon_frame) + 1))
+
+
 def test_policy_comparison_uses_defined_formulas() -> None:
     metadata = make_metadata()
     search_config = build_search_config()

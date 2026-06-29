@@ -79,13 +79,6 @@
                   "Value": "true"
                 }
               }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "\"Stop events by hour of day\""
-                }
-              }
             }
           }
         }

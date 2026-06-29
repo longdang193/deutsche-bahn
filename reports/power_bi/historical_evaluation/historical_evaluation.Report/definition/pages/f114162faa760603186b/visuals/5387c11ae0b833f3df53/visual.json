@@ -61,13 +61,6 @@
                   "Value": "true"
                 }
               }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "\"Share of stop events eligible for review\""
-                }
-              }
             }
           }
         }

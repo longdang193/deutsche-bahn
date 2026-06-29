@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "c9f4d9c39704b1e72bc9",
   "position": {
-    "x": 466.28039346496143,
-    "y": 360.46613958637914,
+    "x": 710.46713318476668,
+    "y": 100.00028388525358,
     "z": 7000,
-    "height": 358.14055158904767,
-    "width": 296.5124696597635,
+    "height": 319.76834963307829,
+    "width": 232.55879973314785,
     "tabOrder": 7000
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Review Decision"
+                  "Property": "Actual Outcome"
                 }
               },
-              "queryRef": "fact_event_decision.Review Decision",
-              "nativeQueryRef": "Review Decision",
+              "queryRef": "fact_event_decision.Actual Outcome",
+              "nativeQueryRef": "Actual Outcome",
               "active": true
             }
           ]

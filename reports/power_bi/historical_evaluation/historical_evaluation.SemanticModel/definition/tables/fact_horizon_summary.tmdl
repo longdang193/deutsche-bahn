@@ -51,9 +51,11 @@ table fact_horizon_summary
 
 	measure 'Available review slots left unused' = [Unused Review Slots]
 		formatString: 0
+		lineageTag: 5edd44b5-86b6-4e6d-b79a-17f329b41170
 
 	measure 'Share of available review slots that were used' = [Capacity Utilization]
 		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: ac8907a6-2b47-463d-a440-33b913654fa9
 
 	column optimization_run_id
 		dataType: string

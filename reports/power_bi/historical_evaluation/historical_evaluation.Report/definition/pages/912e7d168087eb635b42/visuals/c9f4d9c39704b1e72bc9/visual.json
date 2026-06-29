@@ -3,10 +3,10 @@
   "name": "c9f4d9c39704b1e72bc9",
   "position": {
     "x": 240,
-    "y": 320,
+    "y": 460,
     "z": 7000,
-    "height": 260,
-    "width": 370,
+    "height": 220,
+    "width": 360,
     "tabOrder": 7000
   },
   "visual": {
@@ -78,13 +78,6 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "\"Average predicted severe-risk by train type\""
                 }
               }
             }

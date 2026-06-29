@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
-  "name": "2f871f2966ce08c60435",
+  "name": "1b_page3_chosen_severe_events",
   "position": {
-    "x": 240,
-    "y": 86,
-    "z": 3000,
-    "height": 110,
-    "width": 220,
-    "tabOrder": 3000
+    "x": 490,
+    "y": 0,
+    "z": 11100,
+    "height": 90,
+    "width": 210,
+    "tabOrder": 11100
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Stop events in this slice"
+                  "Property": "Chosen Severe Event Count"
                 }
               },
-              "queryRef": "fact_event_decision.Stop events in this slice",
-              "nativeQueryRef": "Stop events in this slice"
+              "queryRef": "fact_event_decision.Chosen Severe Event Count",
+              "nativeQueryRef": "Chosen Severe Event Count"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "fact_event_decision"
                   }
                 },
-                "Property": "Stop events in this slice"
+                "Property": "Chosen Severe Event Count"
               }
             },
             "direction": "Descending"
@@ -50,6 +50,40 @@
         ],
         "isDefaultSort": true
       }
+    },
+    "objects": {
+      "label": [
+        {
+          "properties": {
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ],
+      "value": [
+        {
+          "properties": {
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
     },
     "visualContainerObjects": {
       "title": [

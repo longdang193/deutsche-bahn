@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "3f4b2fd287f84aa8b6a1",
-  "displayName": "Which Events Were Chosen For Review",
+  "displayName": "Chosen Events: Did selections focus on real severe delays?",
   "displayOption": "FitToPage",
   "height": 720,
   "width": 1280

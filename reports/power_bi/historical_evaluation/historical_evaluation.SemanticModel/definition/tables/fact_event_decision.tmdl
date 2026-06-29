@@ -99,21 +99,6 @@ table fact_event_decision
 		formatString: 0.0%;-0.0%;0.0%
 		lineageTag: 56e933e4-7f0e-4099-a115-aec6016957de
 
-	measure 'Stop events in this slice' = [Event Count]
-		formatString: 0
-
-	measure 'Stop events that became severe' = [Actual Severe Event Count]
-		formatString: 0
-
-	measure 'Stop events eligible for review' = [Reviewable Event Count]
-		formatString: 0
-
-	measure 'Share of stop events eligible for review' = [Reviewable Share]
-		formatString: 0.0%;-0.0%;0.0%
-
-	measure 'Among eligible stop events, share that became severe' = [Reviewable Severe Share]
-		formatString: 0.0%;-0.0%;0.0%
-
 	measure 'Chosen Severe Share' = DIVIDE ( [Chosen Severe Event Count], [Chosen Event Count] )
 		formatString: 0.0%;-0.0%;0.0%
 		lineageTag: 8cdf6bf4-e615-44fb-98ae-19277556e560
@@ -129,6 +114,26 @@ table fact_event_decision
 	measure 'Reviewable Risk Rank In Current Filter' = VAR CurrentProbability = MAX ( fact_event_decision[predicted_severe_delay_probability] ) VAR CurrentStopEventKey = SELECTEDVALUE ( fact_event_decision[stop_event_key] ) VAR IsCurrentRowReviewable = SELECTEDVALUE ( fact_event_decision[is_eligible_candidate], FALSE () ) VAR ReviewableUniverse = FILTER ( ALLSELECTED ( fact_event_decision ), fact_event_decision[is_eligible_candidate] = TRUE () ) RETURN IF ( NOT IsCurrentRowReviewable || ISBLANK ( CurrentStopEventKey ), BLANK (), RANKX ( ReviewableUniverse, fact_event_decision[predicted_severe_delay_probability], CurrentProbability, DESC, DENSE ) )
 		formatString: 0
 		lineageTag: baa69880-327a-4e7e-a58d-480fb58731f2
+
+	measure 'Stop events in this slice' = [Event Count]
+		formatString: 0
+		lineageTag: 87e9ae59-7bb8-40f5-bfb3-6db6cc7c3905
+
+	measure 'Stop events that became severe' = [Actual Severe Event Count]
+		formatString: 0
+		lineageTag: 6060c254-76b6-4a46-b1d1-17fdd643f575
+
+	measure 'Stop events eligible for review' = [Reviewable Event Count]
+		formatString: 0
+		lineageTag: 4622f3a3-13a8-4b2e-ab05-740b85f8186d
+
+	measure 'Share of stop events eligible for review' = [Reviewable Share]
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: aabbc021-76ab-43ec-b800-c752b67455cc
+
+	measure 'Among eligible stop events, share that became severe' = [Reviewable Severe Share]
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: b17dbf35-06b3-48e2-b183-309303660700
 
 	column optimization_run_id
 		dataType: string

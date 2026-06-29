@@ -244,7 +244,7 @@ def stable_sort(frame: pd.DataFrame) -> pd.DataFrame:
         by=[CANONICAL_PROBABILITY_FIELD, 'stop_event_key'],
         ascending=[False, True],
         kind='mergesort',
-    ).reset_index(drop=True)
+    )
 
 
 
