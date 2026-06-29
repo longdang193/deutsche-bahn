@@ -64,7 +64,7 @@
     "customTimeoutLimit": "225"
   },
   "slowDataSourceSettings": {
-    "isCrossHighlightingDisabled": true,
+    "isCrossHighlightingDisabled": false,
     "isSlicerSelectionsButtonEnabled": false,
     "isFilterSelectionsButtonEnabled": false,
     "isApplyAllButtonEnabled": true

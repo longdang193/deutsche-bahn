@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "264ec34db1b81a424547",
   "position": {
-    "x": 730,
+    "x": 770,
     "y": 80,
     "z": 8000,
-    "height": 220,
-    "width": 490,
+    "height": 360,
+    "width": 450,
     "tabOrder": 8000
   },
   "visual": {
@@ -20,13 +20,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_date_hour"
+                      "Entity": "fact_event_decision"
                     }
                   },
                   "Property": "calendar_date"
                 }
               },
-              "queryRef": "dim_date_hour.calendar_date",
+              "queryRef": "fact_event_decision.calendar_date",
               "nativeQueryRef": "calendar_date"
             },
             {
@@ -34,13 +34,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_date_hour"
+                      "Entity": "fact_event_decision"
                     }
                   },
                   "Property": "hour_of_day"
                 }
               },
-              "queryRef": "dim_date_hour.hour_of_day",
+              "queryRef": "fact_event_decision.hour_of_day",
               "nativeQueryRef": "hour_of_day"
             },
             {
@@ -48,13 +48,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_station"
+                      "Entity": "fact_event_decision"
                     }
                   },
                   "Property": "station_name"
                 }
               },
-              "queryRef": "dim_station.station_name",
+              "queryRef": "fact_event_decision.station_name",
               "nativeQueryRef": "station_name"
             },
             {
@@ -62,13 +62,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_train_service"
+                      "Entity": "fact_event_decision"
                     }
                   },
                   "Property": "train_type"
                 }
               },
-              "queryRef": "dim_train_service.train_type",
+              "queryRef": "fact_event_decision.train_type",
               "nativeQueryRef": "train_type"
             },
             {
@@ -76,14 +76,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_train_service"
+                      "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "line_number"
+                  "Property": "Predicted Risk Band"
                 }
               },
-              "queryRef": "dim_train_service.line_number",
-              "nativeQueryRef": "line_number"
+              "queryRef": "fact_event_decision.Predicted Risk Band",
+              "nativeQueryRef": "Predicted Risk Band"
             },
             {
               "field": {
@@ -139,13 +139,6 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "\"Highest-risk reviewable stop events in this filter\""
                 }
               }
             }
