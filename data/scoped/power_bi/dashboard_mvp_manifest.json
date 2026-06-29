@@ -3,11 +3,12 @@
   "status": "handoff_ready",
   "metadata_contract_only": true,
   "report_build_status": "pending",
-  "page_count": 2,
+  "page_count": 4,
   "notes": [
-    "Prototype / historical evaluation only.",
-    "ML scores severe-delay risk. Gurobi selects limited review slots under capacity and station-concentration trade-off.",
-    "Canonical event_decision and horizon_summary are frozen Gurobi at capacity 3. Cross-policy and cross-capacity analysis lives in policy_comparison and horizon_policy_metrics."
+    "Prototype on historical data only.",
+    "ML estimates which stop events are most likely to become severe. Review policies decide which few events to inspect first.",
+    "Main event-level pages show one prototype review queue. Method-comparison pages show whether smarter selection changes results.",
+    "Expanded same-hub scope is stress-test evidence. It shows historical selection quality, not causal impact."
   ],
   "semantic_contract": {
     "canonical_policy_name": "gurobi_soft_station_penalty",
@@ -33,7 +34,7 @@
   "pages": [
     {
       "page_key": "overview_capacity",
-      "page_title": "Overview and Capacity",
+      "page_title": "Network Disruption Snapshot",
       "required_slicers": [
         "calendar_date",
         "hour_of_day",
@@ -49,7 +50,7 @@
     },
     {
       "page_key": "candidate_station_detail",
-      "page_title": "Candidate and Station Detail",
+      "page_title": "Find Review Candidates",
       "required_slicers": [
         "calendar_date",
         "hour_of_day",
@@ -64,6 +65,32 @@
         "station_detail_table",
         "train_service_detail_table",
         "candidate_probability_distribution"
+      ]
+    },
+    {
+      "page_key": "decision_story",
+      "page_title": "Review Queue Results",
+      "required_slicers": [
+        "calendar_date",
+        "hour_of_day",
+        "scenario_key"
+      ],
+      "required_visual_groups": [
+        "capacity_regime_story",
+        "selection_examples",
+        "station_tradeoff_story"
+      ]
+    },
+    {
+      "page_key": "method_comparison",
+      "page_title": "Compare Review Policies",
+      "required_slicers": [
+        "scenario_key"
+      ],
+      "required_visual_groups": [
+        "policy_comparison_cards",
+        "pairwise_comparison",
+        "capacity_comparison"
       ]
     }
   ]

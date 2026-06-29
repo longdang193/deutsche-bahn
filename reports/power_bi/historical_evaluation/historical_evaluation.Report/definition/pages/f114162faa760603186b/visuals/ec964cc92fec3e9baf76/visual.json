@@ -20,42 +20,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_scenario"
+                      "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Scenario"
+                  "Property": "Scenario Display"
                 }
               },
-              "queryRef": "dim_scenario.Scenario",
-              "nativeQueryRef": "Scenario"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_scenario"
-                    }
-                  },
-                  "Property": "Model version"
-                }
-              },
-              "queryRef": "dim_scenario.Model version",
-              "nativeQueryRef": "Model version"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_scenario"
-                    }
-                  },
-                  "Property": "Policy version"
-                }
-              },
-              "queryRef": "dim_scenario.Policy version",
-              "nativeQueryRef": "Policy version"
+              "queryRef": "fact_event_decision.Scenario Display",
+              "nativeQueryRef": "Scenario Display"
             },
             {
               "field": {
@@ -65,11 +37,39 @@
                       "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "Optimized at"
+                  "Property": "Model Version Display"
                 }
               },
-              "queryRef": "fact_event_decision.Optimized at",
-              "nativeQueryRef": "Optimized at"
+              "queryRef": "fact_event_decision.Model Version Display",
+              "nativeQueryRef": "Model Version Display"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_event_decision"
+                    }
+                  },
+                  "Property": "Policy Version Display"
+                }
+              },
+              "queryRef": "fact_event_decision.Policy Version Display",
+              "nativeQueryRef": "Policy Version Display"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_event_decision"
+                    }
+                  },
+                  "Property": "Optimized At Display"
+                }
+              },
+              "queryRef": "fact_event_decision.Optimized At Display",
+              "nativeQueryRef": "Optimized At Display"
             }
           ]
         }

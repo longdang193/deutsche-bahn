@@ -21,68 +21,68 @@
     "is_arrival_cancelled",
     "has_arrival_time_data"
   ],
-  "selected_threshold": 0.4,
+  "selected_threshold": 0.5,
   "split_metrics": [
     {
       "split": "train",
-      "row_count": 135045,
-      "journey_count": 2905,
-      "positive_count": 13859,
-      "negative_count": 121186,
-      "prevalence": 0.10262505090895628,
+      "row_count": 248841,
+      "journey_count": 3041,
+      "positive_count": 27855,
+      "negative_count": 220986,
+      "prevalence": 0.11193894896741292,
       "anchor_date_min": "2025-03-01",
-      "anchor_date_max": "2025-03-18"
+      "anchor_date_max": "2025-03-28"
     },
     {
       "split": "validation",
-      "row_count": 742,
-      "journey_count": 68,
-      "positive_count": 109,
-      "negative_count": 633,
-      "prevalence": 0.14690026954177898,
-      "anchor_date_min": "2025-03-19",
-      "anchor_date_max": "2025-03-24"
+      "row_count": 8062,
+      "journey_count": 151,
+      "positive_count": 1885,
+      "negative_count": 6177,
+      "prevalence": 0.23381294964028776,
+      "anchor_date_min": "2025-03-29",
+      "anchor_date_max": "2025-05-07"
     },
     {
       "split": "test",
-      "row_count": 743,
-      "journey_count": 112,
-      "positive_count": 119,
-      "negative_count": 624,
-      "prevalence": 0.1601615074024226,
-      "anchor_date_min": "2025-03-25",
-      "anchor_date_max": "2025-03-31"
+      "row_count": 2838,
+      "journey_count": 222,
+      "positive_count": 273,
+      "negative_count": 2565,
+      "prevalence": 0.09619450317124736,
+      "anchor_date_min": "2025-05-08",
+      "anchor_date_max": "2025-05-18"
     }
   ],
   "validation_metrics": {
     "split": "validation",
-    "pr_auc": 0.9463437036634407,
-    "roc_auc": 0.9670710320738582,
-    "precision": 0.9603960396039604,
-    "recall": 0.8899082568807339,
-    "f1": 0.9238095238095239,
+    "pr_auc": 0.9659314688352872,
+    "roc_auc": 0.9782583546647119,
+    "precision": 0.9735632183908046,
+    "recall": 0.8986737400530505,
+    "f1": 0.9346206896551724,
     "confusion_matrix": {
-      "tn": 629,
-      "fp": 4,
-      "fn": 12,
-      "tp": 97
+      "tn": 6131,
+      "fp": 46,
+      "fn": 191,
+      "tp": 1694
     },
-    "naive_baseline_prevalence": 0.10262505090895628
+    "naive_baseline_prevalence": 0.11193894896741292
   },
   "test_metrics": {
     "split": "test",
-    "pr_auc": 0.9502542624760527,
-    "roc_auc": 0.9828498707175178,
-    "precision": 0.8677685950413223,
-    "recall": 0.8823529411764706,
-    "f1": 0.875,
+    "pr_auc": 0.769061409437966,
+    "roc_auc": 0.8945154910067192,
+    "precision": 0.9682539682539683,
+    "recall": 0.6703296703296703,
+    "f1": 0.7922077922077922,
     "confusion_matrix": {
-      "tn": 608,
-      "fp": 16,
-      "fn": 14,
-      "tp": 105
+      "tn": 2559,
+      "fp": 6,
+      "fn": 90,
+      "tp": 183
     },
-    "naive_baseline_prevalence": 0.10262505090895628
+    "naive_baseline_prevalence": 0.11193894896741292
   },
   "excluded_feature_columns": [
     "stop_event_key",
@@ -115,10 +115,53 @@
   ],
   "scored_output_path": "C:\\Users\\HOANG PHI LONG DANG\\repos\\deutsche-bahn\\data\\scoped\\ml\\scored_stop_events.parquet",
   "model_path": "C:\\Users\\HOANG PHI LONG DANG\\repos\\deutsche-bahn\\data\\scoped\\ml\\severe_delay_model.joblib",
-  "scored_row_count": 1485,
+  "scored_row_count": 10900,
   "scored_split_counts": {
-    "test": 743,
-    "validation": 742
+    "test": 2838,
+    "validation": 8062
   },
-  "scored_at": "2026-06-28T09:45:21.869778+00:00"
+  "scored_at": "2026-06-29T22:36:31.383942+00:00",
+  "scope_manifest_path": "C:\\Users\\HOANG PHI LONG DANG\\repos\\deutsche-bahn\\data\\scoped\\manifests\\scope_expansion_manifest.json",
+  "scope_stage": "B",
+  "scope_evaluation_mode": "rebuilt_pipeline",
+  "stage_a_scope_diagnostic_path": "C:\\Users\\HOANG PHI LONG DANG\\repos\\deutsche-bahn\\data\\scoped\\ml\\stage_a_scope_diagnostic.json",
+  "stage_a_scored_output_path": "C:\\Users\\HOANG PHI LONG DANG\\repos\\deutsche-bahn\\data\\scoped\\ml\\stage_a_frozen_scored_stop_events.parquet",
+  "stage_a_scope_rows": [
+    {
+      "scope_slice": "added_disrupted_week",
+      "row_count": 28423,
+      "journey_count": 2355,
+      "severe_event_count": 4294,
+      "selected_by_frozen_threshold_count": 3732,
+      "selected_severe_event_count": 3610,
+      "mean_probability": 0.14755821094999017,
+      "max_probability": 1.0,
+      "service_date_min": "2025-05-12",
+      "service_date_max": "2025-05-18"
+    },
+    {
+      "scope_slice": "baseline_month",
+      "row_count": 136530,
+      "journey_count": 3085,
+      "severe_event_count": 14087,
+      "selected_by_frozen_threshold_count": 12169,
+      "selected_severe_event_count": 11722,
+      "mean_probability": 0.10314342439768903,
+      "max_probability": 1.0,
+      "service_date_min": "2025-03-01",
+      "service_date_max": "2025-03-31"
+    },
+    {
+      "scope_slice": "unknown_scope_slice",
+      "row_count": 94788,
+      "journey_count": 2438,
+      "severe_event_count": 11632,
+      "selected_by_frozen_threshold_count": 10093,
+      "selected_severe_event_count": 9663,
+      "mean_probability": 0.12347380716541327,
+      "max_probability": 1.0,
+      "service_date_min": "2025-05-01",
+      "service_date_max": "2025-05-31"
+    }
+  ]
 }

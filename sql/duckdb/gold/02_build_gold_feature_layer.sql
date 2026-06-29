@@ -7,6 +7,7 @@ select
     fact.train_service_key,
     fact.service_date,
     fact.journey_id,
+    fact.source_file,
     fact.stop_sequence,
     station.station_id,
     station.station_name,

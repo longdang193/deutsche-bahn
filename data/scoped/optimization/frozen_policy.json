@@ -13,8 +13,8 @@
   ],
   "canonical_probability_field": "predicted_severe_delay_probability",
   "threshold_source": "data/scoped/ml/evaluation.json",
-  "selected_threshold": 0.4,
-  "minimum_candidate_probability": 0.4,
+  "selected_threshold": 0.5,
+  "minimum_candidate_probability": 0.5,
   "scoring_model_name": "logistic_regression",
   "scoring_model_version": "2026-06-28-v1",
   "capacity_scenario": "hourly_capacity_3",
@@ -26,7 +26,7 @@
     0.1,
     0.2
   ],
-  "frozen_station_excess_penalty_lambda": 0.05,
+  "frozen_station_excess_penalty_lambda": 0.2,
   "feasible_selection_rule": "exact_feasible_selection_target",
   "constraint_set": [
     "exact_feasible_selection_target",
@@ -55,5 +55,5 @@
     "candidate_prevalence",
     "station_concentration_excess_total"
   ],
-  "frozen_at": "2026-06-29T14:24:37.070921+00:00"
+  "frozen_at": "2026-06-29T22:37:56.419549+00:00"
 }

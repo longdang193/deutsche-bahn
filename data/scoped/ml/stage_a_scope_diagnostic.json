@@ -1,0 +1,48 @@
+{
+  "stage": "A",
+  "diagnostic_type": "frozen_model_scope_expansion",
+  "model_name": "logistic_regression",
+  "model_version": "2026-06-28-v1",
+  "selected_threshold": 0.5,
+  "probability_column": "stage_a_frozen_probability__logistic_regression__2026-06-28-v1",
+  "manifest_path": "C:\\Users\\HOANG PHI LONG DANG\\repos\\deutsche-bahn\\data\\scoped\\manifests\\scope_expansion_manifest.json",
+  "scored_output_path": "C:\\Users\\HOANG PHI LONG DANG\\repos\\deutsche-bahn\\data\\scoped\\ml\\stage_a_frozen_scored_stop_events.parquet",
+  "scope_rows": [
+    {
+      "scope_slice": "added_disrupted_week",
+      "row_count": 28423,
+      "journey_count": 2355,
+      "severe_event_count": 4294,
+      "selected_by_frozen_threshold_count": 3732,
+      "selected_severe_event_count": 3610,
+      "mean_probability": 0.14755821094999017,
+      "max_probability": 1.0,
+      "service_date_min": "2025-05-12",
+      "service_date_max": "2025-05-18"
+    },
+    {
+      "scope_slice": "baseline_month",
+      "row_count": 136530,
+      "journey_count": 3085,
+      "severe_event_count": 14087,
+      "selected_by_frozen_threshold_count": 12169,
+      "selected_severe_event_count": 11722,
+      "mean_probability": 0.10314342439768903,
+      "max_probability": 1.0,
+      "service_date_min": "2025-03-01",
+      "service_date_max": "2025-03-31"
+    },
+    {
+      "scope_slice": "unknown_scope_slice",
+      "row_count": 94788,
+      "journey_count": 2438,
+      "severe_event_count": 11632,
+      "selected_by_frozen_threshold_count": 10093,
+      "selected_severe_event_count": 9663,
+      "mean_probability": 0.12347380716541327,
+      "max_probability": 1.0,
+      "service_date_min": "2025-05-01",
+      "service_date_max": "2025-05-31"
+    }
+  ]
+}

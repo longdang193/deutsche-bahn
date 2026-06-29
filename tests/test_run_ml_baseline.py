@@ -61,6 +61,7 @@ def test_build_modeling_frame_excludes_leakage_and_preserves_journey_split() -> 
             "station_id": ["A", "A", "B", "C", "D", "E"],
             "train_type": ["ICE"] * 6,
             "line_number": ["1"] * 6,
+            "source_file": ["data-2025-03.parquet"] * 6,
             "service_class": ["long_distance"] * 6,
             "day_name": ["Sat", "Sat", "Sun", "Mon", "Tue", "Wed"],
             "time_band": ["morning"] * 6,

@@ -1,18 +1,6 @@
 table dim_scenario
 	lineageTag: 6d1cbab8-4640-478a-9b80-24061d708eff
 
-	measure 'Scenario Key Display' = IF ( HASONEVALUE ( dim_scenario[scenario_key] ), SELECTEDVALUE ( dim_scenario[scenario_key] ), BLANK () )
-		lineageTag: 46346797-4d2e-4fed-9b41-3b8ec809c6aa
-
-	measure Scenario = IF ( HASONEVALUE ( dim_scenario[scenario_key] ), SELECTEDVALUE ( dim_scenario[scenario_display_name] ), BLANK () )
-		lineageTag: 989129cd-7c0c-4426-bed6-33855247a869
-
-	measure 'Model version' = IF ( HASONEVALUE ( dim_scenario[scenario_key] ), SELECTEDVALUE ( dim_scenario[model_version] ), BLANK () )
-		lineageTag: 95f6e89e-46c9-4a1e-b123-176fc606d6f0
-
-	measure 'Policy version' = IF ( HASONEVALUE ( dim_scenario[scenario_key] ), SELECTEDVALUE ( dim_scenario[policy_version] ), BLANK () )
-		lineageTag: 9c8fb755-5bc3-4188-b3c0-ada94af8a9aa
-
 	column scenario_key
 		dataType: string
 		lineageTag: 4fe1dadc-ecc1-4e8f-a99d-f243c1c0ae6c

@@ -3,8 +3,8 @@
 ## Refresh Validation
 
 - Status: `partial`
-- Current state: PBIP source, semantic model source, and report source exist and were updated in repo.
-- Remaining manual step: open `reports/power_bi/historical_evaluation/historical_evaluation.pbip` in Power BI Desktop, refresh from the current `SemanticExportRoot`, save, and verify rendered-page behavior.
+- Current state: PBIP source, semantic model source, report source, and nine-table semantic export exist and were updated in repo.
+- Remaining manual step: open `reports/power_bi/historical_evaluation/historical_evaluation.pbip` in Power BI Desktop, refresh from the current `SemanticExportRoot`, save, and verify rendered-page behavior for page 4 visuals. Page-4 shell is present in source; visual authoring still needs Desktop verification.
 - Required app: `C:\Program Files\Microsoft Power BI Desktop\bin\PBIDesktop.exe`
 - Power BI Desktop version observed on this machine: `2.155.756.0 (26.06)+7f1da5803bfe48beff98093405280405ddb467dd`
 - Canonical entry file: `reports/power_bi/historical_evaluation/historical_evaluation.pbip`
@@ -25,7 +25,7 @@
 
 ### Imported Source Surface
 
-- Imported parquet tables: `6`
+- Imported parquet tables: `9`
 - Imported tables:
   - `dim_date_hour.parquet`
   - `dim_scenario.parquet`
@@ -33,6 +33,9 @@
   - `dim_train_service.parquet`
   - `fact_event_decision.parquet`
   - `fact_horizon_summary.parquet`
+  - `fact_policy_comparison.parquet`
+  - `fact_horizon_policy_metrics.parquet`
+  - `fact_policy_pairwise_summary.parquet`
 - Authoring-only JSON contracts present and not imported as runtime tables:
   - `semantic_contract.json`
   - `dashboard_mvp_manifest.json`
@@ -41,15 +44,16 @@
 
 ### Current Page Source State
 
-- Visible page count in PBIR source: `3`
+- Visible page count in PBIR source: `4`
 - Visible pages in order:
-  1. `What Happened`
-  2. `Which Events Look Risky`
-  3. `Which Events Were Chosen For Review`
+  1. `1. Network Disruption Snapshot`
+  2. `2. Find Review Candidates`
+  3. `3. Review Queue Results`
+  4. `4. Compare Review Policies`
 - Global visual cross-filter flag patched to `false` in PBIR visual source: `yes`
 - Scenario slicers now bind to `scenario_display_name` in PBIR source: `yes`
-- Page 2 source now uses pre-decision labels for risk distribution and review-eligibility visuals: `yes`
-- Page 3 source now uses chosen-review labels and distinct queue-table binding: `yes`
+- Page 2 source now uses pre-decision labels and action-focused wording for risk distribution and review-eligibility visuals: `yes`
+- Page 3 source now uses chosen-review labels, results wording, and distinct queue-table binding: `yes`
 - Rendered Desktop confirmation of final interactions: `pending`
 
 ### Relationship Topology
@@ -180,7 +184,7 @@ The following still require opening the PBIP in Power BI Desktop and checking th
 | Page 2 Top 20 table | deterministic rendered order, reviewable-only scope, exact row count when available | Pending |
 | Page 3 capacity scope | station/train filters do not alter network-capacity visuals | Pending |
 | Rendered interaction matrix | slicers behave as planned, visuals do not cross-filter unexpectedly | Pending |
-| Final visual titles and wording | plain-language labels with no causal claims | Pending |
+| Final visual titles and wording | plain-language labels, user-action framing, and no causal claims | Pending |
 
 ## Open Issues
 

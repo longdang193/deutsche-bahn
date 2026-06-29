@@ -135,6 +135,15 @@ table fact_event_decision
 		formatString: 0.0%;-0.0%;0.0%
 		lineageTag: b17dbf35-06b3-48e2-b183-309303660700
 
+	measure 'Scenario Display' = IF ( HASONEVALUE ( dim_scenario[scenario_key] ), SELECTEDVALUE ( dim_scenario[scenario_display_name] ), BLANK () )
+		lineageTag: 0f94d230-8f3a-4e5c-97d5-2b0abf9f4001
+
+	measure 'Model Version Display' = IF ( HASONEVALUE ( dim_scenario[scenario_key] ), SELECTEDVALUE ( dim_scenario[model_version] ), BLANK () )
+		lineageTag: 0f94d230-8f3a-4e5c-97d5-2b0abf9f4002
+
+	measure 'Policy Version Display' = IF ( HASONEVALUE ( dim_scenario[scenario_key] ), SELECTEDVALUE ( dim_scenario[policy_version] ), BLANK () )
+		lineageTag: 0f94d230-8f3a-4e5c-97d5-2b0abf9f4003
+
 	column optimization_run_id
 		dataType: string
 		lineageTag: ecdf363e-724a-47c7-aba0-d399b8dd8e4f

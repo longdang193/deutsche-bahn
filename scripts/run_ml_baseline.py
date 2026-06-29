@@ -33,10 +33,14 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DUCKDB_PATH = REPO_ROOT / "data" / "scoped" / "local_scope_bronze.duckdb"
-OUTPUT_DIR = REPO_ROOT / "data" / "scoped" / "ml"
+SCOPED_DIR = REPO_ROOT / "data" / "scoped"
+MANIFEST_PATH = SCOPED_DIR / "manifests" / "scope_expansion_manifest.json"
+OUTPUT_DIR = SCOPED_DIR / "ml"
 MODEL_PATH = OUTPUT_DIR / "severe_delay_model.joblib"
 SCORED_OUTPUT_PATH = OUTPUT_DIR / "scored_stop_events.parquet"
 EVALUATION_PATH = OUTPUT_DIR / "evaluation.json"
+STAGE_A_SCORED_OUTPUT_PATH = OUTPUT_DIR / "stage_a_frozen_scored_stop_events.parquet"
+STAGE_A_EVALUATION_PATH = OUTPUT_DIR / "stage_a_scope_diagnostic.json"
 GOLD_TABLE_NAME = "gold.feature_stop_event"
 MODEL_NAME = "logistic_regression"
 MODEL_VERSION = "2026-06-28-v1"
@@ -97,6 +101,7 @@ IDENTIFIER_COLUMNS = (
     "station_id",
     "train_type",
     "line_number",
+    "source_file",
 )
 TARGET_COLUMN = "is_departure_severe_delay"
 CATEGORICAL_COLUMNS = (
@@ -162,6 +167,92 @@ def load_gold_frame() -> pd.DataFrame:
         ).fetch_df()
     finally:
         connection.close()
+
+def load_scope_manifest() -> dict[str, object]:
+    return json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+
+
+def stage_a_probability_column(model_name: str, model_version: str) -> str:
+    return f"stage_a_frozen_probability__{model_name}__{model_version}"
+
+
+def add_scope_slice_labels(frame: pd.DataFrame, manifest: dict[str, object]) -> pd.DataFrame:
+    labeled = frame.copy()
+    baseline_source_file = str(manifest["baseline_source_file_name"])
+    added_source_file = str(manifest["added_week_source_file_name"])
+    added_week_start = pd.Timestamp(str(manifest["added_week_start_date"]))
+    added_week_end = pd.Timestamp(str(manifest["added_week_end_date"]))
+    service_date = pd.to_datetime(labeled["service_date"]).dt.normalize()
+    labeled["scope_slice"] = "unknown_scope_slice"
+    labeled.loc[labeled["source_file"] == baseline_source_file, "scope_slice"] = "baseline_month"
+    added_mask = (
+        (labeled["source_file"] == added_source_file)
+        & (service_date >= added_week_start)
+        & (service_date <= added_week_end)
+    )
+    labeled.loc[added_mask, "scope_slice"] = "added_disrupted_week"
+    return labeled
+
+
+def persist_frame(frame: pd.DataFrame, path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    connection = duckdb.connect()
+    try:
+        connection.register("frame_view", frame)
+        connection.execute(f"copy frame_view to '{path.as_posix()}' (format parquet)")
+    finally:
+        connection.close()
+
+
+def build_stage_a_scope_diagnostic(
+    *,
+    pipeline: Pipeline,
+    selected_threshold: float,
+    modeling_frame: pd.DataFrame,
+    manifest: dict[str, object],
+    model_name: str,
+    model_version: str,
+) -> dict[str, object]:
+    scored = modeling_frame.copy()
+    probability_column = stage_a_probability_column(model_name, model_version)
+    probabilities = pipeline.predict_proba(scored.loc[:, ALLOWED_FEATURE_COLUMNS])[:, 1]
+    scored[probability_column] = probabilities
+    scored["stage_a_predicted_severe_delay_probability"] = probabilities
+    scored["stage_a_selected_by_frozen_threshold"] = scored[probability_column] >= selected_threshold
+    scored = add_scope_slice_labels(scored, manifest)
+    persist_frame(scored, STAGE_A_SCORED_OUTPUT_PATH)
+
+    scope_rows: list[dict[str, object]] = []
+    for scope_slice, scope_frame in scored.groupby("scope_slice", sort=True):
+        selected_mask = scope_frame["stage_a_selected_by_frozen_threshold"].fillna(False).astype(bool)
+        scope_rows.append(
+            {
+                "scope_slice": scope_slice,
+                "row_count": int(scope_frame.shape[0]),
+                "journey_count": int(scope_frame["journey_id"].nunique()),
+                "severe_event_count": int(scope_frame[TARGET_COLUMN].fillna(False).astype(bool).sum()),
+                "selected_by_frozen_threshold_count": int(selected_mask.sum()),
+                "selected_severe_event_count": int(scope_frame.loc[selected_mask, TARGET_COLUMN].fillna(False).astype(bool).sum()),
+                "mean_probability": float(scope_frame[probability_column].mean()),
+                "max_probability": float(scope_frame[probability_column].max()),
+                "service_date_min": str(pd.to_datetime(scope_frame["service_date"]).min().date()),
+                "service_date_max": str(pd.to_datetime(scope_frame["service_date"]).max().date()),
+            }
+        )
+
+    diagnostic = {
+        "stage": "A",
+        "diagnostic_type": "frozen_model_scope_expansion",
+        "model_name": model_name,
+        "model_version": model_version,
+        "selected_threshold": selected_threshold,
+        "probability_column": probability_column,
+        "manifest_path": str(MANIFEST_PATH),
+        "scored_output_path": str(STAGE_A_SCORED_OUTPUT_PATH),
+        "scope_rows": scope_rows,
+    }
+    STAGE_A_EVALUATION_PATH.write_text(json.dumps(diagnostic, indent=2), encoding="utf-8")
+    return diagnostic
 
 
 def assign_journey_anchor_splits(frame: pd.DataFrame) -> pd.DataFrame:
@@ -357,13 +448,7 @@ def verify_split_integrity(frame: pd.DataFrame) -> None:
 
 
 def persist_scored_output(frame: pd.DataFrame) -> None:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    connection = duckdb.connect()
-    try:
-        connection.register("scored_frame", frame)
-        connection.execute(f"copy scored_frame to '{SCORED_OUTPUT_PATH.as_posix()}' (format parquet)")
-    finally:
-        connection.close()
+    persist_frame(frame, SCORED_OUTPUT_PATH)
 
 
 def run() -> EvaluationBundle:
@@ -391,6 +476,15 @@ def run() -> EvaluationBundle:
         index=validation_frame.index,
     )
     selected_threshold, _ = select_threshold(validation_frame, validation_probabilities)
+    manifest = load_scope_manifest()
+    stage_a_scope_diagnostic = build_stage_a_scope_diagnostic(
+        pipeline=pipeline,
+        selected_threshold=selected_threshold,
+        modeling_frame=modeling_frame,
+        manifest=manifest,
+        model_name=MODEL_NAME,
+        model_version=MODEL_VERSION,
+    )
     test_probabilities = pd.Series(
         pipeline.predict_proba(test_frame.loc[:, ALLOWED_FEATURE_COLUMNS])[:, 1],
         index=test_frame.index,
@@ -406,7 +500,10 @@ def run() -> EvaluationBundle:
     held_out_frame["model_name"] = MODEL_NAME
     held_out_frame["model_version"] = MODEL_VERSION
     held_out_frame["selected_threshold"] = selected_threshold
+    held_out_frame["scope_stage"] = "B"
+    held_out_frame["scope_evaluation_mode"] = "rebuilt_pipeline"
     held_out_frame["scored_at"] = datetime.now(UTC).isoformat()
+    held_out_frame = add_scope_slice_labels(held_out_frame, manifest)
 
     persist_scored_output(held_out_frame)
     joblib.dump(pipeline, MODEL_PATH)
@@ -450,7 +547,14 @@ def run() -> EvaluationBundle:
         },
         scored_at=held_out_frame["scored_at"].iloc[0],
     )
-    EVALUATION_PATH.write_text(json.dumps(asdict(evaluation), indent=2), encoding="utf-8")
+    evaluation_payload = asdict(evaluation)
+    evaluation_payload["scope_manifest_path"] = str(MANIFEST_PATH)
+    evaluation_payload["scope_stage"] = "B"
+    evaluation_payload["scope_evaluation_mode"] = "rebuilt_pipeline"
+    evaluation_payload["stage_a_scope_diagnostic_path"] = str(STAGE_A_EVALUATION_PATH)
+    evaluation_payload["stage_a_scored_output_path"] = str(STAGE_A_SCORED_OUTPUT_PATH)
+    evaluation_payload["stage_a_scope_rows"] = stage_a_scope_diagnostic["scope_rows"]
+    EVALUATION_PATH.write_text(json.dumps(evaluation_payload, indent=2), encoding="utf-8")
     return evaluation
 
 

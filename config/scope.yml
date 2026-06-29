@@ -25,5 +25,11 @@
     "departure_change_time",
     "id"
   ],
-  "complete_journey_rule": "retain all rows whose train_line_ride_id appears at least once at selected_hub within selected_month file"
+  "complete_journey_rule": "retain all rows whose train_line_ride_id appears at least once at selected_hub within selected_month file",
+  "added_week_source_file_name": "data-2025-05.parquet",
+  "added_week_source_url": "https://huggingface.co/datasets/piebro/deutsche-bahn-data/resolve/main/monthly_processed_data/data-2025-05.parquet",
+  "added_week_source_version": "monthly_processed_data/data-2025-05.parquet@main",
+  "added_week_start_date": "2025-05-12",
+  "added_week_end_date": "2025-05-18",
+  "added_week_selection_metric": "severe_or_cancel_count"
 }

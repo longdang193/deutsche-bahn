@@ -3,44 +3,74 @@
   "selected_month": "2025-03",
   "selected_hub": "Frankfurt (Main) Hbf",
   "source_file_name": "data-2025-03.parquet",
+  "added_week_source_file_name": "data-2025-05.parquet",
+  "added_week_start_date": "2025-05-12",
+  "added_week_end_date": "2025-05-18",
   "duckdb_path": "C:\\Users\\HOANG PHI LONG DANG\\repos\\deutsche-bahn\\data\\scoped\\local_scope_bronze.duckdb",
-  "raw_stop_events_row_count": 186656,
-  "manifest_row_count": 186656,
-  "hub_row_count": 62698,
-  "journey_count": 3451,
+  "scope_expansion_manifest_path": "C:\\Users\\HOANG PHI LONG DANG\\repos\\deutsche-bahn\\data\\scoped\\manifests\\scope_expansion_manifest.json",
+  "raw_stop_events_row_count": 353274,
+  "manifest_row_count": 353274,
+  "hub_row_count": 118953,
+  "journey_count": 3864,
   "hub_sample_rows": [
     [
       "Frankfurt (Main) Hbf",
       "S",
-      "36615",
-      "Darmstadt Hbf",
-      "-8707109134936807572"
+      "36157",
+      "Rödermark-Ober Roden",
+      "-4484967909015534089"
     ],
     [
       "Frankfurt (Main) Hbf",
-      "RB",
-      "15404",
+      "RE",
+      "4529",
       "Frankfurt (Main) Hbf",
-      "-9192485595791867238"
+      "-2092067297599742934"
     ],
     [
       "Frankfurt (Main) Hbf",
-      "HLB",
-      "15004",
-      "Stadtallendorf",
-      "190074822622425170"
+      "ICE",
+      "317",
+      "Frankfurt (Main) Hbf",
+      "4992819178731237054"
     ]
   ],
-  "manifest_row": [
-    "data-2025-03.parquet",
-    "monthly_processed_data/data-2025-03.parquet@main",
-    "2026-06-27-local-bronze-v1",
-    "2026-06-27-hub-touching-journeys-v1",
-    "2025-03",
-    "Frankfurt (Main) Hbf",
-    "[\"station_name\", \"xml_station_name\", \"eva\", \"train_number\", \"line_number\", \"final_destination_station\", \"delay_in_min\", \"time\", \"is_canceled\", \"train_type\", \"train_line_ride_id\", \"train_line_station_num\", \"arrival_planned_time\", \"arrival_change_time\", \"departure_planned_time\", \"departure_change_time\", \"id\"]",
-    "retain all rows whose train_line_ride_id appears at least once at selected_hub within selected_month file",
-    "2026-06-27 22:01:27",
-    186656
+  "manifest_rows": [
+    [
+      "added_disrupted_week",
+      "data-2025-05.parquet",
+      "monthly_processed_data/data-2025-05.parquet@main",
+      "2025-05-12:2025-05-18",
+      "2025-05-12",
+      "2025-05-18",
+      166618
+    ],
+    [
+      "baseline_month",
+      "data-2025-03.parquet",
+      "monthly_processed_data/data-2025-03.parquet@main",
+      "2025-03",
+      null,
+      null,
+      186656
+    ]
+  ],
+  "scope_rows": [
+    [
+      "added_disrupted_week",
+      "data-2025-05.parquet",
+      "2025-05-01",
+      "2025-05-31",
+      166618,
+      2757
+    ],
+    [
+      "baseline_month",
+      "data-2025-03.parquet",
+      "2025-03-01",
+      "2025-03-31",
+      186656,
+      3451
+    ]
   ]
 }

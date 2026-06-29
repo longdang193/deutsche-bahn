@@ -1,11 +1,3 @@
-relationship 49c3b6a5-c00f-53b7-f088-ac5aeac5582e
-	fromColumn: fact_event_decision.horizon_id
-	toColumn: dim_date_hour.horizon_id
-
-relationship 7cbe19f9-6f5e-e5f7-54e1-f3c3454d412b
-	fromColumn: fact_horizon_summary.horizon_id
-	toColumn: dim_date_hour.horizon_id
-
 relationship fcdb88bf-e0f7-3df9-645b-80b0e1c5f334
 	fromColumn: fact_event_decision.scenario_key
 	toColumn: dim_scenario.scenario_key

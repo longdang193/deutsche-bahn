@@ -1,0 +1,129 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "4l_method_details_table",
+  "position": {
+    "x": 0,
+    "y": 110,
+    "z": 3100,
+    "height": 610,
+    "width": 1280,
+    "tabOrder": 3100
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_policy_comparison"
+                    }
+                  },
+                  "Property": "capacity_per_hour"
+                }
+              },
+              "queryRef": "fact_policy_comparison.capacity_per_hour",
+              "nativeQueryRef": "capacity_per_hour"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_policy_comparison"
+                    }
+                  },
+                  "Property": "policy_display_name"
+                }
+              },
+              "queryRef": "fact_policy_comparison.policy_display_name",
+              "nativeQueryRef": "policy_display_name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_policy_comparison"
+                    }
+                  },
+                  "Property": "selected_event_count"
+                }
+              },
+              "queryRef": "fact_policy_comparison.selected_event_count",
+              "nativeQueryRef": "selected_event_count"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_policy_comparison"
+                    }
+                  },
+                  "Property": "selected_severe_event_count"
+                }
+              },
+              "queryRef": "fact_policy_comparison.selected_severe_event_count",
+              "nativeQueryRef": "selected_severe_event_count"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_policy_comparison"
+                    }
+                  },
+                  "Property": "precision_at_capacity"
+                }
+              },
+              "queryRef": "fact_policy_comparison.precision_at_capacity",
+              "nativeQueryRef": "precision_at_capacity"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_policy_comparison"
+                    }
+                  },
+                  "Property": "severe_delay_coverage"
+                }
+              },
+              "queryRef": "fact_policy_comparison.severe_delay_coverage",
+              "nativeQueryRef": "severe_delay_coverage"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'How each review policy performs at this capacity'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

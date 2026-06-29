@@ -10,21 +10,8 @@
       "nodes": [
         {
           "location": {
-            "x": 992.2260659424519,
-            "y": -50
-          },
-          "nodeIndex": "dim_date_hour",
-          "nodeLineageTag": "1fbd7e12-5ed5-4228-9f1b-5a6e1019b129",
-          "size": {
-            "height": 200,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
             "x": 628.83265262423311,
-            "y": 476.82339361093318
+            "y": 501.11508102559731
           },
           "nodeIndex": "dim_scenario",
           "nodeLineageTag": "6d1cbab8-4640-478a-9b80-24061d708eff",
@@ -37,7 +24,7 @@
         {
           "location": {
             "x": 156.3682035169785,
-            "y": 512.9349092999629
+            "y": 537.226596714627
           },
           "nodeIndex": "dim_station",
           "nodeLineageTag": "6ed6c446-2a0b-4eb7-926b-d26068401d6c",
@@ -50,7 +37,7 @@
         {
           "location": {
             "x": 50,
-            "y": 48.58337482932825
+            "y": 72.875062243992375
           },
           "nodeIndex": "dim_train_service",
           "nodeLineageTag": "a475925b-e19a-4d7e-8069-711b7ef65f4f",
@@ -63,7 +50,7 @@
         {
           "location": {
             "x": 339.90608309298079,
-            "y": 157.4404503589962
+            "y": 181.73213777366033
           },
           "nodeIndex": "fact_event_decision",
           "nodeLineageTag": "4ed99f14-0adf-4a57-8120-78818da795af",
@@ -76,10 +63,36 @@
         {
           "location": {
             "x": 708.04498146000117,
-            "y": 119.62123855552449
+            "y": 143.91292597018861
           },
           "nodeIndex": "fact_horizon_summary",
           "nodeLineageTag": "1766006c-4172-496a-8751-41f12e2f7d5b",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 942.04498146000117,
+            "y": 238.41169680546659
+          },
+          "nodeIndex": "fact_horizon_policy_metrics",
+          "nodeLineageTag": "6685de0e-864c-4699-ae69-6509b46fb411",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1226.0449814600011,
+            "y": 238.41169680546659
+          },
+          "nodeIndex": "fact_policy_comparison",
+          "nodeLineageTag": "7003c959-8e2f-4b09-a07e-c1fe3cc25b21",
           "size": {
             "height": 300,
             "width": 234

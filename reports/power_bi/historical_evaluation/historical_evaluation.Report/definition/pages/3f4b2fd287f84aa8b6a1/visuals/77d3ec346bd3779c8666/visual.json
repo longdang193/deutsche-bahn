@@ -20,13 +20,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_date_hour"
+                      "Entity": "fact_event_decision"
                     }
                   },
                   "Property": "hour_of_day"
                 }
               },
-              "queryRef": "dim_date_hour.hour_of_day",
+              "queryRef": "fact_event_decision.hour_of_day",
               "nativeQueryRef": "hour_of_day",
               "active": true
             }

@@ -140,7 +140,11 @@ def ensure_search_config() -> dict[str, object]:
 
 
 def load_ml_metadata() -> dict[str, object]:
-    return json.loads(ML_EVALUATION_PATH.read_text(encoding='utf-8'))
+    metadata = json.loads(ML_EVALUATION_PATH.read_text(encoding='utf-8'))
+    # ponytail: prefer current rebuilt ML threshold over stale frozen-policy remnants; add dedicated threshold registry only if multiple concurrent model lines appear.
+    if 'selected_threshold' in metadata:
+        metadata['selected_threshold'] = float(metadata['selected_threshold'])
+    return metadata
 
 
 def load_scored_rows() -> pd.DataFrame:
@@ -823,11 +827,12 @@ def update_dashboard_manifest() -> None:
         'status': 'handoff_ready',
         'metadata_contract_only': True,
         'report_build_status': 'pending',
-        'page_count': 2,
+        'page_count': 4,
         'notes': [
             'Prototype / historical evaluation only.',
             'ML scores severe-delay risk. Gurobi selects limited review slots under capacity and station-concentration trade-off.',
             'Canonical event_decision and horizon_summary are frozen Gurobi at capacity 3. Cross-policy and cross-capacity analysis lives in policy_comparison and horizon_policy_metrics.',
+            'Expanded same-hub scope is stress-test evidence, not causal impact proof.',
         ],
         'semantic_contract': {
             'canonical_policy_name': DEFAULT_POLICY_NAME,
@@ -852,6 +857,18 @@ def update_dashboard_manifest() -> None:
                 'page_title': 'Candidate and Station Detail',
                 'required_slicers': ['calendar_date', 'hour_of_day', 'scenario_key', 'station_id', 'train_service_key', 'eligibility_reason', 'selected_for_review'],
                 'required_visual_groups': ['selected_vs_not_selected_breakdown', 'station_detail_table', 'train_service_detail_table', 'candidate_probability_distribution'],
+            },
+            {
+                'page_key': 'decision_story',
+                'page_title': 'Decision Story',
+                'required_slicers': ['calendar_date', 'hour_of_day', 'scenario_key'],
+                'required_visual_groups': ['capacity_regime_story', 'selection_examples', 'station_tradeoff_story'],
+            },
+            {
+                'page_key': 'method_comparison',
+                'page_title': 'How Methods Compare',
+                'required_slicers': ['scenario_key'],
+                'required_visual_groups': ['policy_comparison_cards', 'pairwise_comparison', 'capacity_comparison'],
             },
         ],
     }

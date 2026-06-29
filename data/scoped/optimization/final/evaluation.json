@@ -15,8 +15,8 @@
     ],
     "canonical_probability_field": "predicted_severe_delay_probability",
     "threshold_source": "data/scoped/ml/evaluation.json",
-    "selected_threshold": 0.4,
-    "minimum_candidate_probability": 0.4,
+    "selected_threshold": 0.5,
+    "minimum_candidate_probability": 0.5,
     "scoring_model_name": "logistic_regression",
     "scoring_model_version": "2026-06-28-v1",
     "capacity_scenario": "hourly_capacity_3",
@@ -28,7 +28,7 @@
       0.1,
       0.2
     ],
-    "frozen_station_excess_penalty_lambda": 0.05,
+    "frozen_station_excess_penalty_lambda": 0.2,
     "feasible_selection_rule": "exact_feasible_selection_target",
     "constraint_set": [
       "exact_feasible_selection_target",
@@ -57,28 +57,28 @@
       "candidate_prevalence",
       "station_concentration_excess_total"
     ],
-    "frozen_at": "2026-06-29T14:24:37.070921+00:00"
+    "frozen_at": "2026-06-29T22:37:56.419549+00:00"
   },
   "horizon_policy_metrics_path": "data/scoped/optimization/final/horizon_policy_metrics.parquet",
   "policy_comparison_path": "data/scoped/optimization/final/policy_comparison.parquet",
   "pairwise_diagnostics": {
     "gurobi_vs_ml_first": {
-      "horizon_count": 137,
-      "matching_horizon_count": 135,
-      "differing_horizon_count": 2,
-      "selected_set_match_rate": 0.9854014598540146,
-      "mean_selected_set_jaccard": 0.9902676399026763,
-      "selected_event_disagreement_count": 4,
-      "penalty_active_horizon_count": 0
+      "horizon_count": 347,
+      "matching_horizon_count": 343,
+      "differing_horizon_count": 4,
+      "selected_set_match_rate": 0.9884726224783862,
+      "mean_selected_set_jaccard": 0.9927953890489913,
+      "selected_event_disagreement_count": 8,
+      "penalty_active_horizon_count": 5
     },
     "gurobi_vs_constrained_greedy": {
-      "horizon_count": 137,
-      "matching_horizon_count": 135,
-      "differing_horizon_count": 2,
-      "selected_set_match_rate": 0.9854014598540146,
-      "mean_selected_set_jaccard": 0.9902676399026763,
-      "selected_event_disagreement_count": 4,
-      "penalty_active_horizon_count": 0
+      "horizon_count": 347,
+      "matching_horizon_count": 343,
+      "differing_horizon_count": 4,
+      "selected_set_match_rate": 0.9884726224783862,
+      "mean_selected_set_jaccard": 0.9927953890489913,
+      "selected_event_disagreement_count": 8,
+      "penalty_active_horizon_count": 5
     }
   }
 }

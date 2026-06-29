@@ -1,0 +1,37 @@
+{
+  "scope_version": "2026-06-27-local-bronze-v1",
+  "extraction_query_version": "2026-06-27-hub-touching-journeys-v1",
+  "selected_hub": "Frankfurt (Main) Hbf",
+  "baseline_source_file_name": "data-2025-03.parquet",
+  "baseline_selected_month": "2025-03",
+  "added_week_source_file_name": "data-2025-05.parquet",
+  "added_week_source_version": "monthly_processed_data/data-2025-05.parquet@main",
+  "added_week_start_date": "2025-05-12",
+  "added_week_end_date": "2025-05-18",
+  "added_week_selection_metric": "severe_or_cancel_count",
+  "added_week_metric_values": {
+    "hub_stop_count": 13586,
+    "severe_or_cancel_count": 2580,
+    "severe_or_cancel_share": 0.18990136905638158
+  },
+  "source_slices": [
+    {
+      "scope_slice": "baseline_month",
+      "source_file_name": "data-2025-03.parquet",
+      "source_url": "https://huggingface.co/datasets/piebro/deutsche-bahn-data/resolve/main/monthly_processed_data/data-2025-03.parquet",
+      "source_version": "monthly_processed_data/data-2025-03.parquet@main",
+      "scope_label": "2025-03",
+      "week_start_date": null,
+      "week_end_date": null
+    },
+    {
+      "scope_slice": "added_disrupted_week",
+      "source_file_name": "data-2025-05.parquet",
+      "source_url": "https://huggingface.co/datasets/piebro/deutsche-bahn-data/resolve/main/monthly_processed_data/data-2025-05.parquet",
+      "source_version": "monthly_processed_data/data-2025-05.parquet@main",
+      "scope_label": "2025-05-12:2025-05-18",
+      "week_start_date": "2025-05-12",
+      "week_end_date": "2025-05-18"
+    }
+  ]
+}

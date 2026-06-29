@@ -1,1 +1,73 @@
-{"$schema":"https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json","name":"cf6380387ac72c3cbd6a","position":{"x":1400,"y":760,"z":6000,"height":12,"width":12,"tabOrder":6000},"visual":{"visualType":"slicer","query":{"queryState":{"Values":{"projections":[{"field":{"Column":{"Expression":{"SourceRef":{"Entity":"fact_event_decision"}},"Property":"selected_for_review"}},"queryRef":"fact_event_decision.selected_for_review","nativeQueryRef":"selected_for_review","active":true}]}}},"objects":{"data":[{"properties":{"mode":{"expr":{"Literal":{"Value":"'Basic'"}}}}}]},"visualContainerObjects":{"title":[{"properties":{"show":{"expr":{"Literal":{"Value":"true"}}}}}]},"syncGroup":{"groupName":"selected_for_review","fieldChanges":true,"filterChanges":true}}}
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "cf6380387ac72c3cbd6a",
+  "position": {
+    "x": 1400,
+    "y": 760,
+    "z": 6000,
+    "height": 12,
+    "width": 12,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_event_decision"
+                    }
+                  },
+                  "Property": "selected_for_review"
+                }
+              },
+              "queryRef": "fact_event_decision.selected_for_review",
+              "nativeQueryRef": "selected_for_review",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Basic'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "syncGroup": {
+      "groupName": "selected_for_review",
+      "fieldChanges": true,
+      "filterChanges": true
+    }
+  }
+}

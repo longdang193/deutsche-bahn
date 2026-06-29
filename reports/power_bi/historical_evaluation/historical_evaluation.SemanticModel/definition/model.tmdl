@@ -6,7 +6,7 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation PBI_QueryOrder = ["fact_event_decision","fact_horizon_summary","dim_date_hour","dim_station","dim_train_service","dim_scenario"]
+annotation PBI_QueryOrder = ["fact_event_decision","fact_horizon_summary","dim_station","dim_train_service","dim_scenario","fact_policy_comparison","fact_horizon_policy_metrics"]
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
@@ -14,10 +14,11 @@ annotation PBI_ProTooling = ["DevMode"]
 
 ref table fact_event_decision
 ref table fact_horizon_summary
-ref table dim_date_hour
 ref table dim_station
 ref table dim_train_service
 ref table dim_scenario
+ref table fact_policy_comparison
+ref table fact_horizon_policy_metrics
 
 ref cultureInfo en-US
 

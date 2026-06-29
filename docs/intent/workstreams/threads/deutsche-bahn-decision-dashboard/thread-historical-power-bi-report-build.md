@@ -11,7 +11,7 @@ name: thread-historical-power-bi-report-build
 
 ## Goal
 
-Turn the validated local Power BI semantic export into one working historical Power BI report artifact with the intended relationships, DAX measures, slicer interactions, and a clear three-page storytelling flow for historical Deutsche Bahn evaluation.
+Turn the validated local Power BI semantic export into one working historical Power BI report artifact with the intended relationships, DAX measures, slicer interactions, and a clear storytelling flow for historical Deutsche Bahn evaluation, now extended with a fourth comparison page contract.
 
 ## Key Deliverables
 
@@ -19,9 +19,9 @@ Turn the validated local Power BI semantic export into one working historical Po
 
 Produce one repo-tracked local Power BI report build artifact that consumes the semantic export tables, implements the required star-schema relationships, and exposes the bounded measure set defined by the historical evaluation and storytelling contracts.
 
-### Three-page historical storytelling dashboard
+### Historical storytelling dashboard plus comparison page
 
-Produce one working three-page historical evaluation report with clear pre-decision context, risk-scoring context, and selected-review context, including explicit prototype scenario labeling and descriptive-only wording.
+Produce one working four-page historical evaluation report with clear pre-decision context, risk-scoring context, selected-review context, and a final-only method-comparison page, including explicit prototype scenario labeling and descriptive-only wording.
 
 ### Report-level validation and handoff proof
 
@@ -88,7 +88,7 @@ Validate relationship topology, DAX formulas, slicer interactions, and visual to
   - implemented DAX measures from atomic horizon counts and event facts
   - implemented field visibility and descriptive labeling rules
   - implemented slicer interactions for date, hour, scenario, station, and train-service surfaces
-  - exactly three descriptive report pages
+  - four visible report pages, with page 4 reserved for method comparison
   - report-level reconciliation against semantic export outputs
 - out of scope:
   - Bronze, Silver, Gold, ML, optimization, or semantic-export contract redesign
@@ -97,7 +97,7 @@ Validate relationship topology, DAX formulas, slicer interactions, and visual to
   - live Deutsche Bahn dispatch decisions or prescriptive operational automation
   - causal claims about avoided delays or intervention effectiveness
 - deferred:
-  - baseline-comparison storytelling pages requiring extra runtime export tables
+  - rendered page-4 comparison visuals still need final Desktop save/verification
   - drillthrough, bookmarks, and advanced navigation polish
   - enterprise publishing and refresh workflows
 
@@ -118,7 +118,7 @@ Validate relationship topology, DAX formulas, slicer interactions, and visual to
   - Power BI Desktop still required for final rendered refresh and page-behavior verification
 - downstream handoff:
   - execute the storytelling implementation plan
-  - optionally extend semantic export later for baseline-comparison page
+  - maintain nine-table semantic export and complete Desktop verification for comparison page
 
 ## Execution Notes
 
@@ -127,7 +127,7 @@ Validate relationship topology, DAX formulas, slicer interactions, and visual to
 - current active implementation plan: `docs/superpowers/plans/2026-06-29-11-23-historical-power-bi-storytelling-plan.md`
 - current validation record: `reports/power_bi/historical_evaluation/validation.md`
 - PBIP source exists and now contains:
-  - three visible page definitions
+  - four visible page definitions, with page 4 shell added in source
   - updated semantic-model helper columns and measures
   - source-level no-cross-filter visual flag patch
   - scenario slicers rebound to `scenario_display_name` in PBIR source
