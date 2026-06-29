@@ -14,127 +14,1541 @@
       "grain": "one row per scoped scored stop event",
       "key": "stop_event_key",
       "columns": [
-        {"name": "optimization_run_id", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
-        {"name": "execution_mode", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false, "allowed_values": ["final"]},
-        {"name": "scenario_key", "type": "VARCHAR", "nullable": false, "role": "foreign_key", "visible": true},
-        {"name": "capacity_scenario", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
-        {"name": "capacity_per_hour", "type": "BIGINT", "nullable": false, "role": "attribute", "visible": false},
-        {"name": "minimum_candidate_probability", "type": "DOUBLE", "nullable": false, "role": "attribute", "visible": false, "range": [0.0, 1.0]},
-        {"name": "calendar_date", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
-        {"name": "hour_of_day", "type": "BIGINT", "nullable": false, "role": "attribute", "visible": false, "range": [0, 23]},
-        {"name": "horizon_id", "type": "VARCHAR", "nullable": false, "role": "foreign_key", "visible": false},
-        {"name": "stop_event_key", "type": "VARCHAR", "nullable": false, "role": "primary_key", "visible": false},
-        {"name": "journey_id", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
-        {"name": "station_id", "type": "VARCHAR", "nullable": false, "role": "foreign_key", "visible": false},
-        {"name": "station_name", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
-        {"name": "train_type", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
-        {"name": "line_number", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
-        {"name": "train_service_key", "type": "VARCHAR", "nullable": false, "role": "foreign_key", "visible": false},
-        {"name": "service_class", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
-        {"name": "predicted_severe_delay_probability", "type": "DOUBLE", "nullable": false, "role": "measure", "visible": true, "range": [0.0, 1.0], "default_aggregation": "average"},
-        {"name": "actual_is_departure_severe_delay", "type": "BOOLEAN", "nullable": false, "role": "flag", "visible": true, "default_aggregation": "none"},
-        {"name": "prediction_split", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false, "allowed_values": ["test"]},
-        {"name": "is_eligible_candidate", "type": "BOOLEAN", "nullable": false, "role": "flag", "visible": true, "default_aggregation": "none"},
-        {"name": "eligibility_reason", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": true},
-        {"name": "selected_for_review", "type": "BOOLEAN", "nullable": false, "role": "flag", "visible": true, "default_aggregation": "none"},
-        {"name": "candidate_priority_rank", "type": "BIGINT", "nullable": true, "role": "measure", "visible": true, "default_aggregation": "none"},
-        {"name": "selection_rank", "type": "BIGINT", "nullable": true, "role": "measure", "visible": true, "default_aggregation": "none"},
-        {"name": "priority_score", "type": "DOUBLE", "nullable": true, "role": "measure", "visible": true, "default_aggregation": "average"},
-        {"name": "objective_contribution", "type": "DOUBLE", "nullable": true, "role": "measure", "visible": false, "default_aggregation": "sum"},
-        {"name": "solver_status", "type": "BIGINT", "nullable": false, "role": "metadata", "visible": false},
-        {"name": "model_name", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
-        {"name": "model_version", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
-        {"name": "selected_threshold", "type": "DOUBLE", "nullable": false, "role": "metadata", "visible": false, "range": [0.0, 1.0]},
-        {"name": "optimized_at", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false}
+        {
+          "name": "optimization_run_id",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "execution_mode",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false,
+          "allowed_values": [
+            "final"
+          ]
+        },
+        {
+          "name": "scenario_key",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "foreign_key",
+          "visible": true
+        },
+        {
+          "name": "capacity_scenario",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "capacity_per_hour",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "minimum_candidate_probability",
+          "type": "DOUBLE",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false,
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "calendar_date",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "hour_of_day",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false,
+          "range": [
+            0,
+            23
+          ]
+        },
+        {
+          "name": "horizon_id",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "foreign_key",
+          "visible": false
+        },
+        {
+          "name": "stop_event_key",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "primary_key",
+          "visible": false
+        },
+        {
+          "name": "journey_id",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "station_id",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "foreign_key",
+          "visible": false
+        },
+        {
+          "name": "station_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "train_type",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "line_number",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "train_service_key",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "foreign_key",
+          "visible": false
+        },
+        {
+          "name": "service_class",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "predicted_severe_delay_probability",
+          "type": "DOUBLE",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "range": [
+            0.0,
+            1.0
+          ],
+          "default_aggregation": "average"
+        },
+        {
+          "name": "actual_is_departure_severe_delay",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "role": "flag",
+          "visible": true,
+          "default_aggregation": "none"
+        },
+        {
+          "name": "prediction_split",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false,
+          "allowed_values": [
+            "test"
+          ]
+        },
+        {
+          "name": "is_eligible_candidate",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "role": "flag",
+          "visible": true,
+          "default_aggregation": "none"
+        },
+        {
+          "name": "eligibility_reason",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": true
+        },
+        {
+          "name": "selected_for_review",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "role": "flag",
+          "visible": true,
+          "default_aggregation": "none"
+        },
+        {
+          "name": "candidate_priority_rank",
+          "type": "BIGINT",
+          "nullable": true,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "none"
+        },
+        {
+          "name": "selection_rank",
+          "type": "BIGINT",
+          "nullable": true,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "none"
+        },
+        {
+          "name": "priority_score",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "average"
+        },
+        {
+          "name": "objective_contribution",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "solver_status",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "model_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "model_version",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "selected_threshold",
+          "type": "DOUBLE",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false,
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "optimized_at",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "predicted_severe_delay_probability (bins)",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "attribute",
+          "visible": true,
+          "default_aggregation": "none"
+        },
+        {
+          "name": "Review Eligibility",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": true
+        },
+        {
+          "name": "Review Decision",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": true
+        },
+        {
+          "name": "Actual Outcome",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": true
+        },
+        {
+          "name": "Predicted Risk Band",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": true
+        },
+        {
+          "name": "Predicted Risk Band Sort",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false,
+          "default_aggregation": "none"
+        }
       ]
     },
     "fact_horizon_summary": {
       "grain": "one row per scoped horizon",
       "key": "horizon_id",
       "columns": [
-        {"name": "optimization_run_id", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
-        {"name": "execution_mode", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false, "allowed_values": ["final"]},
-        {"name": "scenario_key", "type": "VARCHAR", "nullable": false, "role": "foreign_key", "visible": true},
-        {"name": "calendar_date", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
-        {"name": "hour_of_day", "type": "BIGINT", "nullable": false, "role": "attribute", "visible": false, "range": [0, 23]},
-        {"name": "horizon_id", "type": "VARCHAR", "nullable": false, "role": "primary_key", "visible": false},
-        {"name": "capacity_scenario", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": false},
-        {"name": "capacity_per_hour", "type": "BIGINT", "nullable": false, "role": "attribute", "visible": false},
-        {"name": "candidate_count", "type": "BIGINT", "nullable": false, "role": "measure", "visible": true, "default_aggregation": "sum"},
-        {"name": "eligible_candidate_count", "type": "BIGINT", "nullable": false, "role": "measure", "visible": true, "default_aggregation": "sum"},
-        {"name": "selected_event_count", "type": "BIGINT", "nullable": false, "role": "measure", "visible": true, "default_aggregation": "sum"},
-        {"name": "unused_capacity", "type": "BIGINT", "nullable": false, "role": "measure", "visible": true, "default_aggregation": "sum"},
-        {"name": "selected_probability_score_sum", "type": "DOUBLE", "nullable": false, "role": "measure", "visible": false, "default_aggregation": "sum"},
-        {"name": "actual_severe_selected_count", "type": "BIGINT", "nullable": false, "role": "measure", "visible": true, "default_aggregation": "sum"},
-        {"name": "actual_severe_candidate_count", "type": "BIGINT", "nullable": false, "role": "measure", "visible": true, "default_aggregation": "sum"},
-        {"name": "candidate_prevalence", "type": "DOUBLE", "nullable": true, "role": "measure", "visible": false, "default_aggregation": "none", "purpose": "source reconciliation only"},
-        {"name": "precision_at_capacity", "type": "DOUBLE", "nullable": true, "role": "measure", "visible": false, "default_aggregation": "none", "purpose": "source reconciliation only"},
-        {"name": "severe_delay_coverage", "type": "DOUBLE", "nullable": true, "role": "measure", "visible": false, "default_aggregation": "none", "purpose": "source reconciliation only"},
-        {"name": "lift_over_candidate_prevalence", "type": "DOUBLE", "nullable": true, "role": "measure", "visible": false, "default_aggregation": "none", "purpose": "source reconciliation only"},
-        {"name": "solver_status", "type": "BIGINT", "nullable": false, "role": "metadata", "visible": false},
-        {"name": "model_name", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
-        {"name": "model_version", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
-        {"name": "optimized_at", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false}
+        {
+          "name": "optimization_run_id",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "execution_mode",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false,
+          "allowed_values": [
+            "final"
+          ]
+        },
+        {
+          "name": "scenario_key",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "foreign_key",
+          "visible": true
+        },
+        {
+          "name": "calendar_date",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "hour_of_day",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false,
+          "range": [
+            0,
+            23
+          ]
+        },
+        {
+          "name": "horizon_id",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "primary_key",
+          "visible": false
+        },
+        {
+          "name": "capacity_scenario",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "capacity_per_hour",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "candidate_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "eligible_candidate_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "selected_event_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "unused_capacity",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "selected_probability_score_sum",
+          "type": "DOUBLE",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "actual_severe_selected_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "actual_severe_candidate_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "candidate_prevalence",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "none",
+          "purpose": "source reconciliation only"
+        },
+        {
+          "name": "precision_at_capacity",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "none",
+          "purpose": "source reconciliation only"
+        },
+        {
+          "name": "severe_delay_coverage",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "none",
+          "purpose": "source reconciliation only"
+        },
+        {
+          "name": "lift_over_candidate_prevalence",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "none",
+          "purpose": "source reconciliation only"
+        },
+        {
+          "name": "solver_status",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "model_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "model_version",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "optimized_at",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        }
       ]
     },
     "dim_date_hour": {
       "grain": "one row per horizon_id",
       "key": "horizon_id",
       "columns": [
-        {"name": "horizon_id", "type": "VARCHAR", "nullable": false, "role": "primary_key", "visible": false},
-        {"name": "calendar_date", "type": "VARCHAR", "nullable": false, "role": "attribute", "visible": true},
-        {"name": "hour_of_day", "type": "BIGINT", "nullable": false, "role": "sort_key", "visible": false, "range": [0, 23]},
-        {"name": "date_label", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true, "sort_by": "calendar_date"},
-        {"name": "hour_label", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true, "sort_by": "hour_of_day", "format": "HH:00-HH:59"}
+        {
+          "name": "horizon_id",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "primary_key",
+          "visible": false
+        },
+        {
+          "name": "calendar_date",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": true
+        },
+        {
+          "name": "hour_of_day",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "sort_key",
+          "visible": false,
+          "range": [
+            0,
+            23
+          ]
+        },
+        {
+          "name": "date_label",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "display",
+          "visible": true,
+          "sort_by": "calendar_date"
+        },
+        {
+          "name": "hour_label",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "display",
+          "visible": true,
+          "sort_by": "hour_of_day",
+          "format": "HH:00-HH:59"
+        }
       ]
     },
     "dim_station": {
       "grain": "one row per station_id",
       "key": "station_id",
       "columns": [
-        {"name": "station_id", "type": "VARCHAR", "nullable": false, "role": "primary_key", "visible": false},
-        {"name": "station_name", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true}
+        {
+          "name": "station_id",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "primary_key",
+          "visible": false
+        },
+        {
+          "name": "station_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "display",
+          "visible": true
+        }
       ]
     },
     "dim_train_service": {
       "grain": "one row per train_service_key",
       "key": "train_service_key",
       "columns": [
-        {"name": "train_service_key", "type": "VARCHAR", "nullable": false, "role": "primary_key", "visible": false},
-        {"name": "train_type", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true},
-        {"name": "line_number", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true},
-        {"name": "service_class", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true}
+        {
+          "name": "train_service_key",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "primary_key",
+          "visible": false
+        },
+        {
+          "name": "train_type",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "display",
+          "visible": true
+        },
+        {
+          "name": "line_number",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "display",
+          "visible": true
+        },
+        {
+          "name": "service_class",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "display",
+          "visible": true
+        }
       ]
     },
     "dim_scenario": {
       "grain": "one row per scenario_key",
       "key": "scenario_key",
       "columns": [
-        {"name": "scenario_key", "type": "VARCHAR", "nullable": false, "role": "primary_key", "visible": true},
-        {"name": "capacity_scenario", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true},
-        {"name": "capacity_per_hour", "type": "BIGINT", "nullable": false, "role": "display", "visible": true},
-        {"name": "minimum_candidate_probability", "type": "DOUBLE", "nullable": false, "role": "display", "visible": true, "range": [0.0, 1.0]},
-        {"name": "model_name", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true},
-        {"name": "model_version", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true},
-        {"name": "selected_threshold", "type": "DOUBLE", "nullable": false, "role": "display", "visible": true, "range": [0.0, 1.0]},
-        {"name": "policy_version", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
-        {"name": "frozen_at", "type": "VARCHAR", "nullable": false, "role": "metadata", "visible": false},
-        {"name": "scenario_display_name", "type": "VARCHAR", "nullable": false, "role": "display", "visible": true}
+        {
+          "name": "scenario_key",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "primary_key",
+          "visible": true
+        },
+        {
+          "name": "capacity_scenario",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "display",
+          "visible": true
+        },
+        {
+          "name": "capacity_per_hour",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "display",
+          "visible": true
+        },
+        {
+          "name": "minimum_candidate_probability",
+          "type": "DOUBLE",
+          "nullable": false,
+          "role": "display",
+          "visible": true,
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "model_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "display",
+          "visible": true
+        },
+        {
+          "name": "model_version",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "display",
+          "visible": true
+        },
+        {
+          "name": "selected_threshold",
+          "type": "DOUBLE",
+          "nullable": false,
+          "role": "display",
+          "visible": true,
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "policy_version",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "frozen_at",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "scenario_display_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "display",
+          "visible": true
+        }
+      ]
+    },
+    "fact_policy_comparison": {
+      "grain": "one row per optimization run, capacity, and policy",
+      "key": "optimization_run_id|capacity_per_hour|policy_name",
+      "columns": [
+        {
+          "name": "optimization_run_id",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "candidate_pool_fingerprint",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "scoring_model_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "scoring_model_version",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "optimization_policy_version",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "optimized_at",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "execution_mode",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false,
+          "allowed_values": [
+            "final"
+          ]
+        },
+        {
+          "name": "policy_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "key",
+          "visible": false
+        },
+        {
+          "name": "policy_display_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "display",
+          "visible": true
+        },
+        {
+          "name": "policy_sort_order",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "sort_key",
+          "visible": false
+        },
+        {
+          "name": "capacity_scenario",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "capacity_per_hour",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "attribute",
+          "visible": true
+        },
+        {
+          "name": "horizon_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "selected_event_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "selected_severe_event_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "precision_at_capacity",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": true,
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "severe_delay_coverage",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": true,
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "lift_vs_random",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": true
+        },
+        {
+          "name": "expected_risk_score_captured",
+          "type": "DOUBLE",
+          "nullable": false,
+          "role": "measure",
+          "visible": false
+        },
+        {
+          "name": "distinct_stations_covered",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "max_selected_same_station_in_horizon",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "max"
+        },
+        {
+          "name": "station_concentration_excess_total",
+          "type": "DOUBLE",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "mean_station_concentration_excess_per_horizon",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": true
+        },
+        {
+          "name": "unused_capacity_total",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "mean_unused_capacity_per_horizon",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": true
+        },
+        {
+          "name": "binding_horizon_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "binding_horizon_rate",
+          "type": "DOUBLE",
+          "nullable": false,
+          "role": "measure",
+          "visible": false
+        },
+        {
+          "name": "candidate_shortage_horizon_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "candidate_shortage_horizon_rate",
+          "type": "DOUBLE",
+          "nullable": false,
+          "role": "measure",
+          "visible": false
+        },
+        {
+          "name": "median_feasible_selection_target",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false
+        },
+        {
+          "name": "preferred_station_load_per_station_hour",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "frozen_station_excess_penalty_lambda",
+          "type": "DOUBLE",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        }
+      ]
+    },
+    "fact_horizon_policy_metrics": {
+      "grain": "one row per optimization run, capacity, policy, and horizon",
+      "key": "optimization_run_id|capacity_per_hour|policy_name|horizon_id",
+      "columns": [
+        {
+          "name": "optimization_run_id",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "candidate_pool_fingerprint",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "scoring_model_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "scoring_model_version",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "optimization_policy_version",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "optimized_at",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "execution_mode",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false,
+          "allowed_values": [
+            "final"
+          ]
+        },
+        {
+          "name": "policy_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "key",
+          "visible": false
+        },
+        {
+          "name": "policy_display_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "display",
+          "visible": false
+        },
+        {
+          "name": "policy_sort_order",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "sort_key",
+          "visible": false
+        },
+        {
+          "name": "calendar_date",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "hour_of_day",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false,
+          "range": [
+            0,
+            23
+          ]
+        },
+        {
+          "name": "horizon_id",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "key",
+          "visible": false
+        },
+        {
+          "name": "capacity_scenario",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "capacity_per_hour",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "feasible_selection_target",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "candidate_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "eligible_candidate_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "selected_event_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "candidate_shortage_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "unused_capacity",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "selected_probability_score_sum",
+          "type": "DOUBLE",
+          "nullable": false,
+          "role": "measure",
+          "visible": false
+        },
+        {
+          "name": "actual_severe_selected_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "selected_severe_event_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "actual_severe_candidate_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "candidate_prevalence",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false,
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "precision_at_capacity",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false,
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "severe_delay_coverage",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false,
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "lift_over_candidate_prevalence",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false
+        },
+        {
+          "name": "distinct_selected_stations",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "max_selected_same_station_in_horizon",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "max"
+        },
+        {
+          "name": "station_concentration_excess_total",
+          "type": "DOUBLE",
+          "nullable": false,
+          "role": "measure",
+          "visible": false
+        },
+        {
+          "name": "penalty_active_in_horizon",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "role": "attribute",
+          "visible": false
+        },
+        {
+          "name": "solver_status",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "preferred_station_load_per_station_hour",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "frozen_station_excess_penalty_lambda",
+          "type": "DOUBLE",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "selected_stop_event_key_hash",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        }
+      ]
+    },
+    "fact_policy_pairwise_summary": {
+      "grain": "one row per optimization run, capacity, reference policy, and comparator policy",
+      "key": "optimization_run_id|capacity_per_hour|reference_policy_name|comparator_policy_name",
+      "columns": [
+        {
+          "name": "optimization_run_id",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "candidate_pool_fingerprint",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "scoring_model_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "scoring_model_version",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "optimization_policy_version",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "optimized_at",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false
+        },
+        {
+          "name": "execution_mode",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "metadata",
+          "visible": false,
+          "allowed_values": [
+            "final"
+          ]
+        },
+        {
+          "name": "capacity_per_hour",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "attribute",
+          "visible": true
+        },
+        {
+          "name": "reference_policy_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "key",
+          "visible": false
+        },
+        {
+          "name": "reference_policy_display_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "display",
+          "visible": false
+        },
+        {
+          "name": "comparator_policy_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "key",
+          "visible": false
+        },
+        {
+          "name": "comparator_policy_display_name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "role": "display",
+          "visible": true
+        },
+        {
+          "name": "compared_horizon_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "win_horizon_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "tie_horizon_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "loss_horizon_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "selected_set_match_rate",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": true,
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "gurobi_selected_severe_event_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "comparator_selected_severe_event_count",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": false,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "selected_severe_event_count_delta",
+          "type": "BIGINT",
+          "nullable": false,
+          "role": "measure",
+          "visible": true,
+          "default_aggregation": "sum"
+        },
+        {
+          "name": "gurobi_precision_at_capacity",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false,
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "comparator_precision_at_capacity",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false,
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "precision_at_capacity_delta",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": true
+        },
+        {
+          "name": "gurobi_severe_delay_coverage",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false,
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "comparator_severe_delay_coverage",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false,
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "severe_delay_coverage_delta",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": true
+        },
+        {
+          "name": "gurobi_mean_station_concentration_excess_per_horizon",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false
+        },
+        {
+          "name": "comparator_mean_station_concentration_excess_per_horizon",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false
+        },
+        {
+          "name": "mean_station_concentration_excess_per_horizon_delta",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": true
+        },
+        {
+          "name": "gurobi_mean_unused_capacity_per_horizon",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false
+        },
+        {
+          "name": "comparator_mean_unused_capacity_per_horizon",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": false
+        },
+        {
+          "name": "mean_unused_capacity_per_horizon_delta",
+          "type": "DOUBLE",
+          "nullable": true,
+          "role": "measure",
+          "visible": true
+        }
       ]
     }
   },
   "relationship_topology": [
-    {"from": "dim_date_hour", "to": "fact_event_decision", "key": "horizon_id", "direction": "dimension_to_fact"},
-    {"from": "dim_date_hour", "to": "fact_horizon_summary", "key": "horizon_id", "direction": "dimension_to_fact"},
-    {"from": "dim_scenario", "to": "fact_event_decision", "key": "scenario_key", "direction": "dimension_to_fact"},
-    {"from": "dim_scenario", "to": "fact_horizon_summary", "key": "scenario_key", "direction": "dimension_to_fact"},
-    {"from": "dim_station", "to": "fact_event_decision", "key": "station_id", "direction": "dimension_to_fact"},
-    {"from": "dim_train_service", "to": "fact_event_decision", "key": "train_service_key", "direction": "dimension_to_fact"}
+    {
+      "from": "dim_date_hour",
+      "to": "fact_event_decision",
+      "key": "horizon_id",
+      "direction": "dimension_to_fact"
+    },
+    {
+      "from": "dim_date_hour",
+      "to": "fact_horizon_summary",
+      "key": "horizon_id",
+      "direction": "dimension_to_fact"
+    },
+    {
+      "from": "dim_scenario",
+      "to": "fact_event_decision",
+      "key": "scenario_key",
+      "direction": "dimension_to_fact"
+    },
+    {
+      "from": "dim_scenario",
+      "to": "fact_horizon_summary",
+      "key": "scenario_key",
+      "direction": "dimension_to_fact"
+    },
+    {
+      "from": "dim_station",
+      "to": "fact_event_decision",
+      "key": "station_id",
+      "direction": "dimension_to_fact"
+    },
+    {
+      "from": "dim_train_service",
+      "to": "fact_event_decision",
+      "key": "train_service_key",
+      "direction": "dimension_to_fact"
+    }
   ],
   "slicer_scope": {
     "metadata_contract_only": true,
-    "both_facts": ["calendar_date", "hour_of_day", "scenario_key"],
-    "event_only": ["station_id", "station_name", "train_service_key", "train_type", "service_class", "selected_for_review", "eligibility_reason"],
+    "both_facts": [
+      "calendar_date",
+      "hour_of_day",
+      "scenario_key"
+    ],
+    "event_only": [
+      "station_id",
+      "station_name",
+      "train_service_key",
+      "train_type",
+      "service_class",
+      "selected_for_review",
+      "eligibility_reason"
+    ],
     "notes": [
       "Station and train-service slicers must not affect global horizon visuals in downstream Power BI report authoring.",
       "This file documents intended slicer scope only; actual visual interaction behavior is validated downstream."

@@ -103,7 +103,7 @@ table fact_event_decision
 		formatString: 0.0%;-0.0%;0.0%
 		lineageTag: 8cdf6bf4-e615-44fb-98ae-19277556e560
 
-	measure 'Chosen Severe Capture' = DIVIDE ( [Chosen Severe Event Count], CALCULATE ( [Reviewable Severe Event Count], REMOVEFILTERS ( fact_event_decision[Review Decision] ) ) )
+	measure 'Chosen Severe Capture' = DIVIDE ( [Chosen Severe Event Count], [Reviewable Severe Event Count] )
 		formatString: 0.0%;-0.0%;0.0%
 		lineageTag: 37749501-6ca0-4191-9794-061ac9cf10f7
 
@@ -111,7 +111,7 @@ table fact_event_decision
 		formatString: 0.0x
 		lineageTag: d38a3430-7723-4109-bdaa-863e85c0cb44
 
-	measure 'Reviewable Risk Rank In Current Filter' = VAR CurrentProbability = MAX ( fact_event_decision[predicted_severe_delay_probability] ) VAR CurrentStopEventKey = SELECTEDVALUE ( fact_event_decision[stop_event_key] ) VAR IsCurrentRowReviewable = SELECTEDVALUE ( fact_event_decision[is_eligible_candidate], FALSE () ) VAR ReviewableUniverse = FILTER ( ALLSELECTED ( fact_event_decision ), fact_event_decision[is_eligible_candidate] = TRUE () ) RETURN IF ( NOT IsCurrentRowReviewable || ISBLANK ( CurrentStopEventKey ), BLANK (), RANKX ( ReviewableUniverse, fact_event_decision[predicted_severe_delay_probability], CurrentProbability, DESC, DENSE ) )
+	measure 'Reviewable Risk Rank In Current Filter' = BLANK ()
 		formatString: 0
 		lineageTag: baa69880-327a-4e7e-a58d-480fb58731f2
 
@@ -411,73 +411,56 @@ table fact_event_decision
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'predicted_severe_delay_probability (bins)' =
-			IF(
-				ISBLANK('fact_event_decision'[predicted_severe_delay_probability]),
-				BLANK(),
-				IF(
-					'fact_event_decision'[predicted_severe_delay_probability] >= 0,
-					ROUNDDOWN('fact_event_decision'[predicted_severe_delay_probability] / 0.05, 0) * 0.05,
-					ROUNDUP('fact_event_decision'[predicted_severe_delay_probability] / 0.05, 0) * 0.05
-				)
-			)
-		lineageTag: f339c798-a5b3-4c04-bf37-6b81f4f3ff34
-		summarizeBy: none
-
-		extendedProperty GroupingMetadata =
-				{
-				  "version": 0,
-				  "groupedColumns": [
-				    {
-				      "Column": {
-				        "Expression": {
-				          "SourceRef": {
-				            "Entity": "fact_event_decision"
-				          }
-				        },
-				        "Property": "predicted_severe_delay_probability"
-				      }
-				    }
-				  ],
-				  "binningMetadata": {
-				    "binSize": {
-				      "value": 0.05,
-				      "unit": 0
-				    }
-				  }
-				}
-
-		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"f","Entity":"fact_event_decision"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"f"}},"Property":"predicted_severe_delay_probability"}}],"BinItem":{"Expression":{"Floor":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"f"}},"Property":"predicted_severe_delay_probability"}},"Size":0.05}}}}
+	column 'predicted_severe_delay_probability (bins)'
+		dataType: double
+		lineageTag: dfc11c91-b4c6-4d1e-b5b9-7211a06fb47b
+		summarizeBy: sum
+		sourceColumn: predicted_severe_delay_probability (bins)
 
 		annotation SummarizationSetBy = Automatic
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	column 'Review Eligibility' = IF ( fact_event_decision[is_eligible_candidate], "Can be reviewed", "Not reviewable" )
+	column 'Review Eligibility'
 		dataType: string
-		lineageTag: 619fba29-8645-4ff3-853b-fbe7ea8a66e6
+		lineageTag: 73a5ec86-3979-407e-9647-ee0e76b2c03e
 		summarizeBy: none
+		sourceColumn: Review Eligibility
 
-	column 'Review Decision' = SWITCH ( TRUE (), NOT fact_event_decision[is_eligible_candidate], "Not reviewable", fact_event_decision[selected_for_review], "Chosen for review", "Not chosen for review" )
+		annotation SummarizationSetBy = Automatic
+
+	column 'Review Decision'
 		dataType: string
-		lineageTag: 19e0c3d8-4cdd-4a70-bfb9-63dec06c7cba
+		lineageTag: 4fd08d50-1c83-4037-b9e0-4c70b803ae7a
 		summarizeBy: none
+		sourceColumn: Review Decision
 
-	column 'Actual Outcome' = SWITCH ( TRUE (), ISBLANK ( fact_event_decision[actual_is_departure_severe_delay] ), "Outcome unavailable", fact_event_decision[actual_is_departure_severe_delay], "Became severe", "Did not become severe" )
+		annotation SummarizationSetBy = Automatic
+
+	column 'Actual Outcome'
 		dataType: string
-		lineageTag: 217e9d9d-0d95-4c7f-b88f-f47415f0a4bb
+		lineageTag: baa17fa8-5e7f-40c9-8025-0c95a10486a4
 		summarizeBy: none
+		sourceColumn: Actual Outcome
 
-	column 'Predicted Risk Band' = VAR p = fact_event_decision[predicted_severe_delay_probability] RETURN SWITCH ( TRUE (), ISBLANK ( p ), "Unknown", p < 0.10, "00-10%", p < 0.20, "10-20%", p < 0.30, "20-30%", p < 0.40, "30-40%", p < 0.50, "40-50%", p < 0.60, "50-60%", p < 0.70, "60-70%", p < 0.80, "70-80%", p < 0.90, "80-90%", "90-100%" )
+		annotation SummarizationSetBy = Automatic
+
+	column 'Predicted Risk Band'
 		dataType: string
-		lineageTag: c0dc7539-8822-400e-ba17-cd11192dfe6f
+		lineageTag: c909acb9-d8f6-487d-a65c-cb98d88f6f2e
 		summarizeBy: none
-		sortByColumn: 'Predicted Risk Band Sort'
+		sourceColumn: Predicted Risk Band
 
-	column 'Predicted Risk Band Sort' = VAR p = fact_event_decision[predicted_severe_delay_probability] RETURN IF ( ISBLANK ( p ), 99, MIN ( 10, INT ( p * 10 ) + 1 ) )
+		annotation SummarizationSetBy = Automatic
+
+	column 'Predicted Risk Band Sort'
 		dataType: int64
-		lineageTag: d254ad51-437e-4af3-81e3-1f537ab0903e
-		summarizeBy: none
+		formatString: 0
+		lineageTag: cee9fb75-3dfe-4e64-80b1-c37b8f4ff900
+		summarizeBy: sum
+		sourceColumn: Predicted Risk Band Sort
+
+		annotation SummarizationSetBy = Automatic
 
 	partition fact_event_decision = m
 		mode: import
