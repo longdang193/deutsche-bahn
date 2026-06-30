@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from string import Template
@@ -37,12 +37,6 @@ class ScopeConfig:
     source_version: str
     required_columns: tuple[str, ...]
     complete_journey_rule: str
-    added_week_source_file_name: str | None = None
-    added_week_source_url: str | None = None
-    added_week_source_version: str | None = None
-    added_week_start_date: str | None = None
-    added_week_end_date: str | None = None
-    added_week_selection_metric: str | None = None
 
     @property
     def local_source_path(self) -> Path:
@@ -86,17 +80,11 @@ def load_scope_config(path: Path) -> ScopeConfig:
         source_version=config_data["source_version"],
         required_columns=tuple(config_data["required_columns"]),
         complete_journey_rule=config_data["complete_journey_rule"],
-        added_week_source_file_name=config_data.get("added_week_source_file_name"),
-        added_week_source_url=config_data.get("added_week_source_url"),
-        added_week_source_version=config_data.get("added_week_source_version"),
-        added_week_start_date=config_data.get("added_week_start_date"),
-        added_week_end_date=config_data.get("added_week_end_date"),
-        added_week_selection_metric=config_data.get("added_week_selection_metric"),
+
     )
 
 
-def write_scope_config(config: ScopeConfig, path: Path) -> None:
-    path.write_text(json.dumps(asdict(config), indent=2, ensure_ascii=False), encoding="utf-8")
+
 
 
 def build_month_source_url(file_name: str) -> str:
@@ -215,27 +203,6 @@ def query_candidate_weeks(connection: duckdb.DuckDBPyConnection, *, source_url: 
 
 
 def select_added_week(config: ScopeConfig) -> AddedWeekSelection:
-    if all(
-        [
-            config.added_week_source_file_name,
-            config.added_week_source_url,
-            config.added_week_source_version,
-            config.added_week_start_date,
-            config.added_week_end_date,
-        ]
-    ):
-        return AddedWeekSelection(
-            source_file_name=str(config.added_week_source_file_name),
-            source_url=str(config.added_week_source_url),
-            source_version=str(config.added_week_source_version),
-            week_start_date=str(config.added_week_start_date),
-            week_end_date=str(config.added_week_end_date),
-            hub_stop_count=0,
-            severe_or_cancel_count=0,
-            severe_or_cancel_share=0.0,
-            rank_metric_name=str(config.added_week_selection_metric or "manual_or_cached_selection"),
-        )
-
     candidates: list[AddedWeekSelection] = []
     connection = duckdb.connect()
     try:
@@ -412,14 +379,16 @@ def collect_validation_summary(config: ScopeConfig) -> dict[str, object]:
     if manifest_row_count is None or raw_row_count is None or hub_row_count is None or journey_count is None:
         raise RuntimeError("Bronze validation counts could not be computed")
 
+    added_week_row = next((row for row in manifest_rows if row[0] == ADDED_SCOPE_SLICE), None)
+
     summary = {
         "scope_version": config.scope_version,
         "selected_month": config.selected_month,
         "selected_hub": config.selected_hub,
         "source_file_name": config.source_file_name,
-        "added_week_source_file_name": config.added_week_source_file_name,
-        "added_week_start_date": config.added_week_start_date,
-        "added_week_end_date": config.added_week_end_date,
+        "added_week_source_file_name": added_week_row[1] if added_week_row else None,
+        "added_week_start_date": added_week_row[4] if added_week_row else None,
+        "added_week_end_date": added_week_row[5] if added_week_row else None,
         "duckdb_path": str(DUCKDB_PATH),
         "scope_expansion_manifest_path": str(SCOPE_EXPANSION_MANIFEST_PATH),
         "raw_stop_events_row_count": raw_row_count[0],
@@ -447,18 +416,6 @@ def write_summary(summary: dict[str, object]) -> None:
 def main() -> None:
     config = load_scope_config(SCOPE_PATH)
     added_week = select_added_week(config)
-    config = ScopeConfig(
-        **{
-            **asdict(config),
-            "added_week_source_file_name": added_week.source_file_name,
-            "added_week_source_url": added_week.source_url,
-            "added_week_source_version": added_week.source_version,
-            "added_week_start_date": added_week.week_start_date,
-            "added_week_end_date": added_week.week_end_date,
-            "added_week_selection_metric": added_week.rank_metric_name,
-        }
-    )
-    write_scope_config(config, SCOPE_PATH)
     source_slices = build_scope_slices(config, added_week)
     write_scope_expansion_manifest(config, added_week, source_slices)
     execute_bronze_load(config, source_slices, added_week)

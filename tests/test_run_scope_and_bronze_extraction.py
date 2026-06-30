@@ -37,3 +37,10 @@ def test_build_month_source_version_and_url_are_deterministic() -> None:
 
     assert BRONZE.build_month_source_version(file_name) == 'monthly_processed_data/data-2025-04.parquet@main'
     assert BRONZE.build_month_source_url(file_name).endswith('/monthly_processed_data/data-2025-04.parquet')
+
+
+def test_scope_config_stays_input_only() -> None:
+    config = BRONZE.load_scope_config(REPO_ROOT / 'config' / 'scope.yml')
+
+    assert not hasattr(config, 'added_week_source_file_name')
+    assert not hasattr(config, 'added_week_start_date')
