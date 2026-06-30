@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_date_hour"
+                      "Entity": "fact_event_decision"
                     }
                   },
-                  "Property": "hour_label"
+                  "Property": "hour_of_day"
                 }
               },
-              "queryRef": "dim_date_hour.hour_label",
-              "nativeQueryRef": "hour_label",
+              "queryRef": "fact_event_decision.hour_of_day",
+              "nativeQueryRef": "hour_of_day",
               "active": true
             }
           ]
@@ -58,10 +58,10 @@
               "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "dim_date_hour"
+                    "Entity": "fact_event_decision"
                   }
                 },
-                "Property": "hour_label"
+                "Property": "hour_of_day"
               }
             },
             "direction": "Ascending"
